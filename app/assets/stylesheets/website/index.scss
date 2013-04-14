@@ -1,0 +1,31 @@
+.container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.editor-container {
+	position: relative;
+	width: 800px;
+	height: 150px;
+	margin: 10px auto;
+}
+
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.actions {
+	width: 800px;
+	text-align: right;
+	margin: 0 auto;
+}
+
+.result-table {
+	font-size: 1em;
+	width: 90%;
+	margin: 0 auto 40px;
+}
