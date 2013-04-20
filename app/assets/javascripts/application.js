@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require components/jquery/jquery
+//= require jquery_ujs
 //= require components/sugar/release/sugar.min
 //= require components/ace-builds/src/ace
 //= require components/ace-builds/src/mode-sql

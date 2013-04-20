@@ -1,0 +1,27 @@
+// Place all the styles related to the Queries controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.editor-container {
+	position: relative;
+	height: 150px;
+}
+
+#editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.actions {
+	text-align: right;
+	margin: 0 auto;
+}
+
+.result-table {
+	font-size: 1em;
+	width: 90%;
+	margin: 0 auto 40px;
+}

@@ -57,9 +57,14 @@
       </section>
     </nav>
     <div class="container">
+        <% if !flash[:notice].nil? %>
+        <div data-alert class="alert-box success">
+          <%= flash[:notice] %>
+        </div>
+        <% end %>
         <%= yield %>
     </div>
 
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag 'application' %>
   </body>
 </html>

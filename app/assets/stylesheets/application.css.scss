@@ -10,8 +10,17 @@
  *
  *= require_self
  *= require foundation_and_overrides
- *= require_tree .
  */
+@import "bourbon";
+@import "queries";
+
+.container {
+	max-width: 1000px;
+	margin: 10px auto;
+	@include box-sizing(border-box);
+	padding: 0 10px;
+}
+
 .userbar .user {
 	color: #fff;
 	line-height: 45px;

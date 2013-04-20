@@ -1,23 +1,50 @@
-//= require components/jquery.cookie/jquery.cookie
 (function($, ace, window) {
+	'use strict';
+
 	var localStorage = window.localStorage;
+
 	$(function() {
-		$editor = $('#editor');
-		$form = $('.editor-form');
-		var editor = ace.edit("editor");
+		if (!$('#editor').length) {
+			return;
+		}
+
+		var
+			$form = $('.query-form'),
+			$value = $('#query_value'),
+			$resultContainer = $form.find('.result-content'),
+			editor = ace.edit("editor"),
+			cachedValue
+			;
 		editor.getSession().setMode("ace/mode/sql");
 
-		if (localStorage.getItem('content.editor')) {
-			editor.setValue(localStorage.getItem('content.editor').decodeBase64());
+		if ($value.val().trim()) {
+			editor.setValue($value.val());
+		} else if (!$value.val().trim() && localStorage.getItem('content.editor')) {
+			cachedValue = localStorage.getItem('content.editor');
+			editor.setValue(cachedValue);
+			$value.val(cachedValue);
 		}
 
 		editor.on('change', function(e){
-			localStorage.setItem('content.editor', editor.getValue().encodeBase64());
+			localStorage.setItem('content.editor', editor.getValue());
+			$value.val(editor.getValue());
 		});
 
 		$('.run-btn').on('click', function() {
-			$form.find('input[name="q"]').val(editor.getValue().encodeBase64());
-			$form.submit();
+			$value.val(editor.getValue());
+
+			$.post($form.data('run-url'), { value: $value.val() })
+				.done(function(resp) {
+					$resultContainer
+						.hide()
+						.html(resp)
+						.fadeIn('fast')
+						;
+				})
+				.fail(function() {
+					window.alert('query failed');
+				})
+				;
 			return false;
 		});
 	});

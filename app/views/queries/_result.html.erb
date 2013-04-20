@@ -1,0 +1,23 @@
+ <% if !@result.nil? %>
+ <table class="result-table">
+      <thead><tr>
+      <% @result.fields.each do |field| %>
+      <th><%= field %></th>
+      <% end %>
+      </tr></thead>
+      <tbody>
+      <% @result.each(:as => :array) do |row| %>
+        <tr>
+        <% row.each do |col| %>
+        <td><%= col %></td>
+        <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+  </table>
+<% end %>
+<% if !@queryError.nil? %>
+<div data-alert class="alert-box alert secondary">
+  <%= @queryError %>
+</div>
+<% end %>

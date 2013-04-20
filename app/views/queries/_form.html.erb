@@ -1,0 +1,26 @@
+<%= form_for(@query, :html => {:class => 'query-form', 'data-run-url' => run_queries_path }) do |f| %>
+  <% if !flash[:errors].nil? %>
+    <div data-alert class="alert-box alert">
+      <p><%= pluralize(flash[:errors].count, "error") %> prohibited this query from being saved:</p>
+
+      <ul>
+      <% flash[:errors].full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+      <a href="#" class="close">&times;</a>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.text_field :name, :placeholder => 'New query name' %>
+  </div>
+  <div class="editor-container field">
+    <%= f.hidden_field :value, :value => @query.value %>
+    <div id="editor"></div>
+  </div>
+  <div class="actions field">
+    <a href="#" class="button run-btn secondary">run</a>
+    <%= f.submit :class => 'button' %>
+  </div>
+  <div class='result-content'><!-- Container for ajax content --></div>
+<% end %>

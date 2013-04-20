@@ -8,8 +8,10 @@ gem 'rails', '3.2.13'
 gem 'sqlite3'
 # gem 'pg'
 gem 'mysql2'
-gem "bower-rails", "~> 0.2.1"
+gem 'bower-rails', '~> 0.2.1'
 gem 'devise'
+gem 'bourbon'
+gem 'jquery-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -39,7 +41,8 @@ end
 group :development do
   gem 'debugger'
   gem 'thin'
-
+  gem 'better_errors'
+  gem 'binding_of_caller'
   # Deploy with Capistrano
   gem 'capistrano'
 end

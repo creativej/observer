@@ -1,4 +1,10 @@
 TheObserver::Application.routes.draw do
+  resources :queries do
+    collection do
+      post 'run'
+    end
+  end
+
   devise_for :users
 
   # The priority is based upon order of creation:
