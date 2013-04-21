@@ -1,4 +1,4 @@
- <% if !@result.nil? %>
+<% if @result %>
  <table class="result-table">
       <thead><tr>
       <% @result.fields.each do |field| %>
@@ -15,8 +15,7 @@
       <% end %>
       </tbody>
   </table>
-<% end %>
-<% if !@queryError.nil? %>
+<% else %>
 <div data-alert class="alert-box alert secondary">
   <%= @queryError %>
 </div>

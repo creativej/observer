@@ -19,7 +19,7 @@
     <div id="editor"></div>
   </div>
   <div class="actions field">
-    <a href="#" class="button run-btn secondary">run</a>
+    <a href="<%= data_queries_path(:token => @query.token) %>"     <a href="#" class="button run-btn secondary">run</a>
     <%= f.submit :class => 'button' %>
   </div>
   <div class='result-content'><!-- Container for ajax content --></div>

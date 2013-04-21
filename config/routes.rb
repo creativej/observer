@@ -2,6 +2,7 @@ TheObserver::Application.routes.draw do
   resources :queries do
     collection do
       post 'run'
+      match 'data/:token' => 'queries#data', :constraints => {:format => /(html)/}, :as => :data
     end
   end
 

@@ -14,8 +14,7 @@
   <tr>
     <td><%= query.name %></td>
     <td><%= query.value %></td>
-    <td><%= query.token %></td>
-    <td><%= link_to 'Show', query %></td>
+    <td><%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %></td>
     <td><%= link_to 'Edit', edit_query_path(query) %></td>
     <td><%= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>

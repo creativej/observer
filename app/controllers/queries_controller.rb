@@ -1,3 +1,5 @@
+require 'db_client'
+
 class QueriesController < ApplicationController
   include QueriesHelper
 
@@ -46,16 +48,35 @@ class QueriesController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
 
-    begin
-      @result = handle_query_post(request)
-    rescue Mysql2::Error => error
-      @queryError = error
-    end
-
+    client = DBClient.create
+    @result = client.query(request[:value])
+    @queryError = client.last_query_error
     respond_to do |format|
       format.html {
         render :partial => 'result'
       }
+    end
+  end
+
+  # GET /queries/data/:token
+  def data
+    @query = current_user.queries.find_by_token(params[:token])
+    client = DBClient.create
+    @result = client.query(@query.value)
+
+    if (@result)
+      data = {
+        :result => @result,
+        :fields => @result.fields
+      }
+    else
+      data = {
+        :error => client.last_query_error.to_s
+      }
+    end
+
+    respond_to do |format|
+      format.html { render json: data, status: :created }
     end
   end
 
