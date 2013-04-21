@@ -1,0 +1,28 @@
+<%= form_for(@widget) do |f| %>
+  <%= render '/form_errors' %>
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="large-8 columns">
+        <%= f.hidden_field :js %>
+        <div class="editor-container js">
+          <div id="widget_js_editor" class="editor" rel="ace-editor" data-bind="#widget_js" data-mode="javascript"></div>
+        </div>
+      </div>
+      <div class="large-4 columns">
+        <%= f.hidden_field :css, :placeholder => 'css' %>
+        <div class="editor-container css">
+          <div id="widget_css_editor" class="editor" rel="ace-editor" data-bind="#widget_css" data-mode="scss"></div>
+        </div>
+        <%= f.hidden_field :html, :placeholder => 'html' %>
+        <div class="editor-container html">
+          <div id="widget_html_editor" class="editor" rel="ace-editor" data-bind="#widget_html" data-mode="html"></div>
+        </div>
+        <%= f.text_field :name, :placeholder => 'Widget name' %>
+        <div class="actions">
+          <a href="#" class="preview button secondary small">Preview</a>
+          <%= f.submit :class=> 'button small' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

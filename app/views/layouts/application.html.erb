@@ -20,12 +20,12 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body>
+  <body class="<%= "#{controller.controller_name} #{controller.action_name}" %>">
     <nav class="top-bar userbar">
       <ul class="title-area">
         <!-- Title Area -->
         <li class="name">
-          <h1><a href="">The observer</a></h1>
+          <h1><a href="/">The observer</a></h1>
         </li>
       </ul>
       <section class="top-bar-section">
@@ -56,7 +56,7 @@
 
       </section>
     </nav>
-    <div class="container">
+    <div class="container row">
         <% if !flash[:notice].nil? %>
         <div data-alert class="alert-box success">
           <%= flash[:notice] %>

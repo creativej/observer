@@ -1,34 +1,4 @@
-<div class="editor-container">
-  <%= form_tag('/', :method => 'post', :name => 'editor-form', :class => 'editor-form') do %>
-    <%= hidden_field_tag(:q, '') %>
-    <div id="editor"></div>
-  <% end %>
+<div class="row">
+  <div class="large column"><%= link_to 'queries', queries_path %></div>
+  <div class="large column"><%= link_to 'widgets', widgets_path %></div>
 </div>
-<div class="actions">
-  <a href="#" class="button secondary">observe</a>
-  <a href="#" class="button run-btn">run</a>
-</div>
-<% if !@queryError.nil? %>
-<div data-alert class="alert-box alert secondary">
-  <%= @queryError %>
-  <a href="#" class="close">&times;</a>
-</div>
-<% end %>
-<% if !@result.nil? %>
-<table class="result-table">
-    <thead><tr>
-    <% @result.fields.each do |field| %>
-    <th><%= field %></th>
-    <% end %>
-    </tr></thead>
-    <tbody>
-    <% @result.each(:as => :array) do |row| %>
-      <tr>
-      <% row.each do |col| %>
-      <td><%= col %></td>
-      <% end %>
-      </tr>
-    <% end %>
-    </tbody>
-</table>
-<% end %>

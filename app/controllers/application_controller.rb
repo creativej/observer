@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   #   rescue_from Exception, :with => :render_404
   # end
 
+  before_filter :set_controller_properties
+
   def not_found
     render_404
   end
@@ -15,5 +17,10 @@ class ApplicationController < ActionController::Base
       format.xml  { head :not_found }
       format.any  { head :not_found }
     end
+  end
+
+  def set_controller_properties
+    @current_controller = params[:controller]
+    @current_action = params[:action]
   end
 end

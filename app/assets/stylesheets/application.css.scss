@@ -13,9 +13,9 @@
  */
 @import "bourbon";
 @import "queries";
+@import "widgets";
 
 .container {
-	max-width: 1000px;
 	margin: 10px auto;
 	@include box-sizing(border-box);
 	padding: 0 10px;

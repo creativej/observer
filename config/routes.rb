@@ -1,4 +1,7 @@
 TheObserver::Application.routes.draw do
+  resources :widgets
+
+
   resources :queries do
     collection do
       post 'run'

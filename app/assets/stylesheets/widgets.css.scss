@@ -1,0 +1,32 @@
+// Place all the styles related to the Widgets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.widgets {
+    .container {
+        max-width: 100%;
+    }
+
+    .editor {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .editor-container {
+        margin-bottom: 10px;
+    }
+
+    .editor-container.js {
+        height: 480px;
+    }
+
+    .editor-container.css {
+        height: 220px;
+    }
+
+    .editor-container.html {
+        height: 150px;
+    }
+}

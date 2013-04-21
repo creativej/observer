@@ -11,10 +11,21 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require components/jquery/jquery
+//= require the_observer
 //= require jquery_ujs
 //= require components/sugar/release/sugar.min
-//= require components/ace-builds/src/ace
-//= require components/ace-builds/src/mode-sql
-//= require_tree .
+//= require queries
+//= require widgets
 
 // $(document).foundation();
+(function(window, TheObserver, $) {
+	"use strict";
+
+	$(function() {
+		TheObserver.trigger('ready.body');
+	});
+
+	window.onload = function() {
+		TheObserver.trigger('onload.window');
+	};
+}(window, TheObserver, jQuery));
