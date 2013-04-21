@@ -18,7 +18,7 @@ class QueriesController < ApplicationController
   # GET /queries/1
   # GET /queries/1.json
   def show
-    @query = current_user.queries.find(params[:id])
+    @query = current_user.queries.find!(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,7 +39,7 @@ class QueriesController < ApplicationController
 
   # GET /queries/1/edit
   def edit
-    @query = current_user.queries.find(params[:id])
+    @query = current_user.queries.find!(params[:id])
   end
 
   # POST /queries/run
@@ -60,7 +60,12 @@ class QueriesController < ApplicationController
 
   # GET /queries/data/:token
   def data
-    @query = current_user.queries.find_by_token(params[:token])
+    @query = current_user.queries.find_by_token!(params[:token])
+
+    if (@query.nil?)
+      raise ActionController::RoutingError.new('Not Found')
+    end
+
     client = DBClient.create
     @result = client.query(@query.value)
 
@@ -101,7 +106,7 @@ class QueriesController < ApplicationController
   # PUT /queries/1
   # PUT /queries/1.json
   def update
-    @query = current_user.queries.find(params[:id])
+    @query = current_user.queries.find!(params[:id])
 
     respond_to do |format|
       if @query.update_attributes(params[:query])
@@ -122,7 +127,7 @@ class QueriesController < ApplicationController
   # DELETE /queries/1
   # DELETE /queries/1.json
   def destroy
-    @query = current_user.queries.find(params[:id])
+    @query = current_user.queries.find!(params[:id])
     @query.destroy
 
     respond_to do |format|
