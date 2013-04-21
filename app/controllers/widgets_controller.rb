@@ -41,6 +41,7 @@ class WidgetsController < ApplicationController
   # POST /widgets.json
   def create
     @widget = Widget.new(params[:widget])
+    @widget.user = current_user
 
     respond_to do |format|
       if @widget.save

@@ -10,8 +10,10 @@
  *
  *= require_self
  *= require foundation_and_overrides
+ *= require jquery.gridster
  */
 @import "bourbon";
+@import "website";
 @import "queries";
 @import "widgets";
 

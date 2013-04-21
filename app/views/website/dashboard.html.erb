@@ -1,0 +1,14 @@
+<style>
+    <% @widgets.each do |widget| %>
+    <%= sandbox_css(widget) %>
+    <% end %>
+</style>
+<div class="dashboard gridster">
+    <ul>
+        <% @widgets.each do |widget| %>
+        <li class="widget-<%= widget.id %> widget" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+            <%= widget.html.html_safe %>
+        </li>
+        <% end %>
+    </ul>
+</div>

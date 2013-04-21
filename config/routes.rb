@@ -9,6 +9,8 @@ TheObserver::Application.routes.draw do
     end
   end
 
+  match 'dashboard' => 'website#dashboard', :as => :dashboard
+
   devise_for :users
 
   # The priority is based upon order of creation:
