@@ -24,9 +24,11 @@
 
 	$(function() {
 		TheObserver.trigger('ready.body');
+		TheObserver.triggerPageReady();
 	});
 
 	window.onload = function() {
 		TheObserver.trigger('onload.window');
+		TheObserver.triggerPageLoaded();
 	};
 }(window, TheObserver, jQuery));

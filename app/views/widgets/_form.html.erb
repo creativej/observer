@@ -1,5 +1,11 @@
-<%= form_for(@widget) do |f| %>
+<div class="preview-container">
+  <iframe id="widget-preview" seemless="seemless"></iframe>
+</div>
+<%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-preview' do %><% end %>
+<%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
   <%= render '/form_errors' %>
+  <%= hidden_field_tag :column, 4 %>
+  <%= hidden_field_tag :row, 2 %>
   <div class="row">
     <div class="large-12 columns">
       <div class="large-8 columns">
@@ -9,6 +15,16 @@
         </div>
       </div>
       <div class="large-4 columns">
+        <%= f.text_field :name, :placeholder => 'Widget name' %>
+        <div class="actions">
+          <a
+            href="#"
+            class="preview button secondary small"
+            >Preview</a>
+
+          <%= f.submit :class=> 'button small' %>
+        </div>
+
         <%= f.hidden_field :css, :placeholder => 'css' %>
         <div class="editor-container css">
           <div id="widget_css_editor" class="editor" rel="ace-editor" data-bind="#widget_css" data-mode="scss"></div>
@@ -16,11 +32,6 @@
         <%= f.hidden_field :html, :placeholder => 'html' %>
         <div class="editor-container html">
           <div id="widget_html_editor" class="editor" rel="ace-editor" data-bind="#widget_html" data-mode="html"></div>
-        </div>
-        <%= f.text_field :name, :placeholder => 'Widget name' %>
-        <div class="actions">
-          <a href="#" class="preview button secondary small">Preview</a>
-          <%= f.submit :class=> 'button small' %>
         </div>
       </div>
     </div>

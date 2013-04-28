@@ -1,5 +1,9 @@
 TheObserver::Application.routes.draw do
-  resources :widgets
+  resources :widgets do
+    collection do
+      match 'preview', :as => :preview
+    end
+  end
 
 
   resources :queries do

@@ -62,7 +62,8 @@ class WidgetsController < ApplicationController
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
-        format.html { redirect_to @widget, notice: 'Widget was successfully updated.' }
+        flash[:notice] = 'Widget was successfully updated.'
+        format.html { redirect_to(edit_widget_path) }
         format.json { head :no_content }
       else
         flash[:errors] = @widget.errors
@@ -82,5 +83,10 @@ class WidgetsController < ApplicationController
       format.html { redirect_to widgets_url }
       format.json { head :no_content }
     end
+  end
+
+  def preview
+    @widget = !params[:widget].nil? ? params[:widget] : {}
+    render :layout => 'basic'
   end
 end

@@ -12,6 +12,7 @@ gem 'bower-rails', '~> 0.2.1'
 gem 'devise'
 gem 'bourbon'
 gem 'jquery-rails'
+gem 'rails_config'
 
 # Gems used only for assets and not required
 # in production environments by default.

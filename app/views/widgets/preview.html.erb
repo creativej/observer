@@ -1,0 +1,22 @@
+<%= sandbox_css('widget', @widget[:css]).html_safe %>
+<div
+  class="widget-preview widget"
+  data-dimensions="<%= Settings.gridster.dimensions %>"
+  data-sizex="<%= params[:column] %>"
+  data-sizey="<%= params[:row] %>"
+  >
+  <%= html_safe @widget[:html] %>
+</div>
+<% content_for :javascript do %>
+<script type="text/javascript">
+(function($, TheObserver, window) {
+  'use strict';
+
+  TheObserver.onPageReady('preview.widgets', function() {
+    var widget = TheObserver.modules.widget($('.widget'));
+    <%= html_safe @widget[:js] %>
+
+  });
+}(jQuery, TheObserver, window));
+</script>
+<% end %>

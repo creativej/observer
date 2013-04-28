@@ -1,10 +1,12 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-//= require modules/dashboard
+
 (function($, window, TheObserver) {
 	'use strict';
 
-	TheObserver.onPageReady('dashboard.website', function() {
-		TheObserver.modules.dashboard($('.dashboard.gridster'));
-	});
+	// TheObserver.onPageReady('preview.widgets', function() {
+	// 	var widget = TheObserver.modules.widget($('.widget'));
+	// 	widget
+	// 		.load([])
+	// });
 }(jQuery, window, TheObserver));

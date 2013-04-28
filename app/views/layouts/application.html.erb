@@ -20,7 +20,11 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="<%= "#{controller.controller_name} #{controller.action_name}" %>">
+  <body
+    id="app_body"
+    class="<%= "#{controller.controller_name} #{controller.action_name}" %>"
+    data-triggerjs="<%= "#{controller.action_name}.#{controller.controller_name}" %>"
+  >
     <nav class="top-bar userbar">
       <ul class="title-area">
         <!-- Title Area -->
@@ -66,5 +70,6 @@
     </div>
 
     <%= javascript_include_tag 'application' %>
+    <%= yield :javascript %>
   </body>
 </html>

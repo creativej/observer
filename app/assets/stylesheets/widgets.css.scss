@@ -14,6 +14,11 @@
         left: 0;
     }
 
+    .widget-preview {
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
     .editor-container {
         margin-bottom: 10px;
     }
@@ -29,4 +34,10 @@
     .editor-container.html {
         height: 150px;
     }
+}
+
+#widget-preview {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
