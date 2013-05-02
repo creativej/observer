@@ -1,8 +1,8 @@
 //= require components/gridster/dist/jquery.gridster
 //= require modules/widget
 //
-(function($, TheObserver, window) {
-	TheObserver.modules.dashboard = function($el, options) {
+(function($, Observer, window) {
+	Observer.modules.dashboard = function($el, options) {
 		options = options || {};
 
 		options = $.extend({
@@ -15,4 +15,4 @@
 			widget_base_dimensions: options.dimensions
 		});
 	};
-}(jQuery, TheObserver, window));
+}(jQuery, Observer, window));

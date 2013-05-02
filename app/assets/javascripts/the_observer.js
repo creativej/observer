@@ -1,7 +1,7 @@
 (function($, window) {
 	"use strict";
 
-	window.TheObserver = function Application($) {
+	window.Observer = function Application($) {
 		var
 			instance = {
 				modules: {},

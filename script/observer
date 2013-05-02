@@ -1,0 +1,3 @@
+#!/bin/sh
+TRUSTED_IP=192.168.33.1 rails s
+

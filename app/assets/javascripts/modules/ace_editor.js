@@ -4,12 +4,12 @@
 //= require components/ace-builds/src/mode-scss
 //= require components/ace-builds/src/mode-html
 //
-(function($, ace, window, TheObserver) {
+(function($, ace, window, Observer) {
 	'use strict';
 
 	var localStorage = window.localStorage;
 
-	TheObserver.modules.aceEditor = function($el) {
+	Observer.modules.aceEditor = function($el) {
 		var
 			instance = {},
 			mode,
@@ -52,4 +52,4 @@
 
 		return instance;
 	};
-}(jQuery, ace, window, TheObserver));
+}(jQuery, ace, window, Observer));

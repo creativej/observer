@@ -9,14 +9,14 @@
 </div>
 <% content_for :javascript do %>
 <script type="text/javascript">
-(function($, TheObserver, window) {
+(function($, Observer, window) {
   'use strict';
 
-  TheObserver.onPageReady('preview.widgets', function() {
-    var widget = TheObserver.modules.widget($('.widget'));
-    <%= html_safe @widget[:js] %>
+  Observer.onPageReady('preview.widgets', function() {
+    var widget = Observer.modules.widget($('.widget'));
+    <%= html_safe js_filter(@widget[:js]) %>
 
   });
-}(jQuery, TheObserver, window));
+}(jQuery, Observer, window));
 </script>
 <% end %>

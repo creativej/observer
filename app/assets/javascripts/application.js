@@ -11,7 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require components/jquery/jquery
+//= require jqplot/jquery.jqplot.js
+//= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require the_observer
+//= require modules/jqplot
 //= require jquery_ujs
 //= require components/sugar/release/sugar.min
 //= require queries
@@ -19,16 +22,16 @@
 //= require website
 
 // $(document).foundation();
-(function(window, TheObserver, $) {
+(function(window, Observer, $) {
 	"use strict";
 
 	$(function() {
-		TheObserver.trigger('ready.body');
-		TheObserver.triggerPageReady();
+		Observer.trigger('ready.body');
+		Observer.triggerPageReady();
 	});
 
 	window.onload = function() {
-		TheObserver.trigger('onload.window');
-		TheObserver.triggerPageLoaded();
+		Observer.trigger('onload.window');
+		Observer.triggerPageLoaded();
 	};
-}(window, TheObserver, jQuery));
+}(window, Observer, jQuery));

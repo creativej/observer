@@ -1,8 +1,7 @@
-//
-(function($, TheObserver, window) {
+(function($, Observer, window) {
 	'use strict';
 
-	TheObserver.modules.widget = function($el) {
+	Observer.modules.widget = function($el) {
 		var widget = {},
 			$widget = $(widget),
 			dataSets = [],
@@ -20,14 +19,23 @@
 
 		function loadData(url) {
 			$
-				.ajax(url)
-				.done(dataLoaded)
+				.ajax({
+					url: url,
+					dataType: "json"
+				})
+				.success(dataLoaded)
 				;
 		}
+
+		widget.$el = $widget;
 
 		widget.on = function(name, callback) {
 			$widget.on(name, callback);
 			return this;
+		};
+
+		widget.dataReady = function(callback) {
+			return this.on('ready.data', callback);
 		};
 
 		widget.load = function(urls) {
@@ -44,4 +52,4 @@
 
 		return widget;
 	};
-}(jQuery, TheObserver, window));
+}(jQuery, Observer, window));

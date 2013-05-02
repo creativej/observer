@@ -42,6 +42,8 @@ class WidgetsController < ApplicationController
   def create
     @widget = Widget.new(params[:widget])
     @widget.user = current_user
+    @widget.set_options :column, params[:column]
+    @widget.set_options :row, params[:row]
 
     respond_to do |format|
       if @widget.save
@@ -59,10 +61,12 @@ class WidgetsController < ApplicationController
   # PUT /widgets/1.json
   def update
     @widget = Widget.find(params[:id])
+    @widget.set_options 'column', params[:column]
+    @widget.set_options 'row', params[:row]
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
-        flash[:notice] = 'Widget was successfully updated.'
+        # flash[:notice] = 'Widget was successfully updated.'
         format.html { redirect_to(edit_widget_path) }
         format.json { head :no_content }
       else

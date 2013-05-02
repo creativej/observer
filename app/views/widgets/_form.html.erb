@@ -1,11 +1,19 @@
 <div class="preview-container">
-  <iframe id="widget-preview" seemless="seemless"></iframe>
+  <iframe id="widget-sandbox" seemless="seemless"></iframe>
 </div>
-<%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-preview' do %><% end %>
+<%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
   <%= render '/form_errors' %>
-  <%= hidden_field_tag :column, 4 %>
-  <%= hidden_field_tag :row, 2 %>
+  <div class="options">
+    <div>
+      <%= label_tag :column %>
+      <%= number_field_tag :column, options_value(@widget, 'column', 4), { :min => 1, :max => Settings.gridster.margin[0] } %>
+    </div>
+    <div>
+      <%= label_tag :row %>
+      <%= number_field_tag :row, options_value(@widget, 'row', 2), { :min => 1, :max => Settings.gridster.margin[1] } %>
+    </div>
+  </div>
   <div class="row">
     <div class="large-12 columns">
       <div class="large-8 columns">

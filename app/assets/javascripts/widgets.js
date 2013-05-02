@@ -1,19 +1,19 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 //= require modules/ace_editor
-(function($, window, TheObserver, undefined) {
+//= require modules/sandbox
+(function($, window, Observer, undefined) {
 	'use strict';
 
 	function previewWidget() {
-		var $hiddenFields = $('.widget-form').find('input[type="hidden"]');
-
-		$('.preview-widget-form').html($hiddenFields.clone().prop('id', undefined));
+		var $hiddenFields = $('.widget-form').find('input[type="hidden"], input[name="column"], input[name="row"]');
+		$('.preview-widget-form').html($hiddenFields.clone().prop('id', undefined).hide());
 		$('.preview-widget-form').submit();
 	}
 
-	TheObserver.onPageReady(['edit.widgets', 'create.widgets'], function() {
+	Observer.onPageReady(['edit.widgets', 'create.widgets'], function() {
 		$('.editor[rel="ace-editor"]').each(function() {
-			TheObserver.modules.aceEditor($(this));
+			Observer.modules.aceEditor($(this));
 		});
 
 		$('.button.preview').click(function() {
@@ -21,10 +21,12 @@
 			return false;
 		});
 
+		var sandbox = Observer.modules.sandbox($('#widget-sandbox'));
+
 		previewWidget();
 	});
 
-	TheObserver.onPageReady('preview.widgets', function() {
+	Observer.onPageReady('preview.widgets', function() {
 		var $el = $('.widget-preview');
 		var dimensions = $el.data('dimensions');
 		var width = dimensions[0] * parseInt($el.data('sizex'), 10);
@@ -33,4 +35,4 @@
 		$el.css('height', height);
 	});
 
-}(jQuery, window, TheObserver));
+}(jQuery, window, Observer));

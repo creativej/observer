@@ -1,7 +1,7 @@
-(function($, TheObserver, window) {
+(function($, Observer, window) {
 	'use strict';
 
-	TheObserver.modules.runQueryButton = function($el, editor) {
+	Observer.modules.runQueryButton = function($el, editor) {
 		var instance = {}, $instance = $(instance);
 
 		$el.click(function() {
@@ -23,4 +23,4 @@
 
 		return instance;
 	};
-}(jQuery, TheObserver, window));
+}(jQuery, Observer, window));

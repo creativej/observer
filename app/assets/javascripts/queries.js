@@ -4,14 +4,14 @@
 //= require modules/run_query_button
 
 
-(function($, window, TheObserver) {
+(function($, window, Observer) {
 	'use strict';
 
-	TheObserver.on('ready.body', function() {
-		var editor = TheObserver.modules.aceEditor($('#query-editor'));
+	Observer.on('ready.body', function() {
+		var editor = Observer.modules.aceEditor($('#query-editor'));
 
 		if (editor) {
-			var runQueryBtn = TheObserver.modules.runQueryButton(
+			var runQueryBtn = Observer.modules.runQueryButton(
 				$('.query-form').find('.run-btn'),
 				editor
 			);
@@ -21,4 +21,4 @@
 			});
 		}
 	});
-}(jQuery, window, TheObserver));
+}(jQuery, window, Observer));
