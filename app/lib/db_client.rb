@@ -1,8 +1,10 @@
 class DBClient
   def self.create
     self.new({
-      :host => 'localhost',
-      :user => 'root'
+      :host => '127.0.0.1',
+      :db => 'contests',
+      :user => 'contests',
+      :password => 'contests',
     })
   end
 
@@ -16,7 +18,7 @@ class DBClient
   def client
       Mysql2::Client.new(
         :host => @host,
-        :db => @db,
+        :database => @db,
         :username => @user,
         :password => @password
       )
