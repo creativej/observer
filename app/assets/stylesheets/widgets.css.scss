@@ -19,19 +19,15 @@
         margin-bottom: 15px;
     }
 
-    .editor-container {
-        margin-bottom: 10px;
-    }
-
-    .editor-container.js {
+    .editor-wrapper.js {
         height: 480px;
     }
 
-    .editor-container.css {
-        height: 220px;
+    .editor-wrapper.css {
+        height: 320px;
     }
 
-    .editor-container.html {
+    .editor-wrapper.html {
         height: 150px;
     }
 
@@ -75,11 +71,8 @@
 }
 
 .widget {
-    background-color: #ddd;
-    border-radius: 5px;
     padding: 10px 20px 10px 10px;
-    border: 2px #eee solid;
-    background-color: #eee;
+    background-color: rgba(180, 180, 180, 0.6);
     position: relative;
     box-sizing: border-box;
     padding-top: 20px;

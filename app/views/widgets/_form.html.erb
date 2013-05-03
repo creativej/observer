@@ -16,14 +16,20 @@
   </div>
   <div class="row">
     <div class="large-12 columns">
-      <div class="large-8 columns">
+      <div class="large-7 columns">
         <%= f.hidden_field :js %>
-        <div class="editor-container js">
-          <div id="widget_js_editor" class="editor" rel="ace-editor" data-bind="#widget_js" data-mode="javascript"></div>
+        <div class="editor-wrapper js">
+          <div class="header">
+            <i class="general foundicon-checkmark"></i>
+            <span class="title">JS</span>
+          </div>
+          <div class="editor-container">
+            <div id="widget_js_editor" class="editor" rel="ace-editor" data-bind="#widget_js" data-mode="javascript"></div>
+          </div>
         </div>
       </div>
-      <div class="large-4 columns">
-        <%= f.text_field :name, :placeholder => 'Widget name' %>
+      <div class="large-5 columns">
+<!--         <%= f.text_field :name, :placeholder => 'Widget name' %>
         <div class="actions">
           <a
             href="#"
@@ -32,14 +38,26 @@
 
           <%= f.submit :class=> 'button small' %>
         </div>
-
+ -->
         <%= f.hidden_field :css, :placeholder => 'css' %>
-        <div class="editor-container css">
-          <div id="widget_css_editor" class="editor" rel="ace-editor" data-bind="#widget_css" data-mode="scss"></div>
+        <div class="editor-wrapper css">
+          <div class="header">
+            <i class="general foundicon-checkmark"></i>
+            <span class="title">CSS</span>
+          </div>
+          <div class="editor-container">
+            <div id="widget_css_editor" class="editor" rel="ace-editor" data-bind="#widget_css" data-mode="scss"></div>
+          </div>
         </div>
         <%= f.hidden_field :html, :placeholder => 'html' %>
-        <div class="editor-container html">
-          <div id="widget_html_editor" class="editor" rel="ace-editor" data-bind="#widget_html" data-mode="html"></div>
+        <div class="editor-wrapper html">
+          <div class="header">
+            <i class="general foundicon-checkmark"></i>
+            <span class="title">HTML</span>
+          </div>
+          <div class="editor-container">
+            <div id="widget_html_editor" class="editor" rel="ace-editor" data-bind="#widget_html" data-mode="html"></div>
+          </div>
         </div>
       </div>
     </div>

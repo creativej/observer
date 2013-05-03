@@ -1,4 +1,5 @@
 //= require components/ace-builds/src/ace
+//= require components/ace-builds/src/theme-twilight
 //= require components/ace-builds/src/mode-sql
 //= require components/ace-builds/src/mode-javascript
 //= require components/ace-builds/src/mode-scss
@@ -27,7 +28,9 @@
 		cacheKey = mode + '.editor';
 		$field = $($el.data('bind'));
 
+		editor.setTheme('ace/theme/twilight');
 		editor.getSession().setMode('ace/mode/'+mode);
+		editor.renderer.setShowGutter(false);
 
 		instance.update = function() {
 			editor.setValue($field.val());
