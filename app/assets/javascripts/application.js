@@ -15,23 +15,26 @@
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require the_observer
 //= require modules/jqplot
+//= require foundation
+//= require modules/alert_modal
 //= require jquery_ujs
 //= require components/sugar/release/sugar.min
 //= require queries
 //= require widgets
 //= require website
 
-// $(document).foundation();
-(function(window, Observer, $) {
+(function(window, Observer, $, document) {
 	"use strict";
 
 	$(function() {
 		Observer.trigger('ready.body');
 		Observer.triggerPageReady();
+
+		$(document).foundation();
 	});
 
 	window.onload = function() {
 		Observer.trigger('onload.window');
 		Observer.triggerPageLoaded();
 	};
-}(window, Observer, jQuery));
+}(window, Observer, jQuery, document));

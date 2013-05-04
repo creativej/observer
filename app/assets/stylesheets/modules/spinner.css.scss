@@ -1,0 +1,21 @@
+.spinner-container {
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0%, 0%, 0%, 0.7);
+    top: 0px;
+    left: 0px;
+    display: none;
+
+    .spinner {
+        background: url(image_path('ajax-loader.gif')) no-repeat no-repeat;
+        width: 31px;
+        height: 31px;
+        margin: 55px auto;
+    }
+}
+
+.spinner-container.show {
+    display: block;
+}

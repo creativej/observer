@@ -21,7 +21,9 @@
 @import "queries";
 @import "widgets";
 
-
+.alert-modal {
+	display: none;
+}
 
 .container {
 	margin: 10px auto;

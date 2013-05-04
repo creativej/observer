@@ -18,15 +18,7 @@
     <div class="large-12 columns">
       <div class="large-7 columns">
         <%= f.hidden_field :js %>
-        <div class="editor-wrapper js">
-          <div class="header">
-            <i class="general foundicon-checkmark"></i>
-            <span class="title">JS</span>
-          </div>
-          <div class="editor-container">
-            <div id="widget_js_editor" class="editor" rel="ace-editor" data-bind="#widget_js" data-mode="javascript"></div>
-          </div>
-        </div>
+        <%= render '/editor', :mode => 'js', :url => widget_path(@widget) %>
       </div>
       <div class="large-5 columns">
 <!--         <%= f.text_field :name, :placeholder => 'Widget name' %>
@@ -40,25 +32,9 @@
         </div>
  -->
         <%= f.hidden_field :css, :placeholder => 'css' %>
-        <div class="editor-wrapper css">
-          <div class="header">
-            <i class="general foundicon-checkmark"></i>
-            <span class="title">CSS</span>
-          </div>
-          <div class="editor-container">
-            <div id="widget_css_editor" class="editor" rel="ace-editor" data-bind="#widget_css" data-mode="scss"></div>
-          </div>
-        </div>
+        <%= render '/editor', :mode => 'css', :url => widget_path(@widget) %>
         <%= f.hidden_field :html, :placeholder => 'html' %>
-        <div class="editor-wrapper html">
-          <div class="header">
-            <i class="general foundicon-checkmark"></i>
-            <span class="title">HTML</span>
-          </div>
-          <div class="editor-container">
-            <div id="widget_html_editor" class="editor" rel="ace-editor" data-bind="#widget_html" data-mode="html"></div>
-          </div>
-        </div>
+        <%= render '/editor', :mode => 'html', :url => widget_path(@widget) %>
       </div>
     </div>
   </div>

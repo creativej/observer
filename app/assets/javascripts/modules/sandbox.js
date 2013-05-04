@@ -14,7 +14,7 @@
 		}
 
 		$el.load(function() {
-			console.log($(sandbox()).height());
+			// console.log($(sandbox()).height());
 			$el.show().animate({
 				opacity: 1,
 				height: $(sandbox()).height()
