@@ -1,9 +1,7 @@
         <div class="editor-wrapper <%= mode %>">
-          <div class="spinner-container">
-            <div class="spinner"></div>
-          </div>
+          <%= spinner.html_safe %>
           <div class="header">
-            <i class="general foundicon-checkmark save-btn" data-url="<%= url %>"></i>
+            <i class="icon-save save-btn" data-url="<%= url %>"></i>
             <span class="title"><%= mode.upcase %></span>
           </div>
           <div class="editor-container">

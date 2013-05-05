@@ -14,12 +14,11 @@
 		var
 			modeReference = {
 				js: 'javascript',
-				scss: 'css',
+				css: 'scss',
 				html: 'html',
 				sql: 'sql'
 			},
-			instance = {},
-			$instance = $(instance),
+			instance = window.eventable({}),
 			mode,
 			cacheKey,
 			cachedValue,
@@ -32,6 +31,7 @@
 
 		editor = ace.edit($el.prop('id'));
 		mode = modeReference[$el.data('mode')];
+
 		cacheKey = mode + '.editor';
 		$field = $($el.data('bind'));
 		editor.setTheme('ace/theme/twilight');
@@ -50,15 +50,6 @@
 			return $field.serialize();
 		};
 
-		instance.on = function(name, callback) {
-			$instance.on(name, callback);
-			return instance;
-		}
-
-		instance.trigger = function(name) {
-			return $instance.trigger(name);
-		}
-
 		if ($field.val().trim()) {
 			instance.update();
 		} else if (!$field.val().trim() && localStorage.getItem(cacheKey)) {
@@ -76,7 +67,7 @@
 			name: 'save',
 			bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
 			exec: function(editor) {
-				$instance.trigger('save.shortcut');
+				instance.trigger('save.shortcut');
 			},
 			readOnly: true // false if this command should not apply in readOnly mode
 		});
@@ -85,7 +76,7 @@
 			name: 'preview',
 			bindKey: {win: 'Ctrl-ENTER',  mac: 'Command-ENTER'},
 			exec: function(editor) {
-				$instance.trigger('preview.shortcut');
+				instance.trigger('preview.shortcut');
 			},
 			readOnly: true // false if this command should not apply in readOnly mode
 		});

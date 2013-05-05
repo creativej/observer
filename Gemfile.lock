@@ -62,6 +62,8 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.1)
+    entypo-rails (2.0.1)
+      railties (>= 3.1, <= 5)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -71,9 +73,6 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
-    foundation-icons-sass-rails (2.0.0)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
     highline (1.6.16)
     hike (1.2.2)
     i18n (0.6.1)
@@ -176,8 +175,8 @@ DEPENDENCIES
   capistrano
   debugger
   devise
+  entypo-rails
   factory_girl_rails
-  foundation-icons-sass-rails
   jquery-rails
   mysql2
   rails (= 3.2.13)

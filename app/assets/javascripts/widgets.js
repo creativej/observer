@@ -1,21 +1,36 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 //= require modules/ace_editor
-//= require modules/save_action
+//= require actions/save_attribute
 //= require modules/spinner
+//= require modules/widget_tools
 //= require modules/sandbox
 (function($, window, Observer, undefined) {
 	'use strict';
 
 	var modules = Observer.modules;
 
-	function previewWidget() {
-		var $hiddenFields = $('.widget-form').find('input[type="hidden"], input[name="column"], input[name="row"]');
-		$('.preview-widget-form').html($hiddenFields.clone().prop('id', undefined).hide());
-		$('.preview-widget-form').submit();
+	function previewWidget(sandbox) {
+		var
+			$hiddenFields = $('.widget-form')
+				.find('input[type="hidden"], input[name="column"], input[name="row"]'),
+			$form = $('.preview-widget-form')
+			;
+
+		$form.html($hiddenFields.clone().prop('id', undefined).hide());
+		sandbox.prepareToLoad(function() {
+			$form.submit();
+		});
 	}
 
 	Observer.onPageReady(['edit.widgets', 'create.widgets'], function() {
+		var
+			spinner = modules.spinner(
+				$('.preview-container').find('.spinner-container')
+			),
+			sandbox = modules.sandbox($('#widget-sandbox'), spinner)
+			;
+
 		$('.editor-wrapper').each(function() {
 			var
 				$component = $(this),
@@ -27,28 +42,28 @@
 				;
 
 				function save() {
-					Observer.modules.saveAction(
-						$saveBtn.data('url')+'.json',
+					Observer.actions.saveAttribute(
+						$saveBtn.data('url'),
 						spinner,
 						editor.serialize()
-					);
-
-					previewWidget();
+					).done(function() {
+						// previewWidget(sandbox);
+					});
 				}
 
 				editor.on('save.shortcut', save);
-				editor.on('preview.shortcut', previewWidget);
+				editor.on('preview.shortcut', function() { previewWidget(sandbox); });
 				$saveBtn.click(save);
 		});
 
 		$('.button.preview').click(function() {
-			previewWidget();
+			previewWidget(sandbox);
 			return false;
 		});
 
-		var sandbox = modules.sandbox($('#widget-sandbox'));
+		previewWidget(sandbox);
 
-		previewWidget();
+		var widgetTools = modules.widgetTools($('.widget-tools'));
 	});
 
 	Observer.onPageReady('preview.widgets', function() {

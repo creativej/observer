@@ -13,7 +13,8 @@
 //= require components/jquery/jquery
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
-//= require the_observer
+//= require mixins/eventable
+//= require observer
 //= require modules/jqplot
 //= require foundation
 //= require modules/alert_modal

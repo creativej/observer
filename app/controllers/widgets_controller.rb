@@ -42,8 +42,8 @@ class WidgetsController < ApplicationController
   def create
     @widget = Widget.new(params[:widget])
     @widget.user = current_user
-    @widget.set_options :column, params[:column]
-    @widget.set_options :row, params[:row]
+    @widget.set_column params[:column]
+    @widget.set_row params[:row]
 
     respond_to do |format|
       if @widget.save
@@ -61,8 +61,8 @@ class WidgetsController < ApplicationController
   # PUT /widgets/1.json
   def update
     @widget = Widget.find(params[:id])
-    @widget.set_options 'column', params[:column]
-    @widget.set_options 'row', params[:row]
+    @widget.set_column params[:column]
+    @widget.set_row params[:row]
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
@@ -74,6 +74,27 @@ class WidgetsController < ApplicationController
         format.html { redirect_to(edit_widget_path()) }
         format.json { render json: @widget.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PUT /widgets/1/update
+  def update_attribute
+    # if !request.xhr?
+    #   not_found
+    # end
+
+    @widget = current_user.widgets.find(params[:widget_id])
+
+    attributes = {}
+
+    params[:widget].each do |name|
+      attributes[name] = params[:widget][name]
+    end
+
+    @widget.update_attributes(attributes)
+
+    respond_to do |format|
+      format.html { render json: {} }
     end
   end
 

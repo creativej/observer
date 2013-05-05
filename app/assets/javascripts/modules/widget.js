@@ -2,18 +2,23 @@
 	'use strict';
 
 	Observer.modules.widget = function($el) {
-		var widget = {},
-			$widget = $(widget),
+		var instance = window.eventable({}),
 			dataSets = [],
 			loadingQueue = []
 			;
 
-
 		function dataLoaded(data) {
+			var returnData;
 			dataSets.push(data);
 
 			if (dataSets.length === loadingQueue.length) {
-				$widget.trigger('ready.data', dataSets);
+				if (dataSets.length === 1) {
+					returnData = dataSets[0];
+				} else {
+					returnData = dataSets;
+				}
+
+				instance.trigger('ready.data', returnData);
 			}
 		}
 
@@ -27,18 +32,13 @@
 				;
 		}
 
-		widget.$el = $widget;
+		instance.$el = $el;
 
-		widget.on = function(name, callback) {
-			$widget.on(name, callback);
-			return this;
-		};
-
-		widget.dataReady = function(callback) {
+		instance.dataReady = function(callback) {
 			return this.on('ready.data', callback);
 		};
 
-		widget.load = function(urls) {
+		instance.load = function(urls) {
 			if (Array.isArray(urls)) {
 				loadingQueue = urls;
 			} else {
@@ -50,6 +50,6 @@
 			return this;
 		};
 
-		return widget;
+		return instance;
 	};
 }(jQuery, Observer, window));

@@ -3,6 +3,7 @@ TheObserver::Application.routes.draw do
     collection do
       match 'preview', :as => :preview
     end
+    match 'update' => 'widgets#update_attribute', :as => :update_attribute
   end
 
 

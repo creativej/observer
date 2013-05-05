@@ -12,9 +12,11 @@
  *= require foundation_and_overrides
  *= require jquery.gridster
  *= require jquery.jqplot
+ *= require entypo
  */
+@charset "UTF-8";
+
 @import "bourbon";
-@import "foundation-icons";
 @import "mixins";
 @import "modules/editor";
 @import "website";

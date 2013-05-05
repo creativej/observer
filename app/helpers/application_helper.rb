@@ -6,4 +6,8 @@ module ApplicationHelper
   def get(value, default)
     value.nil? ? value : default
   end
+
+  def spinner
+    '<div class="spinner-container"><div class="spinner"></div></div>'
+  end
 end

@@ -1,24 +1,30 @@
 //
 (function($, Observer, window) {
-	Observer.modules.sandbox = function($el, options) {
+	Observer.modules.sandbox = function($el, spinner) {
 		var
-			instance = {}
+			instance = window.eventable({})
 			;
-		options = options || {};
-
-		options = $.extend({
-		}, options);
 
 		function sandbox() {
 			return $el.get(0).contentDocument;
 		}
 
+		instance.prepareToLoad = function(callback) {
+			spinner.show();
+			$el.show().animate({
+				opacity: 0
+			}, 'fast', callback);
+		};
+
 		$el.load(function() {
-			// console.log($(sandbox()).height());
+			spinner.hide();
+
 			$el.show().animate({
 				opacity: 1,
 				height: $(sandbox()).height()
 			}, 'fast');
+
+			instance.trigger('load');
 		});
 
 		return instance;

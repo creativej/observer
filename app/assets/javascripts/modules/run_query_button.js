@@ -2,12 +2,12 @@
 	'use strict';
 
 	Observer.modules.runQueryButton = function($el, editor) {
-		var instance = {}, $instance = $(instance);
+		var instance = window.eventable({});
 
 		$el.click(function() {
 			$.post($(this).data('url'), { value: editor.val() })
 				.done(function(resp) {
-					$instance.trigger('success.post', resp);
+					instance.trigger('success.post', resp);
 				})
 				.fail(function() {
 					window.alert('query failed');
@@ -17,7 +17,7 @@
 		});
 
 		instance.on = function(name, callback) {
-			$instance.on(name, callback);
+			instance.on(name, callback);
 			return this;
 		};
 

@@ -1,7 +1,9 @@
 (function($, Observer, window) {
 	'use strict';
 
-	Observer.modules.saveAction = function(url, spinner, value) {
+	Observer.actions.saveAttribute = function(url, spinner, value) {
+		var dfd = new $.Deferred();
+
 		spinner.show();
 
 		$.ajax({
@@ -12,10 +14,14 @@
 		})
 		.success(function(resp) {
 			spinner.hide();
+			dfd.resolve();
 		})
 		.fail(function(resp) {
 			Observer.alert('Saving failed', resp.responseText, 'medium');
+			dfd.reject();
 		})
 		;
+
+		return dfd.promise();
 	};
 }(jQuery, Observer, window));
