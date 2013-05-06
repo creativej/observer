@@ -5,6 +5,7 @@
 //= require modules/spinner
 //= require modules/widget_tools
 //= require modules/sandbox
+//= require modules/widget_preferences
 (function($, window, Observer, undefined) {
 	'use strict';
 
@@ -13,7 +14,7 @@
 	function previewWidget(sandbox) {
 		var
 			$hiddenFields = $('.widget-form')
-				.find('input[type="hidden"], input[name="column"], input[name="row"]'),
+				.find('input[type="hidden"], input.options-item'),
 			$form = $('.preview-widget-form')
 			;
 
@@ -63,7 +64,11 @@
 
 		previewWidget(sandbox);
 
-		var widgetTools = modules.widgetTools($('.widget-tools'));
+		var $tools = $('.widget-tools');
+		var tools = modules.widgetTools($tools);
+		tools.on('save.preferences', function() {
+			previewWidget(sandbox);
+		});
 	});
 
 	Observer.onPageReady('preview.widgets', function() {

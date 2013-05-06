@@ -8,23 +8,25 @@
   <div class="row">
   <div class="widget-tools">
     <div class="preferences item">
-      <i class="icon-cog icon" title="preferences"></i>
-      <div class="content">
+      <i class="icon-cog icon" title="preferences" data-id="preferences"></i>
+      <div class="content" data-url="<%= widget_path %>">
+        <%= spinner.html_safe %>
         <div>
           <%= label_tag :column %>
-          <%= number_field_tag :column, options_value(@widget, 'column', 4), { :min => 1, :max => Settings.gridster.margin[0] } %>
+
+          <input name="[widget][options][column]" value="<%= options_value(@widget, 'column', 4) %>" type="number" min="1" max="<%= Settings.gridster.margin[0] %>" class="options-item" />
         </div>
         <div>
           <%= label_tag :row %>
-          <%= number_field_tag :row, options_value(@widget, 'row', 2), { :min => 1, :max => Settings.gridster.margin[1] } %>
+          <input name="[widget][options][row]" value="<%= options_value(@widget, 'row', 4) %>" type="number" min="1" max="<%= Settings.gridster.margin[1] %>" class="options-item" />
         </div>
 
-        <i class="action icon-cross"></i>
-        <i class="action icon-check"></i>
+        <i class="action icon-cross cancel"></i>
+        <i class="action icon-check save"></i>
       </div>
     </div>
     <div class="resources item">
-      <i class="icon-database icon" title="resources"></i>
+      <i class="icon-database icon" title="resources" data-id="resources"></i>
       <div class="content"></div>
     </div>
   </div>

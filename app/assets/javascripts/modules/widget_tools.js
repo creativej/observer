@@ -5,26 +5,26 @@
 
 	var item = function($el) {
 		var
-			instance = eventable({})
+			instance = eventable()
 			;
 
 		$el.click(function() {
 			instance.trigger('click');
 		});
 
+		instance.id = $el.data('id');
+
 		instance.activate = function() {
 			if ($el.length) {
 				$el.addClass('active');
-				$el.siblings('.content').addClass('active');
-				return true;
+				this.trigger("activate", this.id);
 			}
 		};
 
 		instance.deactivate = function() {
 			if ($el.length) {
 				$el.removeClass('active');
-				$el.siblings('.content').removeClass('active');
-				return true;
+				this.trigger('deactivate', this.id);
 			}
 		};
 
@@ -37,15 +37,36 @@
 
 	Observer.modules.widgetTools = function($el) {
 		var
-			instance = eventable({}),
+			instance = eventable(),
 			$instance = $({}),
 			$items = $el.find('.item'),
 			items = [],
-			previousItem
+			previousItem,
+			tools = {
+				preferences: Observer.modules.widgetPreferences($el.find('.preferences .content'))
+			}
 			;
 
-		items = $items.find('.icon').map(function() {
+		tools.preferences
+			.on('cancel', function() {
+				instance.deactivate('preferences');
+			}).on('save', function() {
+				instance.deactivate('preferences');
+				instance.trigger('save.preferences');
+			})
+			;
+
+		$items.find('.icon').each(function() {
 			var currentItem = item($(this));
+
+			currentItem
+				.on('activate', function(id) {
+					previousItem = currentItem;
+					if (tools[id]) { tools[id].show(); }
+				})
+				.on('deactivate', function(id) {
+					if (tools[id]) { tools[id].hide(); }
+				});
 
 			currentItem.on('click', function() {
 				if (currentItem.isActive()) {
@@ -57,12 +78,16 @@
 
 					currentItem.activate();
 				}
-
-				previousItem = currentItem;
 			});
 
-			return currentItem;
+			items.push(currentItem);
 		});
+
+		instance.deactivate = function(name) {
+			items.find(function(item) {
+				return item.id === name;
+			}).deactivate();
+		};
 
 		return instance;
 	};

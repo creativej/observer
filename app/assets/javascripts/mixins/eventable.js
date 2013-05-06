@@ -3,6 +3,7 @@
 
 	window.eventable = function(obj) {
 		var events = {};
+		obj = obj || {};
 
 		obj.on = function(name, fn) {
 			events[name] = events[name] || [];

@@ -61,8 +61,6 @@ class WidgetsController < ApplicationController
   # PUT /widgets/1.json
   def update
     @widget = Widget.find(params[:id])
-    @widget.set_column params[:column]
-    @widget.set_row params[:row]
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
