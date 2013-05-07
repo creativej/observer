@@ -9,19 +9,24 @@
 			spinner = Observer.modules.spinner($el.find('.spinner-container'))
 			;
 
-		$save.click(function() {
-			Observer.actions.saveAttribute(
-				$el.data('url'),
-				spinner,
-				$el.find('input').serialize()
-			).done(function() {
-				instance.trigger('save');
-			});
+		function isEnter(e) {
+			return e.keyCode === 13;
+		}
+
+		$save.keypress(function(e) {
+			if (isEnter(e)) {
+				instance.saveAttribute();
+			}
 		});
 
-		$cancel.click(function() {
-			instance.trigger('cancel');
+		$cancel.keypress(function(e) {
+			if (isEnter(e)) {
+				instance.cancel();
+			}
 		});
+
+		$save.click(function() { instance.saveAttribute(); });
+		$cancel.click(function() { instance.cancel(); });
 
 		instance.hide = function() {
 			$el.removeClass('active');
@@ -31,6 +36,20 @@
 		instance.show = function() {
 			$el.addClass('active');
 			return this;
+		};
+
+		instance.saveAttribute = function() {
+			Observer.actions.saveAttribute(
+				$el.data('url'),
+				spinner,
+				$el.find('input').serialize()
+			).done(function() {
+				instance.trigger('save');
+			});
+		};
+
+		instance.cancel = function() {
+			instance.trigger('cancel');
 		};
 
 		return instance;

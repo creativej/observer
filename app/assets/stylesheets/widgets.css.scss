@@ -121,7 +121,7 @@
         cursor: pointer;
     }
 
-    .action:hover {
+    .action:hover, .action:focus {
         color: yellow;
     }
 }
