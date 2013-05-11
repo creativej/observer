@@ -17,6 +17,11 @@
 			return name + '.' + $('#app_body').data('triggerjs');
 		}
 
+		window.ZeroClipboard.setDefaults({
+			moviePath: '/assets/ZeroClipboard.swf'
+		});
+
+
 		instance.onPageReady = function(page, callback) {
 			if (Array.isArray(page)) {
 				page.forEach(function(p) {

@@ -8,6 +8,10 @@
     <div id="query-editor" data-mode="sql" data-bind="#query_value"></div>
   </div>
   <div class="actions field">
+    <% if !request.referer.nil? %>
+    <%= hidden_field_tag :redirect, request.referer %>
+    <a href="<%= request.referer %>" class="button secondary">back</a>
+    <% end %>
     <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>">run</a>
     <%= f.submit :class => 'button' %>
   </div>

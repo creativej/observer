@@ -7,7 +7,7 @@
 (function($, window, Observer) {
 	'use strict';
 
-	Observer.on('ready.body', function() {
+	Observer.onPageReady(['new.queries', 'edit.queries'], function() {
 		var editor = Observer.modules.aceEditor($('#query-editor'));
 
 		if (editor) {
@@ -16,7 +16,7 @@
 				editor
 			);
 
-			runQueryBtn.on('success.post', function(e, resp) {
+			runQueryBtn.on('success.post', function(resp) {
 				$('.result-content').hide().html(resp).fadeIn('fast');
 			});
 		}

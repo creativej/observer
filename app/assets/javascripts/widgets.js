@@ -6,6 +6,7 @@
 //= require modules/widget_tools
 //= require modules/sandbox
 //= require modules/widget_preferences
+//= require modules/widget_name
 (function($, window, Observer, undefined) {
 	'use strict';
 
@@ -69,6 +70,8 @@
 		tools.on('save.preferences', function() {
 			previewWidget(sandbox);
 		});
+
+		modules.widgetName($('.widget-name'));
 	});
 
 	Observer.onPageReady('preview.widgets', function() {

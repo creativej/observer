@@ -1,3 +1,4 @@
+//= require modules/widget_resources
 (function($, Observer, window) {
 	'use strict';
 
@@ -43,7 +44,8 @@
 			items = [],
 			previousItem,
 			tools = {
-				preferences: Observer.modules.widgetPreferences($el.find('.preferences .content'))
+				preferences: Observer.modules.widgetPreferences($el.find('.preferences .content')),
+				resources: Observer.modules.widgetResources($el.find('.resources .content'))
 			}
 			;
 
@@ -53,6 +55,18 @@
 			}).on('save', function() {
 				instance.deactivate('preferences');
 				instance.trigger('save.preferences');
+			})
+			;
+
+		tools.resources
+			.on('esc.keyup', function() {
+				instance.deactivate('resources');
+			})
+			.on('close.click', function() {
+				instance.deactivate('resources');
+			})
+			.on('copied', function() {
+				instance.deactivate('resources');
 			})
 			;
 

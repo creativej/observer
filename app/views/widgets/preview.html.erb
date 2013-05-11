@@ -2,8 +2,8 @@
 <div
   class="widget-preview widget"
   data-dimensions="<%= Settings.gridster.dimensions %>"
-  data-sizex="<%= @widget[:options][:column] %>"
-  data-sizey="<%= @widget[:options][:row] %>"
+  data-sizex="<%= @widget[:column] %>"
+  data-sizey="<%= @widget[:row] %>"
   >
   <%= html_safe @widget[:html] %>
 </div>

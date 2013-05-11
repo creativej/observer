@@ -30,6 +30,19 @@
     .editor-wrapper.html {
         height: 150px;
     }
+
+    .widget-name {
+        max-width: 800px;
+        margin: 10px auto 10px;
+        padding: 5px;
+        font-weight: bold;
+        color: #999
+    }
+
+    .widget-name:focus {
+        background-color: #151515;
+        color: #fff
+    }
 }
 
 #widget-sandbox {
@@ -47,17 +60,17 @@
 
 .widget-label {
     position: absolute;
-    margin-top: -15px;
+    margin-top: -12px;
     right: 10px;
-    color: #aaa;
+    color: #999;
     font-weight: bold;
     font-family: 'Myriad-Pro', 'Myriad', helvetica, arial, sans-serif;
-    text-shadow: 1px 2px 1px #fff;
+    text-shadow: 1px 2px 1px #444;
 }
 
 .widget {
     padding: 10px 20px 10px 10px;
-    background-color: rgba(180, 180, 180, 0.6);
+    background-color: hsla(100%, 100%, 100%, 0.1);
     position: relative;
     box-sizing: border-box;
     padding-top: 20px;
@@ -95,6 +108,64 @@
         text-align: right;
     }
 
+    .resources .item {
+        width: 375px;
+        margin-bottom: 1px;
+    }
+
+    .resources .content {
+        padding: 4px 5px 10px 10px
+    }
+
+    .resources .copy-token {
+        background-color: #222;
+        padding: 5px 10px;
+        cursor: pointer;
+        @include inline-block;
+    }
+
+    .resources .copy-token.hover {
+        background-color: #333;
+    }
+
+    .resources .query-name {
+        color: #ccc;
+        width: 230px;
+        margin-right: 10px;
+        @include inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .resources .query-token {
+        color: #ccc;
+        width: 85px;
+        white-space: nowrap;
+        @include inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .resources .query-edit {
+        color: #555;
+        font-size: 1.3em;
+        @include inline-block;
+    }
+
+    .resources .query-edit:hover {
+        color: yellow;
+    }
+
+    .resources .actions {
+        text-align: right;
+    }
+
+    .resources .action {
+        margin-bottom: 5px;
+        font-size: 1.5em;
+    }
+
     label {
         margin-right: 5px;
     }
@@ -123,5 +194,20 @@
 
     .action:hover, .action:focus {
         color: yellow;
+    }
+}
+
+.widget .jqplot-target {
+    .jqplot-axis {
+        color: #999;
+    }
+
+    .jqplot-table-legend {
+        background: none;
+        border: none;
+    }
+
+    .jqplot-table-legend-label {
+        color: #999
     }
 }

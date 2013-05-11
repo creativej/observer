@@ -2,23 +2,15 @@
 	'use strict';
 
 	Observer.modules.widget = function($el) {
-		var instance = window.eventable({}),
+		var instance = window.eventable(),
 			dataSets = [],
 			loadingQueue = []
 			;
 
 		function dataLoaded(data) {
-			var returnData;
 			dataSets.push(data);
-
 			if (dataSets.length === loadingQueue.length) {
-				if (dataSets.length === 1) {
-					returnData = dataSets[0];
-				} else {
-					returnData = dataSets;
-				}
-
-				instance.trigger('ready.data', returnData);
+				instance.trigger.apply(instance, ['ready.data'].concat(dataSets));
 			}
 		}
 
@@ -48,6 +40,10 @@
 			loadingQueue.forEach(loadData);
 
 			return this;
+		};
+
+		instance.jqplot = function(id, dataSets, options) {
+			return Observer.jqplot(id, dataSets, options);
 		};
 
 		return instance;

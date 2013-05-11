@@ -91,31 +91,20 @@
 //                 fontWeight: null
 //             }
 //         },
+
+var defaultStyles = {
+};
+
 Observer.jqplotTheme = {
-	// axes: {
-	// 	xaxis: {
-	// 		borderColor: "#000000",
-	// 		borderWidth: 4
-	// 	},
-	// 	yaxis: {
-	// 		borderColor: "#000000",
-	// 		borderWidth: 2
-	// 	}
-	// },
 	series: [
-		{
-			color: '#ffffff',
-			shadow: false,
-			markerOptions: {
-				color: "#4bb2c5",
-				show: true,
-				style: 'filledCircle',
-				lineWidth: 1.5,
-				size: 4,
-				shadow: false
-			}
-		}
+		defaultStyles,
+		defaultStyles,
+		defaultStyles,
+		defaultStyles
 	],
+	legend: {
+		show: true
+	},
 	grid: {
 		backgroundColor: 'transparent',
 		drawGridlines: false,

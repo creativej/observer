@@ -93,7 +93,14 @@ class QueriesController < ApplicationController
 
     respond_to do |format|
       if @query.save
-        format.html { redirect_to @query, notice: 'Query was successfully created.' }
+        flash[:notice] = 'Query was successfully created.'
+        if (params[:redirect].nil?)
+          redirect_path = queries_path
+        else
+          redirect_path = params[:redirect]
+        end
+
+        format.html { redirect_to redirect_path }
         format.json { render json: @query, status: :created, location: @query }
       else
         flash[:errors] = @query.errors
@@ -112,9 +119,13 @@ class QueriesController < ApplicationController
       if @query.update_attributes(params[:query])
         flash[:notice] = 'Query was successfully updated.'
 
-        format.html {
-          redirect_to queries_path
-        }
+        if (params[:redirect].nil?)
+          redirect_path = queries_path
+        else
+          redirect_path = params[:redirect]
+        end
+
+        format.html { redirect_to redirect_path }
         format.json { head :no_content }
       else
         flash[:errors] = @query.errors

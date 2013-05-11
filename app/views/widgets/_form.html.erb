@@ -1,3 +1,5 @@
+<div class="widget-name" data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
+
 <div class="preview-container">
   <%= spinner.html_safe %>
   <iframe id="widget-sandbox" seemless="seemless"></iframe>
@@ -6,50 +8,57 @@
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
   <%= render '/form_errors' %>
   <div class="row">
-  <div class="widget-tools">
-    <div class="preferences item">
-      <i class="icon-cog icon" title="preferences" data-id="preferences"></i>
-      <div class="content" data-url="<%= widget_path %>">
-        <%= spinner.html_safe %>
-        <div>
-          <%= label_tag :column %>
+    <div class="widget-tools">
+      <div class="preferences item">
+        <i class="icon-cog icon" title="preferences" data-id="preferences"></i>
+        <div class="content" data-url="<%= widget_path %>">
+          <%= spinner.html_safe %>
+          <div>
+            <%= label_tag :column %>
+            <%= f.number_field :column, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.margin[0] } %>
+          </div>
+          <div>
+            <%= label_tag :row %>
+            <%= f.number_field :row, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.margin[1] } %>
+          </div>
 
-          <input name="[widget][options][column]" value="<%= options_value(@widget, 'column', 4) %>" type="number" min="1" max="<%= Settings.gridster.margin[0] %>" class="options-item" tabindex="1"/>
+          <i class="action icon-cross cancel" tabindex="2"></i>
+          <i class="action icon-check save" tabindex="3"></i>
         </div>
-        <div>
-          <%= label_tag :row %>
-          <input name="[widget][options][row]" value="<%= options_value(@widget, 'row', 4) %>" type="number" min="1" max="<%= Settings.gridster.margin[1] %>" class="options-item" tabindex="2"/>
+      </div>
+      <div class="resources item">
+        <i class="icon-database icon" title="resources" data-id="resources"></i>
+        <div class="content">
+          <div class="actions">
+            <a href="<%= new_query_path %>" title="new data" class="new-query action"><i class="icon-plus"></i></a>
+            <a href="#" class="close-resources action"><i class="icon-cross"></i></a>
+          </div>
+          <div class="items">
+          <% if !@queries.nil? %>
+            <% @queries.each do |q| %>
+            <div class="item">
+              <div class="copy-token" data-clipboard-text="<%= q.token %>">
+                <div class="query-name"><%= q.name %></div>
+                <div class="query-token"><%= q.token %></div>
+              </div>
+              <a href="<%= edit_query_path(q) %>" title="edit this data"><i class="query-edit icon-pencil" ></i></a>
+            </div>
+            <% end %>
+          <% end %>
+          </div>
         </div>
-
-        <i class="action icon-cross cancel" tabindex="2"></i>
-        <i class="action icon-check save" tabindex="3"></i>
       </div>
     </div>
-    <div class="resources item">
-      <i class="icon-database icon" title="resources" data-id="resources"></i>
-      <div class="content"></div>
-    </div>
-  </div>
     <div class="large-12 columns">
       <div class="large-7 columns">
         <%= f.hidden_field :js %>
         <%= render '/editor', :mode => 'js', :url => widget_path %>
       </div>
       <div class="large-5 columns">
-<!--         <%= f.text_field :name, :placeholder => 'Widget name' %>
-        <div class="actions">
-          <a
-            href="#"
-            class="preview button secondary small"
-            >Preview</a>
-
-          <%= f.submit :class=> 'button small' %>
-        </div>
- -->
-        <%= f.hidden_field :css, :placeholder => 'css' %>
-        <%= render '/editor', :mode => 'css', :url => widget_path %>
         <%= f.hidden_field :html, :placeholder => 'html' %>
         <%= render '/editor', :mode => 'html', :url => widget_path %>
+        <%= f.hidden_field :css, :placeholder => 'css' %>
+        <%= render '/editor', :mode => 'css', :url => widget_path %>
       </div>
     </div>
   </div>

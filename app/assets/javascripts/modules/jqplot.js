@@ -13,20 +13,40 @@
 	};
 
 	Observer.jqplot = function(id, dataSets, options) {
-		var instance = {};
+		var
+			instance = {},
+			defaultOptions = {}
+			;
 
-		this.options = options || {};
+		defaultOptions.seriesDefaults = {
+			renderOptions: {
+				smooth: true
+			},
+			showMarker: false
+		};
 
-		instance.useDateChart = function(options) {
-			this.options = $.extend(true, dateChartOptions, options);
+		defaultOptions.legend = {
+			show: true,
+			location: 'nw',
+			border: 'none',
+			background: 'transparent'
+		};
+		defaultOptions.grid = {
+			backgroundColor: 'transparent',
+			drawGridlines: false,
+			drawBorder: false,
+			shadow: false
+		};
+
+		options = $.extend(true, defaultOptions, options);
+
+		instance.useDateChart = function(overrides) {
+			options = $.extend(true, options, dateChartOptions, overrides);
 			return this;
 		};
 
 		instance.draw = function() {
-			var plot = $.jqplot(id, dataSets, this.options);
-
-			plot.themeEngine.newTheme('theme', Observer.jqplotTheme);
-			plot.activateTheme('theme');
+			var plot = $.jqplot(id, dataSets, options);
 
 			return plot;
 		};

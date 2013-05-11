@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421010414) do
+ActiveRecord::Schema.define(:version => 20130507110851) do
 
   create_table "queries", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -47,9 +47,10 @@ ActiveRecord::Schema.define(:version => 20130421010414) do
     t.text     "js"
     t.text     "css"
     t.text     "html"
-    t.text     "options"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "column"
+    t.integer  "row"
   end
 
 end
