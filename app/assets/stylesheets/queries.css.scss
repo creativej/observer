@@ -3,22 +3,20 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .queries {
-    .editor-container {
-        height: 150px;
-        margin-bottom: 10px;
-    }
-
     #query-editor {
-        position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
     }
 
-    .actions {
+    .editor-group.sql {
+        height: 300px;
+    }
+
+    .query-form-actions {
         text-align: right;
-        margin: 0 auto;
+        margin: 20px auto;
     }
 
     .result-table {

@@ -58,6 +58,8 @@
 			$field.val(cachedValue);
 		}
 
+		editor.clearSelection();
+
 		editor.on('change', function(e){
 			localStorage.setItem(cacheKey, editor.getValue());
 			$field.val(editor.getValue());

@@ -33,7 +33,7 @@
 			sandbox = modules.sandbox($('#widget-sandbox'), spinner)
 			;
 
-		$('.editor-wrapper').each(function() {
+		$('.editor-group').each(function() {
 			var
 				$component = $(this),
 				$spinner = $component.find('.spinner-container'),

@@ -1,19 +1,28 @@
-<%= form_for(@query, :html => {:class => 'query-form' }) do |f| %>
-  <%= render '/form_errors' %>
-  <div class="field">
-    <%= f.text_field :name, :placeholder => 'New query name' %>
-  </div>
-  <div class="editor-container field">
-    <%= f.hidden_field :value, :value => @query.value %>
-    <div id="query-editor" data-mode="sql" data-bind="#query_value"></div>
-  </div>
-  <div class="actions field">
-    <% if !request.referer.nil? %>
-    <%= hidden_field_tag :redirect, request.referer %>
-    <a href="<%= request.referer %>" class="button secondary">back</a>
-    <% end %>
-    <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>">run</a>
-    <%= f.submit :class => 'button' %>
-  </div>
-  <div class='result-content'><!-- Container for ajax content --></div>
-<% end %>
+<div class="row query-edit-form-group">
+  <%= form_for(@query, :html => {:class => 'query-form' }) do |f| %>
+    <%= render '/form_errors' %>
+    <div class="field">
+      <%= f.text_field :name, :placeholder => 'New query name' %>
+    </div>
+    <div class="editor-container field">
+      <%= f.hidden_field :value %>
+      <%=
+      render '/editor',
+        :mode => 'sql',
+        :url => query_path,
+        :prefix => 'query',
+        :bind => '#query_value',
+        :no_save => true
+    %>
+    </div>
+    <div class="query-form-actions field">
+      <% if !request.referer.nil? %>
+      <%= hidden_field_tag :redirect, request.referer %>
+      <a href="<%= request.referer %>" class="button secondary">back</a>
+      <% end %>
+      <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>">run</a>
+      <%= f.submit :class => 'button' %>
+    </div>
+    <div class='result-content'><!-- Container for ajax content --></div>
+  <% end %>
+</div>

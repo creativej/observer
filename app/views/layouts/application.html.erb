@@ -25,18 +25,45 @@
     class="<%= "#{controller.controller_name} #{controller.action_name}" %>"
     data-triggerjs="<%= "#{controller.action_name}.#{controller.controller_name}" %>"
   >
-    <div class="contain-to-grid sticky">
-      <nav class="top-bar userbar">
+    <div class="contain-to-grid sticky userbar">
+      <nav class="top-bar">
         <ul class="title-area">
           <!-- Title Area -->
           <li class="name">
-            <h1><a href="/">The observer</a></h1>
+            <h1><a href="/" class="brand-title">The observer</a></h1>
           </li>
         </ul>
-        <section class="top-bar-section">
+        <section class="top-bar-section components-menu">
+          <ul class="left">
+            <li class="divider hide-for-small"></li>
+            <li>
+              <a
+                href="<%= queries_path %>"
+                class="<%= controller.is('queries')? 'active' : '' %>"
+                ><i class="icon-database"></i>Resources</a>
+            </li>
+          </ul>
+          <ul class="left">
+            <li class="divider hide-for-small"></li>
+            <li>
+              <a
+                href="<%= widgets_path %>"
+                class="<%= controller.is('widgets')? 'active' : '' %>"
+                ><i class="icon-line-graph"></i>Widgets</a>
+            </li>
+          </ul>
+          <ul class="left">
+            <li class="divider hide-for-small"></li>
+            <li>
+              <a
+                href="#"
+                class="<%= controller.is('dashboards')? 'active' : '' %>"
+                ><i class="icon-layout"></i>Dashboards</a>
+            </li>
+            <li class="divider hide-for-small"></li>
+          </ul>
           <!-- Right Nav Section -->
           <ul class="right">
-            <li class="divider show-for-small"></li>
             <li class="has-form actions">
               <% if !user_signed_in? %>
                 <a class="login action" href="<%= new_user_session_path %>">
@@ -61,7 +88,7 @@
         </section>
       </nav>
     </div>
-    <div class="container row">
+    <div class="container">
         <% if !flash[:notice].nil? %>
         <div data-alert class="alert-box success">
           <%= flash[:notice] %>

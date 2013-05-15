@@ -1,0 +1,11 @@
+@import "bourbon";
+@import "mixins";
+
+.table--common {
+	border-spacing: 0px;
+	@include drop-shadow;
+
+	.action-cell {
+		padding: 0;
+	}
+}

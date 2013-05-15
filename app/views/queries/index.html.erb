@@ -1,26 +1,31 @@
-<h1>Listing queries</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-    <th>Token</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @queries.each do |query| %>
-  <tr>
-    <td><%= query.name %></td>
-    <td><%= query.value %></td>
-    <td><%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %></td>
-    <td><%= link_to 'Edit', edit_query_path(query) %></td>
-    <td><%= link_to 'Destroy', query, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<h1>Resources</h1>
+<table class="table--common">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Token</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @queries.each do |query| %>
+    <tr>
+      <td><%= query.name %></td>
+      <td><%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %></td>
+      <td class="action-cell">
+          <a href="<%= edit_query_path(query) %>" class="action"><i class="icon-pencil"></i></a>
+      </td>
+      <td class="action-cell">
+        <a href="<%= query_path(query) %>" class="action" data-confirm="Are you sure?" data-method="delete">
+          <i class="icon-cross"></i>
+        </a>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Query', new_query_path %>
+<%= link_to 'New Query', new_query_path, { :class => 'button small' } %>

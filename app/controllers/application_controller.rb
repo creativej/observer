@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
     @current_action = params[:action]
   end
 
+  def is(name)
+    @current_controller == name
+  end
+
   def dump(object)
     puts YAML::dump(object)
   end

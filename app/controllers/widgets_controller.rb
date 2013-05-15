@@ -10,17 +10,6 @@ class WidgetsController < ApplicationController
     end
   end
 
-  # GET /widgets/1
-  # GET /widgets/1.json
-  def show
-    @widget = current_user.widgets.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @widget }
-    end
-  end
-
   # GET /widgets/new
   # GET /widgets/new.json
   def new

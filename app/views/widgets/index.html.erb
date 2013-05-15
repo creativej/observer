@@ -1,23 +1,29 @@
-<h1>Listing widgets</h1>
+<h1>Widgets</h1>
+<table class="table--common">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
+  <tbody>
 <% @widgets.each do |widget| %>
-  <tr>
-    <td><%= widget.name %></td>
-    <td><%= link_to 'Show', widget %></td>
-    <td><%= link_to 'Edit', edit_widget_path(widget) %></td>
-    <td><%= link_to 'Destroy', widget, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <tr>
+      <td><%= widget.name %></td>
+      <td class="action-cell">
+          <a href="<%= edit_widget_path(widget) %>" class="action"><i class="icon-pencil"></i></a>
+      </td>
+      <td class="action-cell">
+        <a href="<%= widget_path(widget) %>" class="action" data-confirm="Are you sure?" data-method="delete">
+          <i class="icon-cross"></i>
+        </a>
+      </td>    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Widget', new_widget_path %>
+<%= link_to 'New Widget', new_widget_path, { :class => 'button small' } %>

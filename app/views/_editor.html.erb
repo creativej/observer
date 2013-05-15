@@ -1,10 +1,12 @@
-        <div class="editor-wrapper <%= mode %>">
+        <div class="editor-group <%= mode %>">
           <%= spinner.html_safe %>
           <div class="header">
-            <i class="icon-save save-btn" data-url="<%= url %>"></i>
+            <% if !defined? no_save %>
+            <i class="action icon-save save-btn" data-url="<%= url %>"></i>
+            <% end %>
             <span class="title"><%= mode.upcase %></span>
           </div>
           <div class="editor-container">
-            <div id="widget_<%= mode %>_editor" class="editor" rel="ace-editor" data-bind="#widget_<%= mode %>" data-mode="<%= mode %>"></div>
+            <div id="<%= prefix %>_<%= mode %>_editor" class="editor" rel="ace-editor" data-bind="<%= defined?(bind) ? bind : "##{prefix}_#{mode}" %>" data-mode="<%= mode %>"></div>
           </div>
         </div>

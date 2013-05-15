@@ -7,27 +7,20 @@
         max-width: 100%;
     }
 
-    .editor {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-    }
-
     .widget-preview {
         margin: 0 auto;
         margin-bottom: 15px;
     }
 
-    .editor-wrapper.js {
+    .editor-group.js {
         height: 480px;
     }
 
-    .editor-wrapper.css {
+    .editor-group.css {
         height: 320px;
     }
 
-    .editor-wrapper.html {
+    .editor-group.html {
         height: 150px;
     }
 
@@ -42,6 +35,14 @@
     .widget-name:focus {
         background-color: #151515;
         color: #fff
+    }
+}
+
+.widgets.index, .queries.index {
+    .container {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -74,6 +75,10 @@
     position: relative;
     box-sizing: border-box;
     padding-top: 20px;
+}
+
+.widget-edit-form-group {
+    max-width: 100%;
 }
 
 .widget-tools {
@@ -148,13 +153,8 @@
     }
 
     .resources .query-edit {
-        color: #555;
         font-size: 1.3em;
         @include inline-block;
-    }
-
-    .resources .query-edit:hover {
-        color: yellow;
     }
 
     .resources .actions {
@@ -175,10 +175,6 @@
         width: auto;
     }
 
-    input[type="number"] {
-
-    }
-
     .content.active {
         display: block;
         font-size: 0.8em;
@@ -188,12 +184,11 @@
 
     .action {
         font-size: 2em;
-        color: #333;
         cursor: pointer;
     }
 
-    .action:hover, .action:focus {
-        color: yellow;
+    .action:focus {
+        color: $highlight-color;
     }
 }
 

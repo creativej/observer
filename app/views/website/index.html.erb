@@ -1,5 +1,20 @@
-<div class="row">
-  <div class="large column"><%= link_to 'queries', queries_path %></div>
-  <div class="large column"><%= link_to 'widgets', widgets_path %></div>
-  <div class="large column"><%= link_to 'dashboard', dashboard_path %></div>
-</div>
+<ul class="components">
+  <li class="resources component">
+    <a href="<%= queries_path %>">
+      <i class="icon-database component-icon"></i>
+    </a>
+    <%= link_to 'Resources', queries_path %>
+  </li>
+  <li class="database component">
+    <a href="<%= widgets_path %>">
+      <i class="icon-line-graph component-icon"></i>
+    </a>
+    <%= link_to 'Widgets', widgets_path %>
+  </li>
+  <li class="dashboard component">
+    <a href="<%= dashboard_path %>">
+      <i class="icon-layout component-icon"></i>
+    </a>
+    <%= link_to 'Dashboards', dashboard_path %>
+  </li>
+</ul>

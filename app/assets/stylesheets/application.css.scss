@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require foundation_and_overrides
  *= require jquery.gridster
  *= require jquery.jqplot
  *= require entypo
@@ -17,13 +16,35 @@
 @charset "UTF-8";
 
 @import "bourbon";
+@import "variables";
 @import "foundation_and_overrides";
 @import "mixins";
 @import "modules/editor";
+@import "modules/table";
 @import "website";
 @import "queries";
 @import "widgets";
 
+.top-bar .name .brand-title {
+	color: #fff;
+}
+
+.top-bar .name .brand-title:hover {
+	color: $highlight-color;
+}
+
+.components-menu {
+	li {
+		a:not(.button):hover, a.active {
+			background-color: #222;
+			color: $highlight-color;
+		}
+
+		a:not(.button) {
+			line-height: 41px;
+		}
+	}
+}
 .alert-modal {
 	display: none;
 }
@@ -34,27 +55,28 @@
 }
 
 .container {
-	margin: 10px auto;
+	margin-top: 20px;
 	@include box-sizing(border-box);
 	padding: 0 10px;
 }
+
 .userbar {
 	@include box-shadow(0px 2px 2px hsla(0%, 0%, 0%, 0.3));
 
-	.action {
-		font-size: 1em;
-		color: #333;
-	}
-
-	.action:hover {
-		color: yellow;
-	}
-
 	.user {
 		color: #999;
-		line-height: 45px;
+		line-height: 41px;
 		height: $topbar-height;
 		background-color: black;
 		font-size: 0.8em;
 	}
+}
+
+.action {
+	font-size: 1.5em;
+	color: $primary-color;
+}
+
+.action:hover {
+	color: $highlight-color;
 }
