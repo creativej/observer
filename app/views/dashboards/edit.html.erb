@@ -1,0 +1,21 @@
+<div class="row dashboard-edit-form-group">
+<%= form_for(@dashboard) do |f| %>
+  <div class="dashboard-name editable-name" data-url="<%= dashboard_path %>" data-name="dashboard[name]" contenteditable="true"><%= @dashboard.name %></div>
+  <div
+    class="dashboard gridster"
+    data-margin="<%= Settings.gridster.margin %>"
+    data-dimensions="<%= Settings.gridster.dimensions %>"
+    >
+      <ul>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="widget-group"></li>
+      </ul>
+  </div>
+  <div class="field">
+      <% if !request.referer.nil? %>
+      <%= hidden_field_tag :redirect, request.referer %>
+      <a href="<%= request.referer %>" class="button secondary">back</a>
+      <% end %>
+    <%= f.submit :class => 'button' %>
+  </div>
+<% end %>
+</div>

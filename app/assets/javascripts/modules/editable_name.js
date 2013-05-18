@@ -1,5 +1,5 @@
 (function($, Observer, window) {
-	Observer.modules.widgetName = function($el) {
+	Observer.modules.editableName = function($el) {
 		var instance = {};
 		var originalValue;
 

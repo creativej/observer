@@ -18,5 +18,7 @@
 		runQueryBtn.on('success.post', function(resp) {
 			$('.result-content').hide().html(resp).fadeIn('fast');
 		});
+
+		Observer.modules.editableName($('.query-name'));
 	});
 }(jQuery, window, Observer));

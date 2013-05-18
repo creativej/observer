@@ -28,24 +28,6 @@ class WidgetsController < ApplicationController
     @queries = current_user.queries
   end
 
-  # POST /widgets
-  # POST /widgets.json
-  def create
-    @widget = Widget.new(params[:widget])
-    @widget.user = current_user
-
-    respond_to do |format|
-      if @widget.save
-        format.html { redirect_to @widget, notice: 'Widget was successfully created.' }
-        format.json { render json: @widget, status: :created, location: @widget }
-      else
-        flash[:errors] = @widget.errors
-        format.html { redirect_to(new_widget_path()) }
-        format.json { render json: @widget.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PUT /widgets/1
   # PUT /widgets/1.json
   def update
@@ -53,8 +35,13 @@ class WidgetsController < ApplicationController
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
-        # flash[:notice] = 'Widget was successfully updated.'
-        format.html { redirect_to(edit_widget_path) }
+        if (params[:redirect].nil?)
+          redirect_path = widgets_path
+        else
+          redirect_path = params[:redirect]
+        end
+
+        format.html { redirect_to(redirect_path) }
         format.json { head :no_content }
       else
         flash[:errors] = @widget.errors

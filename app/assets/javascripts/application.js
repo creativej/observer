@@ -18,12 +18,15 @@
 //= require observer
 //= require observer/keyboard
 //= require modules/jqplot
+//= require modules/data_set
 //= require foundation
 //= require modules/alert_modal
 //= require jquery_ujs
 //= require components/sugar/release/sugar.min
+//= require components/moment/moment
 //= require queries
 //= require widgets
+//= require dashboards
 //= require website
 
 (function(window, Observer, $, document) {

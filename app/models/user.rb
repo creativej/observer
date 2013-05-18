@@ -10,4 +10,5 @@ class User < ActiveRecord::Base
 
   has_many :queries, :dependent => :destroy
   has_many :widgets, :dependent => :destroy
+  has_many :dashboards, :dependent => :destroy
 end

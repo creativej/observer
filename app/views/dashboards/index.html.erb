@@ -1,0 +1,36 @@
+<h1>Dashboards</h1>
+
+<table class="table--common">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Data</th>
+      <th>Scale</th>
+      <th>Is public</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<% @dashboards.each do |dashboard| %>
+    <tr>
+      <td><%= dashboard.name %></td>
+      <td><%= dashboard.data %></td>
+      <td><%= dashboard.scale %></td>
+      <td><%= dashboard.is_public %></td>
+      <td class="action-cell">
+        <a href="<%= edit_dashboard_path(dashboard) %>" class="action" title="edit this dashboard"><i class="icon-pencil"></i></a>
+      </td>
+      <td class="action-cell">
+        <a href="<%= dashboard_path(dashboard) %>" class="action" data-confirm="Are you sure?" data-method="delete" title="delete this dashboard">
+          <i class="icon-cross"></i>
+        </a>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Dashboard', new_dashboard_path, { :class => 'button small' } %>

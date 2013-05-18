@@ -1,4 +1,6 @@
 TheObserver::Application.routes.draw do
+  resources :dashboards
+
   resources :widgets do
     collection do
       match 'preview', :as => :preview
@@ -6,15 +8,12 @@ TheObserver::Application.routes.draw do
     match 'update' => 'widgets#update_attribute', :as => :update_attribute
   end
 
-
   resources :queries do
     collection do
       post 'run'
       match 'data/:token' => 'queries#data', :constraints => {:format => /(html)/}, :as => :data
     end
   end
-
-  match 'dashboard' => 'website#dashboard', :as => :dashboard
 
   devise_for :users
 

@@ -15,26 +15,16 @@ class QueriesController < ApplicationController
     end
   end
 
-  # GET /queries/1
-  # GET /queries/1.json
-  def show
-    @query = current_user.queries.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @query }
-    end
-  end
-
   # GET /queries/new
   # GET /queries/new.json
   def new
     @query = Query.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @query }
-    end
+    @query.user = current_user
+    @query.name = 'untitled'
+    @query.value = ''
+    @query.save
+    # print @query.errors
+    redirect_to(edit_query_path(@query))
   end
 
   # GET /queries/1/edit
@@ -85,31 +75,6 @@ class QueriesController < ApplicationController
     end
   end
 
-  # POST /queries
-  # POST /queries.json
-  def create
-    @query = Query.new(params[:query])
-    @query.user = current_user
-
-    respond_to do |format|
-      if @query.save
-        flash[:notice] = 'Query was successfully created.'
-        if (params[:redirect].nil?)
-          redirect_path = queries_path
-        else
-          redirect_path = params[:redirect]
-        end
-
-        format.html { redirect_to redirect_path }
-        format.json { render json: @query, status: :created, location: @query }
-      else
-        flash[:errors] = @query.errors
-        format.html { redirect_to(new_query_path()) }
-        format.json { render json: @query.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # PUT /queries/1
   # PUT /queries/1.json
   def update
@@ -117,8 +82,6 @@ class QueriesController < ApplicationController
 
     respond_to do |format|
       if @query.update_attributes(params[:query])
-        flash[:notice] = 'Query was successfully updated.'
-
         if (params[:redirect].nil?)
           redirect_path = queries_path
         else

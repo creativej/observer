@@ -21,7 +21,9 @@
 @import "mixins";
 @import "modules/editor";
 @import "modules/table";
+@import "modules/editable_name";
 @import "website";
+@import "dashboards";
 @import "queries";
 @import "widgets";
 
@@ -79,4 +81,12 @@
 
 .action:hover {
 	color: $highlight-color;
+}
+
+.widgets.index, .queries.index, .dashboards.index {
+    .container {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

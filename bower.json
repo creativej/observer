@@ -13,7 +13,7 @@
         "gridster": "latest",
         "jquery": "~2.0.0",
         "flot": "~0.8.0",
-        "Chart.js": "latest"
+        "moment": "~2.0.0"
       }
   }
 }

@@ -1,0 +1,12 @@
+.editable-name {
+    max-width: $row-width;
+    margin: 10px auto 10px;
+    padding: 5px;
+    font-weight: bold;
+    color: #999
+}
+
+.editable-name:focus {
+    background-color: #151515;
+    color: #fff
+}

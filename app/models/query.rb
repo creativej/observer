@@ -4,7 +4,6 @@ class Query < ActiveRecord::Base
   belongs_to :user
 
   validates :name, :presence => true
-  validates :value, :presence => true
 
   def before_create
     if (self.token.nil?)

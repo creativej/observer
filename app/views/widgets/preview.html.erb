@@ -13,6 +13,7 @@
   'use strict';
 
   Observer.onPageReady('preview.widgets', function() {
+    var modules = Observer.modules;
     var widget = Observer.modules.widget($('.widget'));
     <%= html_safe js_filter(@widget[:js]) %>
 

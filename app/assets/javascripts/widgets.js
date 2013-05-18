@@ -6,7 +6,7 @@
 //= require modules/widget_tools
 //= require modules/sandbox
 //= require modules/widget_preferences
-//= require modules/widget_name
+//= require modules/editable_name
 (function($, window, Observer, undefined) {
 	'use strict';
 
@@ -25,7 +25,7 @@
 		});
 	}
 
-	Observer.onPageReady(['edit.widgets', 'create.widgets'], function() {
+	Observer.onPageReady(['edit.widgets'], function() {
 		var
 			spinner = modules.spinner(
 				$('.preview-container').find('.spinner-container')
@@ -71,7 +71,7 @@
 			previewWidget(sandbox);
 		});
 
-		modules.widgetName($('.widget-name'));
+		modules.editableName($('.widget-name'));
 	});
 
 	Observer.onPageReady('preview.widgets', function() {
