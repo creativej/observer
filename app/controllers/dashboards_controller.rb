@@ -23,6 +23,7 @@ class DashboardsController < ApplicationController
   # GET /dashboards/1/edit
   def edit
     @dashboard = current_user.dashboards.find(params[:id])
+    @dashboard_widgets = @dashboard.dashboard_widgets
     @widgets = current_user.widgets
   end
 
@@ -38,6 +39,20 @@ class DashboardsController < ApplicationController
       else
         flash[:errors] = @dashboard.errors
         format.html { redirect_to(edit_dashboard_path) }
+        format.json { render json: @dashboard.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /dashboards/1/update-widgets
+  # PUT /dashboards/1/update-widgets.json
+  def update_widgets
+    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    widgets = ActiveSupport::JSON.decode(params[:widgets])
+    respond_to do |format|
+      if @dashboard.update_widgets(widgets)
+        format.json { head :no_content }
+      else
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
     end

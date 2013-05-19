@@ -1,23 +1,5 @@
-<%= sandbox_css('widget', @widget[:css]).html_safe %>
-<div
-  class="widget-preview widget"
-  data-dimensions="<%= Settings.gridster.dimensions %>"
-  data-sizex="<%= @widget[:column] %>"
-  data-sizey="<%= @widget[:row] %>"
-  >
-  <%= html_safe @widget[:html] %>
-</div>
-<% content_for :javascript do %>
-<script type="text/javascript">
-(function($, Observer, window) {
-  'use strict';
-
-  Observer.onPageReady('preview.widgets', function() {
-    var modules = Observer.modules;
-    var widget = Observer.modules.widget($('.widget'));
-    <%= html_safe js_filter(@widget[:js]) %>
-
-  });
-}(jQuery, Observer, window));
-</script>
-<% end %>
+<%= render 'widget', {
+  :css => @widget[:css],
+  :html => @widget[:html],
+  :js => @widget[:js]
+} %>

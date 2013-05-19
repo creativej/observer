@@ -1,0 +1,25 @@
+<%= sandbox_css('widget', css).html_safe %>
+<div
+  class="widget-group"
+  >
+  <%= html_safe html %>
+</div>
+<% content_for :javascript do %>
+<script type="text/javascript">
+(function($, Observer, window, undefined) {
+  var modules = Observer.modules;
+
+  Observer.on('ready.body', function() {
+    var
+      Observer = undefined,
+      document = undefined,
+      window = undefined
+      ;
+
+    var widget = modules.widget($('.widget'));
+    <%= html_safe js_filter(js) %>
+
+  });
+}(jQuery, Observer, window));
+</script>
+<% end %>

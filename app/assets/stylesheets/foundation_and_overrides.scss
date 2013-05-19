@@ -18,7 +18,7 @@
 // We use these to control various global styles
 $body-bg: url(image_path('bg.png')) top left repeat repeat;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "Ubuntu", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -35,7 +35,7 @@ $primary-color: #88a;
 // $success-color: #5da423;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+$global-radius: 3px;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -196,13 +196,13 @@ $anchor-font-color-hover: $highlight-color;
 // $label-bottom-margin: emCalc(3px);
 // $input-font-family: inherit;
 $input-font-color: #fff;
-// $input-font-size: emCalc(14px);
+$input-font-size: emCalc(20px);
 $input-bg-color: #222;
-$input-focus-bg-color: #444;
+$input-focus-bg-color: #333;
 $input-border-color: #444;
 $input-focus-border-color: #666;
 // $input-border-style: solid;
-// $input-border-width: 1px;
+$input-border-width: 0px;
 // $input-disabled-bg: #ddd;
 // $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
 
@@ -260,7 +260,7 @@ $input-focus-border-color: #666;
 // $button-function-factor: 10%;
 
 // We use these to control button border styles.
-// $button-border-width: 1px;
+$button-border-width: 0;
 // $button-border-style: solid;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
@@ -775,20 +775,20 @@ $crumb-font-transform: normal;
 //
 
 // We use these to control the style of the reveal overlay.
-// $reveal-overlay-bg: rgba(#000, .45);
+$reveal-overlay-bg: rgba(#fff, .45);
 // $reveal-overlay-bg-old: #000;
 
 // We use these to control the style of the modal itself.
 // $reveal-modal-bg: #fff;
 // $reveal-position-top: 50px;
-// $reveal-default-width: 80%;
+$reveal-default-width: emCalc(600px);
 // $reveal-modal-padding: emCalc(20px);
 // $reveal-box-shadow: 0 0 10px rgba(#000,.4);
 
 // We use these to style the reveal close button
 // $reveal-close-font-size: emCalc(22px);
-// $reveal-close-top: emCalc(8px);
-// $reveal-close-side: emCalc(11px);
+$reveal-close-top: emCalc(0px);
+$reveal-close-side: emCalc(5px);
 // $reveal-close-color: #aaa;
 // $reveal-close-weight: bold;
 
@@ -1031,5 +1031,6 @@ $topbar-breakpoint: emCalc(480px); // Change to 9999px for always mobile layout
 
 .top-bar-section ul li > a {
 	font-size: emCalc(16px);
+	font-weight: bold;
 }
 

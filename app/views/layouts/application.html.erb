@@ -15,6 +15,7 @@
 
   	<title><%= content_for?(:title) ? yield(:title) : "The Observer" %></title>
 
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
   	<%= stylesheet_link_tag    "application" %>
   	<%= javascript_include_tag "vendor/custom.modernizr" %>
     <%= csrf_meta_tags %>
@@ -25,7 +26,7 @@
     class="<%= "#{controller.controller_name} #{controller.action_name}" %>"
     data-triggerjs="<%= "#{controller.action_name}.#{controller.controller_name}" %>"
   >
-    <div class="contain-to-grid sticky userbar">
+    <div class="contain-to-grid userbar">
       <nav class="top-bar">
         <ul class="title-area">
           <!-- Title Area -->

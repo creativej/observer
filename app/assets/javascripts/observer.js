@@ -21,7 +21,6 @@
 			moviePath: '/assets/ZeroClipboard.swf'
 		});
 
-
 		instance.onPageReady = function(page, callback) {
 			if (Array.isArray(page)) {
 				page.forEach(function(p) {

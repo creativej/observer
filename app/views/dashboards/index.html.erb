@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Data</th>
       <th>Scale</th>
       <th>Is public</th>
       <th></th>
@@ -15,7 +14,6 @@
 <% @dashboards.each do |dashboard| %>
     <tr>
       <td><%= dashboard.name %></td>
-      <td><%= dashboard.data %></td>
       <td><%= dashboard.scale %></td>
       <td><%= dashboard.is_public %></td>
       <td class="action-cell">
@@ -33,4 +31,4 @@
 
 <br />
 
-<%= link_to 'New Dashboard', new_dashboard_path, { :class => 'button small' } %>
+<a href="<%= new_dashboard_path %>" class="button small"><i class="icon-plus"></i>New dashboard</a>

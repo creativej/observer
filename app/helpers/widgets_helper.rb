@@ -20,4 +20,15 @@ module WidgetsHelper
     end
     widget.options[name]
   end
+
+  def widget_sandbox(src = '', id = '')
+<<eos
+<iframe
+  id="#{id}"
+  class="widget-sandbox"
+  seemless="seemless"
+  src="#{src}"
+  data-dimensions="#{Settings.gridster.dimensions}"></iframe>
+eos
+  end
 end

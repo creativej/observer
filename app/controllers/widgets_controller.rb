@@ -51,27 +51,6 @@ class WidgetsController < ApplicationController
     end
   end
 
-  # PUT /widgets/1/update
-  def update_attribute
-    # if !request.xhr?
-    #   not_found
-    # end
-
-    @widget = current_user.widgets.find(params[:widget_id])
-
-    attributes = {}
-
-    params[:widget].each do |name|
-      attributes[name] = params[:widget][name]
-    end
-
-    @widget.update_attributes(attributes)
-
-    respond_to do |format|
-      format.html { render json: {} }
-    end
-  end
-
   # DELETE /widgets/1
   # DELETE /widgets/1.json
   def destroy
@@ -84,8 +63,15 @@ class WidgetsController < ApplicationController
     end
   end
 
+  # POST /widgets/preview
   def preview
     @widget = !params[:widget].nil? ? params[:widget] : {}
+    render :layout => 'basic'
+  end
+
+  # POST /widgets/1
+  def show
+    @widget = current_user.widgets.find(params[:id])
     render :layout => 'basic'
   end
 end

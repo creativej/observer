@@ -1,21 +1,65 @@
-<div class="row dashboard-edit-form-group">
-<%= form_for(@dashboard) do |f| %>
-  <div class="dashboard-name editable-name" data-url="<%= dashboard_path %>" data-name="dashboard[name]" contenteditable="true"><%= @dashboard.name %></div>
+<div class="dashboard-menu-group">
+  <div class="preferences item">
+    <a href="#" data-reveal-id="dashboard-preferences" title="add widgets">
+      <i class="icon-cog dashboard-menu-icon" title="preferences"></i>
+    </a>
+  </div>
+  <div class="widgets dashboard-menu-item">
+    <a href="#" data-reveal-id="widgets-selector" title="add widgets">
+      <i class="icon-line-graph dashboard-menu-icon"></i>
+    </a>
+  </div>
+</div>
+<div class="dashboard-edit-form-group">
   <div
     class="dashboard gridster"
-    data-margin="<%= Settings.gridster.margin %>"
     data-dimensions="<%= Settings.gridster.dimensions %>"
+    data-max-size="<%= Settings.gridster.max_size %>"
     >
       <ul>
-        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="widget-group"></li>
+        <% @dashboard_widgets.each do |dw| %>
+        <li
+          data-id="<%= dw.widget.id %>"
+          data-col="<%= dw.col %>"
+          data-row="<%= dw.row %>"
+          data-sizex="<%= dw.size_x %>"
+          data-sizey="<%= dw.size_y %>"
+          ><%= widget_sandbox(widget_path(dw.widget)).html_safe %></li≥
+        <% end %>
       </ul>
   </div>
-  <div class="field">
-      <% if !request.referer.nil? %>
-      <%= hidden_field_tag :redirect, request.referer %>
-      <a href="<%= request.referer %>" class="button secondary">back</a>
-      <% end %>
-    <%= f.submit :class => 'button' %>
-  </div>
-<% end %>
 </div>
+<div class="widgets-selector-group reveal-modal" id="widgets-selector">
+  <% @widgets.each do |widget| %>
+  <div
+    class="widgets-selector-item"
+    data-row="<%= widget.row %>"
+    data-col="<%= widget.column %>"
+    data-url="<%= widget_path widget %>"
+    data-id="<%= widget.id %>"
+  >
+    <div><i class="widgets-selector-icon icon-line-graph"></i></div>
+    <%= widget.name %>
+    <%= widget_sandbox.html_safe %>
+  </div>
+  <% end %>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<div class="dashboard-preferences-group reveal-modal" id="dashboard-preferences">
+  <%= spinner.html_safe %>
+  <%= form_for(@dashboard, :url => dashboard_update_widgets_path(@dashboard)) do |f| %>
+  <div class="field">
+    <%= f.text_field :name, :class => 'dashboard-preference-text' %>
+  </div>
+  <div class="dashboard-preferences-action">
+    <a href="#" class="button secondary cancel-dashboard-action">
+      <i class="icon-back"></i> Cancel
+    </a>
+    <a href="#" class="button primary save-dashboard-action">
+      <i class="icon-save"></i> Save
+    </a>
+  </div>
+  <% end %>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+

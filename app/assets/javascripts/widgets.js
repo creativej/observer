@@ -15,9 +15,14 @@
 	function previewWidget(sandbox) {
 		var
 			$hiddenFields = $('.widget-form')
-				.find('input[type="hidden"], input.options-item'),
+				.find('input[type="hidden"]'),
 			$form = $('.preview-widget-form')
 			;
+
+		sandbox.resize(
+			parseInt($('#widget_row').val(), 10),
+			parseInt($('#widget_column').val(), 10)
+		);
 
 		$form.html($hiddenFields.clone().prop('id', undefined).hide());
 		sandbox.prepareToLoad(function() {
@@ -27,11 +32,17 @@
 
 	Observer.onPageReady(['edit.widgets'], function() {
 		var
+			$previewContainer = $('.preview-container'),
 			spinner = modules.spinner(
-				$('.preview-container').find('.spinner-container')
+				$previewContainer.find('.spinner-container')
 			),
-			sandbox = modules.sandbox($('#widget-sandbox'), spinner)
+			sandbox = modules.sandbox($('.widget-sandbox'), spinner)
 			;
+
+		sandbox.on('resized', function() {
+			$previewContainer.width(this.width());
+			$previewContainer.height(this.height());
+		});
 
 		$('.editor-group').each(function() {
 			var
@@ -74,13 +85,10 @@
 		modules.editableName($('.widget-name'));
 	});
 
-	Observer.onPageReady('preview.widgets', function() {
-		var $el = $('.widget-preview');
-		var dimensions = $el.data('dimensions');
-		var width = dimensions[0] * parseInt($el.data('sizex'), 10);
-		var height = dimensions[1] * parseInt($el.data('sizey'), 10);
-		$el.css('width', width);
-		$el.css('height', height);
+	Observer.onPageLoaded(['preview.widgets', 'show.widgets'], function() {
+		var $el = $('.widget-group');
+		$el.css('width', $(window).width());
+		$el.css('height', $(window).height());
 	});
 
 }(jQuery, window, Observer));

@@ -3,15 +3,101 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .dashboards {
 	.dashboard {
-		border: 1px #555 solid;
+		// border: 1px #555 solid;
+		min-height: 100px;
 		margin-bottom: 20px;
+	}
+
+	.dashboard ul {
+		list-style: none;
+	}
+
+	.dashboard li {
+		cursor: pointer;
 	}
 }
 
-.dashboard ul {
-	list-style: none;
+.widget-group {
+	background-color: hsla(100%, 100%, 100%, 0.1);
 }
 
-.widget-group {
-    background-color: hsla(100%, 100%, 100%, 0.1);
+.dashboards.edit {
+	.container {
+		margin-top: 10px;
+	}
+}
+
+
+/**
+ * Widget selector group
+ */
+.widgets-selector-group {
+	height: 100px;
+	bottom: 0px;
+	background-color: $panel-color;
+	padding: 10px;
+	@include box-sizing(border-box);
+	margin-bottom: 10px;
+	display: none;
+}
+
+.widgets-selector-icon {
+	font-size: emCalc(48px);
+}
+
+.widgets-selector-item {
+	@include inline-block;
+	width: 120px;
+	height: 80px;
+	background-color: #222;
+	font-size: emCalc(12px);
+	padding: 10px;
+	text-align: center;
+	@include box-sizing(border-box);
+	cursor: pointer;
+	color: $primary-color;
+
+	.widget-sandbox {
+		display: none;
+	}
+}
+
+.widgets-selector-item:hover {
+	color: $highlight-color;
+}
+
+/**
+ * dashbaord preferences
+ */
+.dashboard-preferences-group {
+	min-height: 100px;
+	background-color: $panel-color;
+	display: none;
+}
+
+/**
+ * Dashboard menu
+ */
+.dashboard-menu-group {
+	position: absolute;
+	top: 65px;
+	right: 26px;
+	z-index: 11;
+}
+
+.dashboard-menu-icon {
+    color: #ccc;
+    font-size: 2em;
+    padding: 5px;
+    opacity: 0.5;
+    cursor: pointer;
+    text-shadow: 5px 5px hsla(0%, 0%, 0%, 0.3);
+}
+
+.dashboard-menu-item {
+	position: relative;
+}
+
+.dashboard-menu-icon.active, .dashboard-menu-icon:hover {
+    opacity: 1;
 }

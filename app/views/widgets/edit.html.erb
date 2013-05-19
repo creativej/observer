@@ -2,7 +2,7 @@
 
 <div class="preview-container">
   <%= spinner.html_safe %>
-  <iframe id="widget-sandbox" seemless="seemless"></iframe>
+  <%= widget_sandbox('', 'widget-sandbox').html_safe %>
 </div>
 <%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
@@ -15,11 +15,11 @@
           <%= spinner.html_safe %>
           <div>
             <%= label_tag :column %>
-            <%= f.number_field :column, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.margin[0] } %>
+            <%= f.number_field :column, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[0] } %>
           </div>
           <div>
             <%= label_tag :row %>
-            <%= f.number_field :row, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.margin[1] } %>
+            <%= f.number_field :row, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[1] } %>
           </div>
 
           <i class="action icon-cross cancel" tabindex="2"></i>

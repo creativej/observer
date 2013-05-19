@@ -1,4 +1,19 @@
 (function($, Observer, window) {
+	function save($el, field) {
+		var data = {};
+
+		data[$el.data(field)] = $el.text();
+
+		$.ajax({
+			url: $el.data('url'),
+			data: data,
+			type: 'PUT',
+			dataType: 'json'
+		}).fail(function(resp) {
+			Observer.alert('Saving failed', resp.responseText, 'medium');
+		});
+	}
+
 	Observer.modules.editableName = function($el) {
 		var instance = {};
 		var originalValue;
@@ -7,23 +22,17 @@
 			originalValue = $el.text();
 		});
 
+		$el.on('blur', function() {
+			if (originalValue !== $el.text()) {
+				save($el, 'name');
+			}
+		});
+
 		Observer.Keyboard
 			.keypress('enter', $el, function() {
 				return false;
 			})
 			.keyup('enter', $el, function() {
-				var data = {};
-
-				data[$el.data('name')] = $el.text();
-
-				$.ajax({
-					url: $el.data('url'),
-					data: data,
-					type: 'PUT',
-					dataType: 'json'
-				}).fail(function(resp) {
-					Observer.alert('Saving failed', resp.responseText, 'medium');
-				});
 				$el.blur();
 
 				return false;

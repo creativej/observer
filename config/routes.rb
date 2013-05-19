@@ -1,11 +1,12 @@
 TheObserver::Application.routes.draw do
-  resources :dashboards
+  resources :dashboards do
+    match 'update-widgets' => 'dashboards#update_widgets', :as => :update_widgets, :constraints => {:format => /json/}
+  end
 
   resources :widgets do
     collection do
       match 'preview', :as => :preview
     end
-    match 'update' => 'widgets#update_attribute', :as => :update_attribute
   end
 
   resources :queries do
