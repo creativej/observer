@@ -58,6 +58,31 @@ class DashboardsController < ApplicationController
     end
   end
 
+  # POST /dashboards/1/add-widget.json
+  def add_widget
+    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    widget = ActiveSupport::JSON.decode(params[:widget]).first
+    respond_to do |format|
+      if @dashboard.add_widget(widget)
+        format.json { render json: { :id => @dashboard.last_added_widget.id } }
+      else
+        format.json { render json: @dashboard.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /dashboards/1/remove-widgets.json
+  def remove_widget
+    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    respond_to do |format|
+      if @dashboard.remove_widget(params[:id])
+        format.json { head :no_content }
+      else
+        format.json { render json: @dashboard.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /dashboards/1
   # DELETE /dashboards/1.json
   def destroy

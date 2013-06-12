@@ -14,7 +14,7 @@
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require mixins/eventable
-//= require zeroclipboard
+//= require components/zeroclipboard/ZeroClipboard
 //= require observer
 //= require observer/keyboard
 //= require modules/jqplot

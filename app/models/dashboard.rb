@@ -4,19 +4,44 @@ class Dashboard < ActiveRecord::Base
   validates :user_id, :presence => true
 
   belongs_to :user
-  has_and_belongs_to_many :widgets
+  has_many :widgets, :through => :dashboards_widgets
 
   def update_widgets(widgets)
-    print 'update widgets'
     self.transaction do
-      self.widgets.clear
-
       widgets.each do | widget |
-        widget['dashboard_id'] = self.id
-        DashboardsWidgets.create_from_data(widget).save
+        dw = self.dashboard_widgets.where('id = ?', widget['id']).first
+
+        if !dw.nil?
+          dw.col = widget['col']
+          dw.row = widget['row']
+          dw.size_x = widget['size_x']
+          dw.size_y = widget['size_y']
+          dw.save
+        end
       end
     end
   end
+
+  def add_widget(widget)
+    widget['dashboard_id'] = self.id
+    @last_added_widget = DashboardsWidgets.create_from_data(widget)
+    @last_added_widget.save
+  end
+
+  def last_added_widget
+    @last_added_widget
+  end
+
+  def remove_widget(id)
+    dw = DashboardsWidgets.find(id)
+
+    if dw.dashboard_id == self.id
+      dw.destroy
+    else
+      false
+    end
+  end
+
   def dashboard_widgets
     DashboardsWidgets.includes(:widget).where("dashboard_id = ?", self.id)
   end

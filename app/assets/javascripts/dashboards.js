@@ -2,16 +2,21 @@
 // All this logic will automatically be available in application.js.
 //= require modules/widgets_selector
 //= require modules/dashboard_preferences
-//= require actions/save_dashboard
+//= require actions/save_widget_to_dashboard
+//= require actions/update_dashboard_widgets
 //
 (function($, window, Observer, undefined) {
 	'use strict';
 
-	var modules = Observer.modules;
+	var
+		modules = Observer.modules,
+		actions = Observer.actions
+		;
 
 	Observer.onPageReady(['edit.dashboards'], function() {
 		var
-			dashboard = modules.dashboard($('.dashboard.gridster')),
+			$dashboard = $('.dashboard.gridster'),
+			dashboard = modules.dashboard($dashboard),
 			dashboardPreferences = modules.dashboardPreferences(
 				$('#dashboard-preferences'),
 				{ model: 'dashboard' }
@@ -20,9 +25,20 @@
 			widgets = modules.widgetSelector($widgetSelector)
 			;
 
-		dashboard.on('added.widget', function(widgets) {
-			Observer.actions.saveDashboard(
-				$('.edit_dashboard').prop('action'),
+		dashboard.on('added.widget', function(data, widget) {
+			var saveWidget = actions.saveWidgetToDashboard(
+				$widgetSelector.data('url'),
+				data
+			);
+
+			saveWidget.done(function(resp) {
+				$(widget).attr('data-id', resp.id);
+			});
+		});
+
+		dashboard.on('moved.widgets', function(widgets) {
+			actions.updateDashboardWidgets(
+				$dashboard.data('update-url'),
 				widgets
 			);
 		});
@@ -30,12 +46,12 @@
 		widgets.on('click.item', function($item) {
 			var $sandbox = $item.find('.widget-sandbox').clone();
 			$sandbox.data('widget-id', $item.data('id'));
-			$sandbox = $sandbox.prop('src', $item.data('url')).wrap('<li />').parent();
+
 			dashboard.addWidget(
-				$sandbox.get(0),
-				$item.data('col'),
-				$item.data('row')
+				$sandbox,
+				$item
 			);
+			$sandbox.prop('src', $item.data('url'));
 			$widgetSelector.foundation('reveal', 'close');
 		});
 	});

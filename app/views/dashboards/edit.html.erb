@@ -15,21 +15,18 @@
     class="dashboard gridster"
     data-dimensions="<%= Settings.gridster.dimensions %>"
     data-max-size="<%= Settings.gridster.max_size %>"
+    data-update-url="<%= dashboard_update_widgets_path({ :dashboard_id => @dashboard.id }) %>"
     >
-      <ul>
-        <% @dashboard_widgets.each do |dw| %>
-        <li
-          data-id="<%= dw.widget.id %>"
-          data-col="<%= dw.col %>"
-          data-row="<%= dw.row %>"
-          data-sizex="<%= dw.size_x %>"
-          data-sizey="<%= dw.size_y %>"
-          ><%= widget_sandbox(widget_path(dw.widget)).html_safe %></li≥
-        <% end %>
+      <ul class="gridster-widgets">
+      <% @dashboard_widgets.each do |dw| %>
+        <li data-col="<%= dw.col %>" data-row="<%= dw.row %>" data-sizex="<%= dw.size_x %>" data-sizey="<%= dw.size_y %>" data-url="<%= widget_path(dw.widget) %>" data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>" data-id="<%= dw.id %>">
+          <%= widget_sandbox('', '', dw.widget_id).html_safe %>
+        </li>
+      <% end %>
       </ul>
   </div>
 </div>
-<div class="widgets-selector-group reveal-modal" id="widgets-selector">
+<div class="widgets-selector-group reveal-modal" id="widgets-selector" data-url="<%= dashboard_add_widget_path({ :dashboard_id => @dashboard.id }) %>">
   <% @widgets.each do |widget| %>
   <div
     class="widgets-selector-item"
@@ -37,6 +34,7 @@
     data-col="<%= widget.column %>"
     data-url="<%= widget_path widget %>"
     data-id="<%= widget.id %>"
+    data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>"
   >
     <div><i class="widgets-selector-icon icon-line-graph"></i></div>
     <%= widget.name %>
@@ -47,7 +45,7 @@
 </div>
 <div class="dashboard-preferences-group reveal-modal" id="dashboard-preferences">
   <%= spinner.html_safe %>
-  <%= form_for(@dashboard, :url => dashboard_update_widgets_path(@dashboard)) do |f| %>
+  <%= form_for(@dashboard) do |f| %>
   <div class="field">
     <%= f.text_field :name, :class => 'dashboard-preference-text' %>
   </div>

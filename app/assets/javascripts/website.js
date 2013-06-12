@@ -5,6 +5,5 @@
 	'use strict';
 
 	Observer.onPageReady('dashboard.website', function() {
-		Observer.modules.dashboard($('.dashboard.gridster'));
 	});
 }(jQuery, window, Observer));

@@ -101,3 +101,23 @@
 .dashboard-menu-icon.active, .dashboard-menu-icon:hover {
     opacity: 1;
 }
+
+/**
+ * Dashboard widget
+ */
+.dashboard-widget-remove {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	text-align: center;
+	line-height: 1.2;
+	color: #fff;
+	background-color: #888;
+	border-radius: 8px;
+	width: 17px;
+	height: 18px;
+}
+
+.dashboard-widget-remove:hover {
+	background-color: $panel-color;
+}
