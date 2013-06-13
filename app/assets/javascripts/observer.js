@@ -14,12 +14,16 @@
 		instance = window.eventable(instance);
 
 		function pageNamespace(name) {
-			return name + '.' + $('#app_body').data('triggerjs');
+			return name + '.' + instance.body().data('triggerjs');
 		}
 
 		window.ZeroClipboard.setDefaults({
 			moviePath: '/assets/ZeroClipboard.swf'
 		});
+
+		instance.body = function() {
+			return $('#app_body');
+		};
 
 		instance.onPageReady = function(page, callback) {
 			if (Array.isArray(page)) {

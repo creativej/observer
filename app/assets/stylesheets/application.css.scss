@@ -64,7 +64,7 @@
 
 .userbar {
 	@include box-shadow(0px 2px 2px hsla(0%, 0%, 0%, 0.3));
-
+	overflow: hidden;
 	.user {
 		color: #999;
 		line-height: 41px;
@@ -72,6 +72,13 @@
 		background-color: black;
 		font-size: 0.8em;
 	}
+
+	transition: height 0.5s;
+	-webkit-transition: height 0.5s; /* Safari */
+}
+
+.fullscreen .userbar {
+	height: 0px;
 }
 
 .action {

@@ -2,6 +2,7 @@
 // All this logic will automatically be available in application.js.
 //= require modules/widgets_selector
 //= require modules/dashboard_preferences
+//= require modules/dashboard_fullscreen_switcher
 //= require actions/save_widget_to_dashboard
 //= require actions/update_dashboard_widgets
 //
@@ -21,6 +22,7 @@
 				$('#dashboard-preferences'),
 				{ model: 'dashboard' }
 			),
+			fullScreenSwitcher = modules.dashboardFullScreenSwitcher($('.monitor-fullscreen')),
 			$widgetSelector = $('#widgets-selector'),
 			widgets = modules.widgetSelector($widgetSelector)
 			;
