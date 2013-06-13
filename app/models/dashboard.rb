@@ -1,5 +1,5 @@
 class Dashboard < ActiveRecord::Base
-  attr_accessible :data, :is_public, :name, :scale, :user_id
+  attr_accessible :data, :is_public, :name, :scale, :user_id, :width, :height
   validates :name, :presence => true
   validates :user_id, :presence => true
 

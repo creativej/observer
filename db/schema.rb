@@ -11,16 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130519085243) do
+ActiveRecord::Schema.define(:version => 20130613105454) do
 
   create_table "dashboards", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                          :null => false
+    t.string   "name",                                       :null => false
     t.text     "data"
-    t.boolean  "scale",      :default => false, :null => false
-    t.boolean  "is_public",  :default => false, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "scale",                   :default => false, :null => false
+    t.boolean  "is_public",               :default => false, :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.integer  "width",      :limit => 2
+    t.integer  "height",     :limit => 2
   end
 
   create_table "dashboards_widgets", :force => true do |t|
