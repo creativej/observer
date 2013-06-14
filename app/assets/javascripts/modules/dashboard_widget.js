@@ -9,7 +9,12 @@
 		;
 
 	Observer.modules.dashboardWidget = function($el) {
-		var instance = window.eventable();
+		var
+			instance = window.eventable({
+				isLoaded: false
+			}),
+			$iframe = $el.find('iframe')
+			;
 
 		$el.on('mouseover', function() {
 			instance.removeBtn();
@@ -22,7 +27,7 @@
 					$widget.data('remove-url'),
 					$widget.data('id')
 				).done(function() {
-					instance.trigger('removed.widget', $widget[0]);
+					instance.trigger('removed', $widget[0]);
 				});
 			});
 		});
@@ -37,6 +42,14 @@
 			$removeWidgetBtn.remove();
 			$removeWidgetBtn.off();
 		};
+
+		instance.load = function() {
+			$iframe.prop('src', $el.data('url'));
+			$iframe.on('load', function() {
+				instance.isLoaded = true;
+				instance.trigger('loaded');
+			});
+		}
 
 		return instance;
 	};

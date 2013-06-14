@@ -53,7 +53,6 @@
 				$sandbox,
 				$item
 			);
-			$sandbox.prop('src', $item.data('url'));
 			$widgetSelector.foundation('reveal', 'close');
 		});
 	});

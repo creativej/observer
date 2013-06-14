@@ -4,7 +4,8 @@
 	Observer.modules.widget = function($el) {
 		var instance = window.eventable(),
 			dataSets = [],
-			loadingQueue = []
+			loadingQueue = [],
+			refreshTimer
 			;
 
 		function dataLoaded(data) {
@@ -42,9 +43,19 @@
 			return this;
 		};
 
+		instance.refresh = function(ms) {
+			if (!ms) { refreshTimer = null; }
+
+			refreshTimer = window.setTimeout(function() {
+				window.location.reload();
+			}, ms);
+		}
+
 		instance.jqplot = function(id, dataSets, options) {
 			return Observer.jqplot(id, dataSets, options);
 		};
+
+		instance.refresh(100000); // Refresh every 10 minutes
 
 		return instance;
 	};

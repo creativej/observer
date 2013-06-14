@@ -8,7 +8,8 @@
 	Observer.modules.dashboard = function($el, options) {
 		var
 			instance = window.eventable(),
-			gridster
+			gridster,
+			widgets = []
 			;
 
 		options = $.extend({
@@ -45,19 +46,31 @@
 
 		function dashboardWidget($widget) {
 			var dw = Observer.modules.dashboardWidget($widget);
-
-			dw.on('removed.widget', function(widget) {
-				gridster.remove_widget(widget);
-			});
+			widgets.push(dw);
+			return dw
+				.on('removed', function(widget) {
+					gridster.remove_widget(widget);
+					widgets.remove(dw);
+				})
+				.on('loaded', function() {
+					widgets.each(function(widget) {
+						if (!widget.isLoaded) {
+							widget.load();
+							return false;
+						}
+					});
+				})
+				;
 		}
 
 		$ul.children().each(function() {
 			var $widget = $(this);
-
 			dashboardWidget($widget);
-
-			$widget.find('iframe').prop('src', $widget.data('url'));
 		});
+
+		if (widgets.length) {
+			widgets[0].load();
+		}
 
 		instance.serialize = function(widget) {
 			var data = gridster.serialize(widget);
@@ -84,9 +97,12 @@
 			var widget = gridster.add_widget(html, $item.data('col'), $item.data('row'));
 			var $widget = $(widget);
 
-			dashboardWidget($widget);
+			$widget
+				.attr('data-url', $item.data('url'))
+				.attr('data-remove-url', $item.data('remove-url'))
+				;
 
-			$widget.attr('data-remove-url', $item.data('remove-url'));
+			dashboardWidget($widget).load();
 
 			instance.trigger(
 				'added.widget',
