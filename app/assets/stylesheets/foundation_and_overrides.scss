@@ -1,5 +1,5 @@
 // Required global settings and mixins for Foundation
-@import "foundation/foundation-global";
+@import "foundation/components/global";
 @import "foundation/components/buttons";
 
 // Settings file to override Foundation variables
@@ -16,7 +16,8 @@
 // $em-base: 16px;
 
 // We use these to control various global styles
-$body-bg: url(image_path('bg.png')) top left repeat repeat;
+$body-bg: #ddd;
+// url(image_path('bg.png')) top left repeat repeat;
 // $body-font-color: #222;
 $body-font-family: "Ubuntu", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
@@ -29,7 +30,7 @@ $body-font-family: "Ubuntu", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 // $text-direction: ltr;
 
 // We use these as default colors throughout
-$primary-color: #88a;
+$primary-color: #cfc;
 // $secondary-color: #e9e9e9;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
@@ -66,7 +67,7 @@ $global-radius: 3px;
 // Grid Variables
 //
 
-// $row-width: 62.5em;
+$row-width: 100%;
 // $column-gutter: 1.875em;
 // $total-columns: 12;
 
@@ -909,8 +910,8 @@ $reveal-close-side: emCalc(5px);
 //
 
 // These control the background color for the table and even rows
-$table-bg: #000;
-$table-even-row-bg: #222;
+$table-bg: $panel-color;
+$table-even-row-bg: #777;
 
 // These control the table cell border style
 $table-border-style: none;
@@ -927,7 +928,7 @@ $table-head-font-color: #fff;
 // These control the row padding and font styles
 // $table-row-padding: emCalc(9px) emCalc(10px);
 // $table-row-font-size: emCalc(14px);
-$table-row-font-color: #999;
+$table-row-font-color: #fff;
 // $table-line-height: emCalc(18px);
 
 // These are for controlling the display and margin of tables
@@ -977,10 +978,10 @@ $table-row-font-color: #999;
 //
 
 // Background color for the top bar
-$topbar-bg: #000;
+$topbar-bg: #666;
 
 // Height and margin
-$topbar-height: 37px;
+// $topbar-height: 37px;
 // $topbar-margin-bottom: emCalc(30px);
 
 // Control Input height for top bar
@@ -1030,7 +1031,7 @@ $topbar-breakpoint: emCalc(480px); // Change to 9999px for always mobile layout
 }
 
 .top-bar-section ul li > a {
-	font-size: emCalc(16px);
-	font-weight: bold;
+	// font-size: emCalc(16px);
+	// font-weight: bold;
 }
 

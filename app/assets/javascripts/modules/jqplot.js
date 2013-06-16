@@ -22,7 +22,8 @@
 			renderOptions: {
 				smooth: true
 			},
-			showMarker: false
+			showMarker: false,
+			shadow: false
 		};
 
 		defaultOptions.legend = {

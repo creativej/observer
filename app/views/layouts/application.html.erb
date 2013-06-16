@@ -28,40 +28,27 @@
   >
     <div class="contain-to-grid userbar">
       <nav class="top-bar">
-        <ul class="title-area">
-          <!-- Title Area -->
-          <li class="name">
-            <h1><a href="/" class="brand-title">The observer</a></h1>
-          </li>
-        </ul>
         <section class="top-bar-section components-menu">
-          <ul class="left">
-            <li class="divider hide-for-small"></li>
-            <li>
-              <a
-                href="<%= queries_path %>"
-                class="<%= controller.is('queries')? 'active' : '' %>"
-                ><i class="icon-database"></i>Resources</a>
+          <ul class="left title-area">
+            <li class="has-dropdown name"><a href="/" class="brand-title">The observer</a>
+            <ul class="dropdown">
+              <li>
+                <a
+                  href="<%= queries_path %>"
+                  ><i class="icon-database"></i>Resources</a>
+              </li>
+              <li>
+                <a
+                  href="<%= widgets_path %>"
+                  ><i class="icon-line-graph"></i>Widgets</a>
+              </li>
+              <li>
+                <a
+                  href="<%= dashboards_path %>"
+                  ><i class="icon-layout"></i>Dashboards</a>
+              </li>
+            </ul>
             </li>
-          </ul>
-          <ul class="left">
-            <li class="divider hide-for-small"></li>
-            <li>
-              <a
-                href="<%= widgets_path %>"
-                class="<%= controller.is('widgets')? 'active' : '' %>"
-                ><i class="icon-line-graph"></i>Widgets</a>
-            </li>
-          </ul>
-          <ul class="left">
-            <li class="divider hide-for-small"></li>
-            <li>
-              <a
-                href="<%= dashboards_path %>"
-                class="<%= controller.is('dashboards')? 'active' : '' %>"
-                ><i class="icon-layout"></i>Dashboards</a>
-            </li>
-            <li class="divider hide-for-small"></li>
           </ul>
           <!-- Right Nav Section -->
           <ul class="right">

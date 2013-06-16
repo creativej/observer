@@ -11,7 +11,7 @@
 
 	.component {
 		font-size: 2em;
-		background-color: #000;
+		background-color: $panel-color;
 		@include drop-shadow;
 		padding: 10px;
 		text-align: center;

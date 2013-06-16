@@ -93,6 +93,7 @@
 //         },
 
 var defaultStyles = {
+	shadow: false
 };
 
 Observer.jqplotTheme = {

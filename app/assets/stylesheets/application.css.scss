@@ -31,6 +31,10 @@
 	color: #fff;
 }
 
+.top-bar li a {
+	height: 100%;
+}
+
 .top-bar .name .brand-title:hover {
 	color: $highlight-color;
 }
@@ -63,13 +67,11 @@
 }
 
 .userbar {
-	@include box-shadow(0px 2px 2px hsla(0%, 0%, 0%, 0.3));
-	overflow: hidden;
 	.user {
 		color: #999;
 		line-height: 41px;
 		height: $topbar-height;
-		background-color: black;
+		background-color: $topbar-bg;
 		font-size: 0.8em;
 	}
 
