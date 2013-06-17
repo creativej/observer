@@ -27,17 +27,6 @@
 @import "queries";
 @import "widgets";
 
-.top-bar .name .brand-title {
-	color: #fff;
-}
-
-.top-bar li a {
-	height: 100%;
-}
-
-.top-bar .name .brand-title:hover {
-	color: $highlight-color;
-}
 
 .components-menu {
 	li {
@@ -74,13 +63,11 @@
 		background-color: $topbar-bg;
 		font-size: 0.8em;
 	}
-
-	transition: height 0.5s;
-	-webkit-transition: height 0.5s; /* Safari */
 }
 
 .fullscreen .userbar {
 	height: 0px;
+	overflow: hidden;
 }
 
 .action {

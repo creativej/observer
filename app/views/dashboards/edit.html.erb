@@ -1,17 +1,23 @@
-<div class="dashboard-menu-group">
-  <div class="preferences item">
-    <a href="#" data-reveal-id="dashboard-preferences" title="add widgets">
-      <i class="icon-cog dashboard-menu-icon" title="preferences"></i>
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <a href="#" data-reveal-id="widgets-selector" title="add widgets">
+      <i class="icon-line-graph dashboard-tools-icon"></i> Add widget
     </a>
-  </div>
+  </li>
+  <li class="divider"></li>
+  <li>
+    <a href="#" data-reveal-id="dashboard-preferences" title="add widgets">
+      <i class="icon-cog dashboard-tools-icon" title="preferences"></i> Dashboard
+    </a>
+  </li>
+</ul>
+<% end %>
+<div class="dashboard-menu-group">
   <div class="monitor item">
     <a href="#" title="full screen" class="monitor-fullscreen">
       <i class="icon-monitor dashboard-menu-icon" title="full screen"></i>
-    </a>
-  </div>
-  <div class="widgets dashboard-menu-item">
-    <a href="#" data-reveal-id="widgets-selector" title="add widgets">
-      <i class="icon-line-graph dashboard-menu-icon"></i>
     </a>
   </div>
 </div>
