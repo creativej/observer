@@ -1,3 +1,17 @@
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <a href="#" title="add resources">
+      <i class="icon-line-graph dashboard-tools-icon"></i> Add resources
+    </a>
+  </li>
+  <% if !params[:redirect].nil? %>
+  <li class="divider"></li>
+  <li><a href="<%= params[:redirect] %>"><i class="icon-forward"></i> Done</a></li>
+  <% end %>
+</ul>
+<% end %>
 <div class="widget-name editable-name" data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
 
 <div class="preview-container">
@@ -30,7 +44,7 @@
         <i class="icon-database icon" title="resources" data-id="resources"></i>
         <div class="content">
           <div class="actions">
-            <a href="<%= new_query_path %>" title="new data" class="new-query action"><i class="icon-plus"></i></a>
+            <a href="<%= new_query_path(:redirect => request.fullpath) %>" title="new data" class="new-query action"><i class="icon-plus"></i></a>
             <a href="#" class="close-resources action"><i class="icon-cross"></i></a>
           </div>
           <div class="items">
@@ -41,7 +55,7 @@
                 <div class="query-name"><%= q.name %></div>
                 <div class="query-token"><%= q.token %></div>
               </div>
-              <a href="<%= edit_query_path(q) %>" title="edit this data"><i class="query-edit icon-pencil" ></i></a>
+              <a href="<%= edit_query_path(q, :redirect => request.fullpath) %>" title="edit this data"><i class="query-edit icon-pencil" ></i></a>
             </div>
             <% end %>
           <% end %>

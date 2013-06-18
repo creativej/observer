@@ -19,7 +19,9 @@ class WidgetsController < ApplicationController
     @widget.row ||= 2
     @widget.name = 'untitled'
     @widget.save
-    redirect_to(edit_widget_path(@widget))
+    redirect_to(
+      edit_widget_path(@widget.id, :redirect => params[:redirect])
+    )
   end
 
   # GET /widgets/1/edit

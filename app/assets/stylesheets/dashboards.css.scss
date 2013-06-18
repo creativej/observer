@@ -28,17 +28,20 @@
  * Widget selector group
  */
 .widgets-selector-group {
-	height: 100px;
+	height: 200px;
 	bottom: 0px;
 	background-color: $panel-color;
 	padding: 10px;
-	@include box-sizing(border-box);
 	margin-bottom: 10px;
 	display: none;
 }
 
 .widgets-selector-icon {
 	font-size: emCalc(48px);
+}
+
+.widgets-selector-actions {
+	margin-top: 10px;
 }
 
 .widgets-selector-item {
@@ -49,7 +52,6 @@
 	font-size: emCalc(12px);
 	padding: 10px;
 	text-align: center;
-	@include box-sizing(border-box);
 	cursor: pointer;
 	color: $primary-color;
 

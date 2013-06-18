@@ -24,7 +24,7 @@ class QueriesController < ApplicationController
     @query.value = ''
     @query.save
     # print @query.errors
-    redirect_to(edit_query_path(@query))
+    redirect_to(edit_query_path(@query, :redirect => params[:redirect]))
   end
 
   # GET /queries/1/edit
