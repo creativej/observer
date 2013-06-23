@@ -2,6 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.query-edit-form-group {
+    padding: 0 20px;
+    margin-bottom: 100px;
+}
+
+.query-editor-group {
+    background-color: $panel-color;
+    padding: 10px;
+    @include drop-shadow;
+}
+
 .queries {
     #query-editor {
         top: 0;
@@ -16,12 +27,30 @@
 
     .query-form-actions {
         text-align: right;
-        margin: 20px auto;
+        float: right;
+    }
+
+    .query-form-actions-group {
+        position: relative;
+    }
+
+    .result-content {
+        overflow: auto;
+        padding: 10px;
+        margin-bottom: 10px;
+        margin-right: 110px;
+    }
+
+    .result-content-empty-text {
+        text-align: center;
+        font-size: 2em;
+        color: #ccc;
+        padding: 50px 0;
     }
 
     .result-table {
-        font-size: 1em;
-        width: 90%;
+        font-size: 0.9em;
         margin: 0 auto 40px;
+        border: 1px #444 solid;
     }
 }

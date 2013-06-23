@@ -1,21 +1,29 @@
 .spinner-container {
-    position: absolute;
-    z-index: 9;
     width: 100%;
     height: 100%;
-    background-color: hsla(0%, 0%, 0%, 0.7);
     top: 0px;
     left: 0px;
-    display: none;
+    opacity: 0;
+    @include transition (all 0.5s ease-out);
 
-    .spinner {
-        background: url(image_path('ajax-loader.gif')) no-repeat no-repeat;
-        width: 31px;
-        height: 31px;
-        margin: 55px auto;
+    .spinner-icon {
+        background: transparent url(image_path('ajax-loader-16.gif')) no-repeat no-repeat;
+        width: 16px;
+        height: 16px;
+        margin: 12px 0;
+        @include inline-block;
+        vertical-align: middle;
+    }
+
+    .spinner-action {
+        font-size: 0.8em;
+        vertical-align: middle;
+        @include inline-block;
+        margin-left: 10px;
+        color: #ddd;
     }
 }
 
 .spinner-container.show {
-    display: block;
+    opacity: 1;
 }

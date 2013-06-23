@@ -8,6 +8,6 @@ module ApplicationHelper
   end
 
   def spinner
-    '<div class="spinner-container"><div class="spinner"></div></div>'
+    '<div class="spinner-container"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
   end
 end

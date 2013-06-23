@@ -8,8 +8,6 @@
 (function($, ace, window, Observer) {
 	'use strict';
 
-	var localStorage = window.localStorage;
-
 	Observer.modules.aceEditor = function($el) {
 		var
 			modeReference = {
@@ -20,8 +18,7 @@
 			},
 			instance = window.eventable({}),
 			mode,
-			cacheKey,
-			cachedValue,
+			lastSavedValue,
 			$field,
 			editor
 			;
@@ -32,7 +29,6 @@
 		editor = ace.edit($el.prop('id'));
 		mode = modeReference[$el.data('mode')];
 
-		cacheKey = mode + '.editor';
 		$field = $($el.data('bind'));
 		editor.setTheme('ace/theme/twilight');
 		editor.getSession().setMode('ace/mode/'+mode);
@@ -50,18 +46,22 @@
 			return $field.serialize();
 		};
 
+		instance.hasUnsavedContent = function() {
+			return lastSavedValue !== this.val();
+		};
+
+		instance.updateLastSavedValue = function() {
+			return lastSavedValue = $field.val();
+		};
+
 		if ($field.val().trim()) {
 			instance.update();
-		} else if (!$field.val().trim() && localStorage.getItem(cacheKey)) {
-			cachedValue = localStorage.getItem(cacheKey);
-			editor.setValue(cachedValue);
-			$field.val(cachedValue);
+			instance.updateLastSavedValue();
 		}
 
 		editor.clearSelection();
 
 		editor.on('change', function(e){
-			localStorage.setItem(cacheKey, editor.getValue());
 			$field.val(editor.getValue());
 		});
 

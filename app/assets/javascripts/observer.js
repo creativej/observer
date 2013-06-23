@@ -25,6 +25,10 @@
 			return $('#app_body');
 		};
 
+		instance.$spinner = function() {
+			return $('.global-spinner .spinner-container');
+		}
+
 		instance.onPageReady = function(page, callback) {
 			if (Array.isArray(page)) {
 				page.forEach(function(p) {

@@ -1,26 +1,32 @@
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <a href="<%= @redirect %>" class="query-done">
+      <i class="icon-back dashboard-tools-icon" title="done"></i> Done
+    </a>
+  </li>
+</ul>
+<% end %>
 <div class="row query-edit-form-group">
+  <div class="query-name editable-name" data-url="<%= query_path %>" data-name="query[name]" contenteditable="true"><%= @query.name %></div>
   <%= form_for(@query, :html => {:class => 'query-form' }) do |f| %>
     <%= render '/form_errors' %>
-    <div class="query-name editable-name" data-url="<%= query_path %>" data-name="query[name]" contenteditable="true"><%= @query.name %></div>
-    <div class="editor-container field">
+    <div class="query-editor-group field">
       <%= f.hidden_field :value %>
       <%=
       render '/editor',
         :mode => 'sql',
         :url => query_path,
         :prefix => 'query',
-        :bind => '#query_value',
-        :no_save => true
-    %>
+        :bind => '#query_value'
+      %>
+      <div class="query-form-actions-group">
+        <div class="query-form-actions field">
+          <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>"><i class="icon-triangle-right"></i>Run</a>
+        </div>
+        <div class='result-content'><div class="result-content-empty-text"></div></div>
+      </div>
     </div>
-    <div class="query-form-actions field">
-      <% if !request.referer.nil? %>
-      <%= hidden_field_tag :redirect, request.referer %>
-      <a href="<%= request.referer %>" class="button secondary">back</a>
-      <% end %>
-      <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>">run</a>
-      <%= f.submit :class => 'button' %>
-    </div>
-    <div class='result-content'><!-- Container for ajax content --></div>
   <% end %>
 </div>

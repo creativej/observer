@@ -14,7 +14,7 @@
 		});
 	}
 
-	Observer.modules.editableName = function($el) {
+	Observer.modules.editableName = function($el, spinner) {
 		var instance = {};
 		var originalValue;
 

@@ -258,7 +258,7 @@ $input-border-width: 0px;
 // $button-font-align: center;
 
 // We use these to control various hover effects.
-// $button-function-factor: 10%;
+$button-function-factor: 20%;
 
 // We use these to control button border styles.
 $button-border-width: 0;
@@ -916,10 +916,10 @@ $table-even-row-bg: #777;
 // These control the table cell border style
 $table-border-style: none;
 // $table-border-size: 1px;
-// $table-border-color: #ddd;
+$table-border-color: #444;
 
 // These control the table head styles
-$table-head-bg: transparent;
+$table-head-bg: #444;
 // $table-head-font-size: emCalc(14px);
 $table-head-font-color: #fff;
 // $table-head-font-weight: bold;
@@ -1033,6 +1033,10 @@ $topbar-breakpoint: emCalc(480px); // Change to 9999px for always mobile layout
 .top-bar-section ul li > a {
 	// font-size: emCalc(16px);
 	// font-weight: bold;
+}
+
+.top-bar-section ul {
+    background-color: $panel-color;
 }
 
 .top-bar .name .brand-title {

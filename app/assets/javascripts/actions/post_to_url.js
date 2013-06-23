@@ -1,34 +1,33 @@
 (function($, Observer, window) {
 	'use strict';
 
-	Observer.actions.postForm = function($form, spinner, options) {
+	Observer.actions.postToUrl = function(url, options) {
 		var
 			dfd = new $.Deferred()
 			;
 
-		function spinnerDo(action, text) {
-			if (spinner) {
-				spinner[action](text);
+		function spinner(action, text) {
+			if (options.spinner) {
+				options.spinner[action](text);
 			}
 		}
 
 		options = $.extend({
-			failedTitle: 'Saving failed'
+			failedTitle: 'Post failed'
 		}, options);
 
-		spinnerDo('show', options.action);
+		spinner('show', options.action);
 
 		$.ajax({
-			url: $form.prop('action'),
-			type: 'PUT',
-			dataType: 'json',
-			data: $form.serialize()
+			url: url,
+			type: 'POST',
+			data: options.data
 		})
 		.success(function(resp) {
-			spinnerDo('hide');
+			spinner('hide');
 			dfd.resolve(resp);
 		})
-		.fail(function(resp) {
+		.fail(function(resp, status, error) {
 			Observer.alert(options.failedTitle, resp.responseText, 'medium');
 			dfd.reject();
 		})

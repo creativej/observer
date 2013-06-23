@@ -16,8 +16,15 @@
 .editor-group {
     position: relative;
     padding: 30px 10px 10px;
-    background-color: #151515;
     margin-bottom: 10px;
+    background-color: #133;
+
+    .ace_scroller {
+        background-color: transparent !important;
+    }
+}
+
+.editor-group--drop-shadow {
     @include drop-shadow;
 }
 
@@ -39,7 +46,7 @@
     }
 
     .title {
-        color: #434343;
+        color: #fff;
         font-weight: bold;
     }
 }
