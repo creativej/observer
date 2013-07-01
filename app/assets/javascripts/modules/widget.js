@@ -41,21 +41,26 @@
 			autoRefresh: 1,
 		}, options || {});
 
-		function dataLoaded(data) {
-			dataSets.push(widgetData(data));
-			if (dataSets.length === loadingQueue.length) {
-				instance.trigger.apply(instance, ['ready.data'].concat(dataSets));
-			}
-		}
-
 		function loadData(url) {
 			$
 				.ajax({
 					url: url,
 					dataType: "json"
 				})
-				.success(dataLoaded)
+				.success(function(data) {
+					dataSets.push(widgetData(data));
+
+					if (loadingQueue.length) {
+						loadNextInQueue();
+					} else {
+						instance.trigger.apply(instance, ['ready.data'].concat(dataSets));
+					}
+				})
 				;
+		}
+
+		function loadNextInQueue() {
+			loadData(loadingQueue.shift());
 		}
 
 		instance.$el = $el;
@@ -71,7 +76,7 @@
 				loadingQueue.push(urls);
 			}
 
-			loadingQueue.forEach(loadData);
+			loadNextInQueue();
 
 			return this;
 		};
