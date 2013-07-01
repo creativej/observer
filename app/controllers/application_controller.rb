@@ -28,6 +28,14 @@ class ApplicationController < ActionController::Base
     @current_controller == name
   end
 
+  def param(name, default = false)
+    if params[name].nil?
+      default
+    else
+      params[:redirect]
+    end
+  end
+
   def dump(object)
     puts YAML::dump(object)
   end

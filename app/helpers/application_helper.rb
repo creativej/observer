@@ -7,7 +7,11 @@ module ApplicationHelper
     value.nil? ? value : default
   end
 
-  def spinner
-    '<div class="spinner-container"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
+  def spinner(classes = '')
+    '<div class="spinner-container ' << classes << '"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
+  end
+
+  def overlay_spinner
+    self.spinner('spinner-container--overlay')
   end
 end

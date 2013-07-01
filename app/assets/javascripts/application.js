@@ -39,8 +39,8 @@
 		$(document).foundation();
 	});
 
-	window.onload = function() {
+	$(window).load(function(){
 		Observer.trigger('onload.window');
 		Observer.triggerPageLoaded();
-	};
+	});
 }(window, Observer, jQuery, document));

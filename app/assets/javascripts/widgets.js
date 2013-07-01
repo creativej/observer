@@ -3,9 +3,9 @@
 //= require modules/ace_editor
 //= require actions/save_attribute
 //= require modules/spinner
-//= require modules/widget_tools
 //= require modules/sandbox
 //= require modules/widget_preferences
+//= require modules/widget_resources
 //= require modules/editable_name
 (function($, window, Observer, undefined) {
 	'use strict';
@@ -77,10 +77,13 @@
 		previewWidget(sandbox);
 
 		var $tools = $('.widget-tools');
-		var tools = modules.widgetTools($tools);
-		tools.on('save.preferences', function() {
+
+		var preferences = modules.widgetPreferences($('[data-widget-preferences]'));
+		preferences.on('save', function() {
 			previewWidget(sandbox);
 		});
+
+		var resources = modules.widgetResources($('[data-widget-resources]'));
 
 		modules.editableName($('.widget-name'));
 	});

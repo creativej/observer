@@ -2,78 +2,81 @@
 <ul class="right dashboard-tools">
   <li class="divider"></li>
   <li>
-    <a href="#" title="add resources">
-      <i class="icon-line-graph dashboard-tools-icon"></i> Add resources
+    <a href="#" title="add resources" data-widget-resources data-modal-id="widget-resources">
+      <i class="icon-database dashboard-tools-icon"></i> Resources
     </a>
   </li>
-  <% if !params[:redirect].nil? %>
   <li class="divider"></li>
-  <li><a href="<%= params[:redirect] %>"><i class="icon-forward"></i> Done</a></li>
-  <% end %>
+  <li>
+    <a href="#" title="Preferences" data-widget-preferences data-modal-id="widget-preferences">
+      <i class="icon-cog dashboard-tools-icon"></i> Preferences
+    </a>
+  </li>
+  <li class="divider"></li>
+  <li><a href="<%= @redirect %>"><i class="icon-forward"></i> Done</a></li>
 </ul>
 <% end %>
 <div class="widget-name editable-name" data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
 
 <div class="preview-container">
-  <%= spinner.html_safe %>
+  <%= overlay_spinner.html_safe %>
   <%= widget_sandbox('', 'widget-sandbox').html_safe %>
 </div>
 <%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
-  <%= render '/form_errors' %>
-  <div class="row widget-edit-form-group">
-    <div class="widget-tools">
-      <div class="preferences item">
-        <i class="icon-cog icon" title="preferences" data-id="preferences"></i>
-        <div class="content" data-url="<%= widget_path %>">
-          <%= spinner.html_safe %>
-          <div>
-            <%= label_tag :column %>
-            <%= f.number_field :column, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[0] } %>
-          </div>
-          <div>
-            <%= label_tag :row %>
-            <%= f.number_field :row, { :class => 'options-item', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[1] } %>
-          </div>
-
-          <i class="action icon-cross cancel" tabindex="2"></i>
-          <i class="action icon-check save" tabindex="3"></i>
-        </div>
-      </div>
-      <div class="resources item">
-        <i class="icon-database icon" title="resources" data-id="resources"></i>
-        <div class="content">
-          <div class="actions">
-            <a href="<%= new_query_path(:redirect => request.fullpath) %>" title="new data" class="new-query action"><i class="icon-plus"></i></a>
-            <a href="#" class="close-resources action"><i class="icon-cross"></i></a>
-          </div>
-          <div class="items">
-          <% if !@queries.nil? %>
-            <% @queries.each do |q| %>
-            <div class="item">
-              <div class="copy-token" data-clipboard-text="<%= q.token %>">
-                <div class="query-name"><%= q.name %></div>
-                <div class="query-token"><%= q.token %></div>
-              </div>
-              <a href="<%= edit_query_path(q, :redirect => request.fullpath) %>" title="edit this data"><i class="query-edit icon-pencil" ></i></a>
-            </div>
-            <% end %>
-          <% end %>
-          </div>
-        </div>
-      </div>
+<div class="row">
+  <div class="large-12 columns">
+    <div class="large-7 columns">
+      <%= f.hidden_field :js %>
+      <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
     </div>
-    <div class="large-12 columns">
-      <div class="large-7 columns">
-        <%= f.hidden_field :js %>
-        <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
-      </div>
-      <div class="large-5 columns">
-        <%= f.hidden_field :html, :placeholder => 'html' %>
-        <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
-        <%= f.hidden_field :css, :placeholder => 'css' %>
-        <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
-      </div>
+    <div class="large-5 columns">
+      <%= f.hidden_field :html, :placeholder => 'html' %>
+      <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
+      <%= f.hidden_field :css, :placeholder => 'css' %>
+      <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
     </div>
   </div>
+</div>
+<div class="widget-preferences-group reveal-modal" id="widget-preferences" data-url="<%= widget_path %>">
+  <div class="widget-preferences__title"><i class="icon-cog"></i> Preferences</div>
+  <div class="widget-preferences__content">
+    <%= overlay_spinner.html_safe %>
+    <div>
+      <%= label_tag :column, nil, :class => 'label--light' %>
+      <%= f.number_field :column, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[0] } %>
+    </div>
+    <div>
+      <%= label_tag :row, nil, :class => 'label--light' %>
+      <%= f.number_field :row, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[1] } %>
+    </div>
+
+    <a href="#" class="button secondary" tabindex="2" data-cancel><i class="icon-back"></i>Cancel</a>
+    <a href="#" class="button" tabindex="3" data-save><i class="icon-save"></i>OK</a>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
 <% end %>
+<div class="widget-resources-group reveal-modal" id="widget-resources">
+  <div class="widget-resources__title"><i class="icon-database"></i> Resources</div>
+  <div class="widget-resources__content">
+    <div class="widget-resources__items">
+    <% if !@queries.nil? %>
+      <% @queries.each do |q| %>
+      <div class="widget-resources__item">
+        <div data-copy-token data-clipboard-text="<%= q.token %>" class="widget-resources__copy-token">
+          <div class="widget-resources__query-name"><%= q.name %></div>
+          <div class="widget-resources__query-token"><%= q.token %></div>
+        </div>
+        <a href="<%= edit_query_path(q, :redirect => request.fullpath) %>" title="edit this data" class="widget-resources__query-edit"><i class="icon-pencil" data-edit></i></a>
+      </div>
+      <% end %>
+    <% end %>
+    </div>
+    <div class="widget-resources__actions">
+      <a href="#" class="button secondary small" data-cancel><i class="icon-back"></i> Cancel</a>
+      <a href="<%= new_query_path(:redirect => request.fullpath) %>" title="new data" class="button small widget-resources__action"><i class="icon-plus"></i> New</a>
+    </div>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>

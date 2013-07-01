@@ -27,3 +27,12 @@
 .spinner-container.show {
     opacity: 1;
 }
+
+.spinner-container--overlay {
+    position: absolute;
+    display: none;
+}
+
+.spinner-container--overlay.show {
+    display: block;
+}

@@ -16,7 +16,9 @@
       window = undefined
       ;
 
-    var widget = modules.widget($('.widget'));
+    var widget = modules.widget($('.widget'), {
+      autoRefresh: $('.show.widgets').length
+    });
     <%= html_safe js_filter(js) %>
 
   });

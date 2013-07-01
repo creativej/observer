@@ -29,11 +29,7 @@ class QueriesController < ApplicationController
 
   # GET /queries/1/edit
   def edit
-    if params[:redirect].nil?
-      @redirect = queries_path
-    else
-      @redirect = params[:redirect]
-    end
+    @redirect = param(:redirect, queries_path)
 
     @query = current_user.queries.find(params[:id])
   end

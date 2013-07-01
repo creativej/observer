@@ -1,15 +1,48 @@
 (function($, Observer, window) {
 	'use strict';
 
-	Observer.modules.widget = function($el) {
+	var widgetData = function(data) {
+		var instance = {};
+
+		instance.data = data.result;
+		instance.raw = data;
+
+		instance.first = function(name) {
+			return this.data[0];
+		};
+
+		instance.val = function(name) {
+			var first = this.first();
+			var keys = Object.keys(first);
+
+			if (!name) {
+				if (keys.length === 1 && first.hasOwnProperty(keys[0])) {
+					return first[keys[0]];
+				}
+			} else {
+				if (first.hasOwnProperty(name)) {
+					return first[name];
+				}
+			}
+		};
+
+		return instance;
+	};
+
+	Observer.modules.widget = function($el, options) {
 		var instance = window.eventable(),
 			dataSets = [],
 			loadingQueue = [],
 			refreshTimer
 			;
 
+		options = $.extend({
+			refresh: 100000, // Refresh every 10 minutes
+			autoRefresh: 1,
+		}, options || {});
+
 		function dataLoaded(data) {
-			dataSets.push(data);
+			dataSets.push(widgetData(data));
 			if (dataSets.length === loadingQueue.length) {
 				instance.trigger.apply(instance, ['ready.data'].concat(dataSets));
 			}
@@ -44,7 +77,7 @@
 		};
 
 		instance.refresh = function(ms) {
-			if (!ms) { refreshTimer = null; }
+			if (!ms) { refreshTimer = null; return; }
 
 			refreshTimer = window.setTimeout(function() {
 				window.location.reload();
@@ -55,7 +88,9 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
-		instance.refresh(100000); // Refresh every 10 minutes
+		if (options.autoRefresh) {
+			instance.refresh(options.refresh);
+		}
 
 		return instance;
 	};

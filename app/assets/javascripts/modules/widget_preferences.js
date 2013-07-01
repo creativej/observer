@@ -4,11 +4,12 @@
 	Observer.modules.widgetPreferences = function($el) {
 		var
 			instance = window.eventable(),
-			$save = $el.find('.save'),
-			$cancel = $el.find('.cancel'),
-			spinner = Observer.modules.spinner($el.find('.spinner-container')),
+			$modal = $('#' + $el.data('modal-id')),
+			$save = $modal.find('[data-save]'),
+			$cancel = $modal.find('[data-cancel]'),
+			spinner = Observer.modules.spinner($modal.find('.spinner-container')),
 			cached = {},
-			$inputs = $el.find('input')
+			$inputs = $modal.find('input')
 			;
 
 		function cache($inputs) {
@@ -18,56 +19,49 @@
 			});
 		}
 
-		Observer.Keyboard.addListener(instance);
-
-		instance.on('esc.keyup', function() {
-			instance.cancel();
+		$modal.foundation('reveal', {
+			opened: function() {
+				instance.trigger('opened');
+			},
+			closed: function() {
+				$inputs.each(function() {
+					var $this = $(this);
+					$this.val(cached[$this.prop('name')]);
+				});
+				instance.trigger('closed');
+			}
 		});
 
-		instance.on('enter.keypress', function() {
-			instance.saveAttribute();
+		$el.click(function() {
+			instance.show();
+			return false;
 		});
 
-		Observer.Keyboard
-			.keypress('enter', $cancel, function() {
-				instance.cancel();
-			})
-			.keypress('enter', $save, function() {
-				instance.saveAttribute();
-			})
-			;
-
-		$save.click(function() { instance.saveAttribute(); });
-		$cancel.click(function() { instance.cancel(); });
-
-		instance.hide = function() {
-			$el.removeClass('active');
-			this.focus = false;
-			return this;
-		};
+		$save.click(function() { instance.saveAttribute(); return false; });
+		$cancel.click(function() { instance.cancel(); return false; });
 
 		instance.show = function() {
-			$el.addClass('active');
+			$modal.foundation('reveal', 'open');
 			cache($inputs);
-			this.focus = true;
-			return this;
 		};
+
+		instance.close = function() {
+			$modal.foundation('reveal', 'close');
+		}
 
 		instance.saveAttribute = function() {
 			Observer.actions.saveAttribute(
-				$el.data('url'),
+				$modal.data('url'),
 				spinner,
 				$inputs.serialize()
 			).done(function() {
+				instance.close();
 				instance.trigger('save');
 			});
 		};
 
 		instance.cancel = function() {
-			$inputs.each(function() {
-				var $this = $(this);
-				$this.val(cached[$this.prop('name')]);
-			});
+			this.close();
 			instance.trigger('cancel');
 		};
 

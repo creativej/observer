@@ -3,25 +3,24 @@
 
 	Observer.modules.widgetResources = function($el) {
 		var
-			instance = window.eventable({})
+			instance = window.eventable({}),
+			$modal = $('#' + $el.data('modal-id'))
 			;
 
 		Observer.Keyboard.addListener(instance);
 
 		instance.hide = function() {
-			$el.removeClass('active');
-			this.focus = false;
+			$modal.foundation('reveal', 'close');
 			return this;
 		};
 
 		instance.show = function() {
-			$el.addClass('active');
-			this.focus = true;
+			$modal.foundation('reveal', 'open');
 			return this;
 		};
 
 		var
-			$items = $el.find('.copy-token'),
+			$items = $modal.find('[data-copy-token]'),
 			clip = new window.ZeroClipboard($items)
 			;
 
@@ -36,15 +35,20 @@
 		});
 
 		clip.on('complete', function() {
+			instance.hide();
 			instance.trigger('copied');
 		});
 
-		$el.find('.query-edit').click(function() {
-			window.location = $(this).data('url');
+		$modal.find('[data-cancel]').click(function() {
+			instance.hide();
+			return false;
 		});
-		$el.find('.close-resources').click(function() {
-			instance.trigger('close.click');
+
+		$el.click(function() {
+			instance.show();
+			return false;
 		});
+
 		return instance;
 	};
 }(jQuery, Observer, window));

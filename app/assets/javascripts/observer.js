@@ -49,11 +49,11 @@
 			}
 		};
 
-		instance.triggerPageReady = function(name, data) {
+		instance.triggerPageReady = function(data) {
 			return instance.trigger(pageNamespace('ready'), data);
 		};
 
-		instance.triggerPageLoaded = function(name, data) {
+		instance.triggerPageLoaded = function(data) {
 			return instance.trigger(pageNamespace('loaded'), data);
 		};
 

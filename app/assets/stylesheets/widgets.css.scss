@@ -54,6 +54,7 @@
 .widgets.edit {
     .preview-container {
         margin: 0 auto;
+        position: relative;
     }
 }
 .widget-group {
@@ -70,115 +71,63 @@
     max-width: 100%;
 }
 
-.widget-tools {
-    position: absolute;
-    top: 65px;
-    right: 26px;
-    border-radius: 5px;
+/** widget resources **/
 
-    .icon {
-        color: #ccc;
-        font-size: 2em;
-        padding: 5px;
-        opacity: 0.5;
-        cursor: pointer;
-        text-shadow: 5px 5px hsla(0%, 0%, 0%, 0.3);
-    }
+.widget-resources__title {
+    color: #fff;
+    margin-bottom: 10px;
+}
 
-    .icon.active, .icon:hover {
-        opacity: 1;
-    }
+.widget-resources__item {
+    margin-bottom: 1px;
+}
 
-    .content {
-        display: none;
-        position:absolute;
-        top: 0px;
-        right: 60px;
-        padding: 10px;
-    }
+.widget-resources__content {
+    padding: 4px 5px 10px 10px
+}
 
-    .preferences .content {
-        width: 150px;
-        text-align: right;
-    }
+.widget-resources__copy-token {
+    background-color: #222;
+    padding: 5px 10px;
+    cursor: pointer;
+    @include inline-block;
+}
 
-    .resources .item {
-        width: 375px;
-        margin-bottom: 1px;
-    }
+.widget-resources__copy-token.hover {
+    background-color: #333;
+}
 
-    .resources .content {
-        padding: 4px 5px 10px 10px
-    }
+.widget-resources__query-name {
+    color: #ccc;
+    width: 378px;
+    margin-right: 10px;
+    @include inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
-    .resources .copy-token {
-        background-color: #222;
-        padding: 5px 10px;
-        cursor: pointer;
-        @include inline-block;
-    }
+.widget-resources__query-token {
+    color: #ccc;
+    width: 85px;
+    white-space: nowrap;
+    @include inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-    .resources .copy-token.hover {
-        background-color: #333;
-    }
+.widget-resources__query-edit {
+    font-size: 1em;
+    @include inline-block;
+}
 
-    .resources .query-name {
-        color: #ccc;
-        width: 230px;
-        margin-right: 10px;
-        @include inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+.widget-resources__actions {
+    margin-top: 10px;
+}
 
-    .resources .query-token {
-        color: #ccc;
-        width: 85px;
-        white-space: nowrap;
-        @include inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .resources .query-edit {
-        font-size: 1.3em;
-        @include inline-block;
-    }
-
-    .resources .actions {
-        text-align: right;
-    }
-
-    .resources .action {
-        margin-bottom: 5px;
-        font-size: 1.5em;
-    }
-
-    label {
-        margin-right: 5px;
-    }
-
-    label, input[type="number"] {
-        @include inline-block;
-        width: auto;
-    }
-
-    .content.active {
-        display: block;
-        font-size: 0.8em;
-        background-color: #151515;
-        @include drop-shadow;
-    }
-
-    .action {
-        font-size: 2em;
-        cursor: pointer;
-    }
-
-    .action:focus {
-        color: $highlight-color;
-    }
+.widget-preferences__title {
+    color: #fff;
+    margin-bottom: 10px;
 }
 
 .widget-group {
@@ -188,7 +137,7 @@
 
 .widget-group .jqplot-target {
     .jqplot-axis {
-        color: #999;
+        color: $panel-color;
     }
 
     .jqplot-table-legend {
@@ -197,6 +146,6 @@
     }
 
     .jqplot-table-legend-label {
-        color: #999
+        color: $panel-color
     }
 }

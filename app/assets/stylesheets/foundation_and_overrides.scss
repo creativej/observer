@@ -780,7 +780,7 @@ $reveal-overlay-bg: rgba(#fff, .45);
 // $reveal-overlay-bg-old: #000;
 
 // We use these to control the style of the modal itself.
-// $reveal-modal-bg: #fff;
+$reveal-modal-bg: #666666;
 // $reveal-position-top: 50px;
 $reveal-default-width: emCalc(600px);
 // $reveal-modal-padding: emCalc(20px);
@@ -1053,4 +1053,8 @@ $topbar-breakpoint: emCalc(480px); // Change to 9999px for always mobile layout
 
 .top-bar-section > ul > .divider, .top-bar-section > ul > [role="separator"] {
     border-left: none;
+}
+
+.label--light {
+    color: #fff;
 }

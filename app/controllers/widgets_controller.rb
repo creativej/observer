@@ -28,6 +28,7 @@ class WidgetsController < ApplicationController
   def edit
     @widget = current_user.widgets.find(params[:id])
     @queries = current_user.queries
+    @redirect = param(:redirect, widgets_path)
   end
 
   # PUT /widgets/1
