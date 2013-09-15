@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.14'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -8,11 +8,12 @@ gem 'rails', '3.2.13'
 gem 'sqlite3'
 # gem 'pg'
 gem 'mysql2'
-gem 'bower-rails', '~> 0.2.1'
+gem 'bower-rails', '~> 0.4.4'
 gem 'devise'
 gem 'bourbon'
 gem 'jquery-rails'
 gem 'rails_config'
+gem 'requirejs-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
