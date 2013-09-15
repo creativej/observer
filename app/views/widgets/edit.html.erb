@@ -21,6 +21,7 @@
 <div class="preview-container">
   <%= overlay_spinner.html_safe %>
   <%= widget_sandbox('', 'widget-sandbox').html_safe %>
+  <%= widget_modifier(:widget_id => @widget.id).html_safe %>
 </div>
 <%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>

@@ -5,6 +5,7 @@
 //= require modules/spinner
 //= require modules/sandbox
 //= require modules/widget_preferences
+//= require modules/widget_modifier
 //= require modules/widget_resources
 //= require modules/editable_name
 (function($, window, Observer, undefined) {
@@ -82,7 +83,7 @@
 		preferences.on('save', function() {
 			previewWidget(sandbox);
 		});
-
+		var modifier = modules.widgetModifier($('[data-widget-modifier]'));
 		var resources = modules.widgetResources($('[data-widget-resources]'));
 
 		modules.editableName($('.widget-name'));

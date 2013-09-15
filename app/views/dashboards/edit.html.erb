@@ -32,6 +32,7 @@
       <% @dashboard_widgets.each do |dw| %>
         <li data-col="<%= dw.col %>" data-row="<%= dw.row %>" data-sizex="<%= dw.size_x %>" data-sizey="<%= dw.size_y %>" data-url="<%= widget_path(dw.widget) %>" data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>" data-id="<%= dw.id %>">
           <%= widget_sandbox('', '', dw.widget_id).html_safe %>
+          <%= widget_modifier(:remove => true).html_safe %>
         </li>
       <% end %>
       </ul>

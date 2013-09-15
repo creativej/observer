@@ -57,6 +57,20 @@
         position: relative;
     }
 }
+
+.widget-modifier-group {
+    width: 100%;
+    height: 100%;
+    border: #ccc 1px solid;
+    position: absolute;
+    top: 0px;
+    opacity: 0;
+}
+
+.widget-modifier-group[data-show="1"] {
+    opacity: 1;
+}
+
 .widget-group {
     padding: 10px 20px 10px 10px;
     position: relative;

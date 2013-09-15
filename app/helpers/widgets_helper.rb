@@ -21,6 +21,19 @@ module WidgetsHelper
     widget.options[name]
   end
 
+  def widget_modifier(data)
+    remove_btn = ''
+
+    if !data[:remove].nil?
+      remove_btn = '<div class="dashboard-widget-remove" data-remove><i class="icon-cross"></i></div>'
+    end
+<<eos
+  <div class="widget-modifier-group" data-widget-modifier>
+  #{remove_btn}
+  </div>
+eos
+  end
+
   def widget_sandbox(src = '', id = '', widget_id = '')
 <<eos
 <iframe

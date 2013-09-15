@@ -1,12 +1,7 @@
 //= require actions/remove_widget_from_dashboard
+//= require modules/widget_modifier
 (function($, window, Observer, undefined) {
 	'use strict';
-
-	var $removeWidgetBtn = $('<div />');
-	$removeWidgetBtn
-		.addClass('dashboard-widget-remove')
-		.append('<i class="icon-cross"></i>')
-		;
 
 	Observer.modules.dashboardWidget = function($el) {
 		var
@@ -16,32 +11,16 @@
 			$iframe = $el.find('iframe')
 			;
 
-		$el.on('mouseover', function() {
-			instance.removeBtn();
-			$el.append($removeWidgetBtn);
+		var modifier = Observer.modules.widgetModifier($el.find('[data-widget-modifier]'));
 
-			$removeWidgetBtn.on('click', function() {
-				var $widget = $removeWidgetBtn.closest('.gs_w');
-				console.log($widget.data('remove-url'));
-				Observer.actions.removeWidgetFromDashboard(
-					$widget.data('remove-url'),
-					$widget.data('id')
-				).done(function() {
-					instance.trigger('removed', $widget[0]);
-				});
+		modifier.on('clicked.remove', function() {
+			Observer.actions.removeWidgetFromDashboard(
+				$el.data('remove-url'),
+				$el.data('id')
+			).done(function() {
+				instance.trigger('removed', $el[0]);
 			});
 		});
-
-		$el.on('mouseout', function(e) {
-			if (!$(e.relatedTarget).closest('.gs_w').length) {
-				instance.removeBtn();
-			}
-		});
-
-		instance.removeBtn = function() {
-			$removeWidgetBtn.remove();
-			$removeWidgetBtn.off();
-		};
 
 		instance.load = function() {
 			$iframe.prop('src', $el.data('url'));

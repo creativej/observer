@@ -116,15 +116,15 @@
  */
 .dashboard-widget-remove {
 	position: absolute;
-	top: -5px;
-	right: -5px;
+	top: -8px;
+	right: -8px;
 	text-align: center;
 	line-height: 1.2;
 	color: #fff;
-	background-color: #888;
 	border-radius: 8px;
 	width: 17px;
 	height: 18px;
+	background-color: #ccc;
 }
 
 .dashboard-widget-remove:hover {
