@@ -1,0 +1,18 @@
+{
+  "name": "zeroclipboard",
+  "version": "1.1.7",
+  "main": [
+    "./ZeroClipboard.js",
+    "./ZeroClipboard.swf"
+  ],
+  "homepage": "https://github.com/zeroclipboard/ZeroClipboard",
+  "_release": "1.1.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.7",
+    "commit": "c4d9db0df1e082be30d3bfd104502f66f840a29f"
+  },
+  "_source": "https://github.com/zeroclipboard/ZeroClipboard.git",
+  "_target": "1.1.7",
+  "_originalSource": "https://github.com/zeroclipboard/ZeroClipboard.git"
+}

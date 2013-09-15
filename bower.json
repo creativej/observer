@@ -1,18 +1,21 @@
 {
   "lib": {
-    "dependencies": {}
+    "name": "bower-rails generated lib assets",
+    "dependencies": {
+    }
   },
   "vendor": {
+    "name": "bower-rails generated vendor assets",
     "dependencies": {
       "modernizr": "~2.6.2",
       "ace-builds": "~1.0.0",
-      "sugar": "~1.3.8",
       "bootstrap": "~2.3.1",
       "jquery": "~2.0.0",
       "gridster.js": "git@github.com:creativej/gridster.js.git#~0.2.2",
       "flot": "~0.8.0",
       "moment": "~2.0.0",
-      "zeroclipboard": "https://github.com/zeroclipboard/ZeroClipboard.git#1.1.7"
+      "zeroclipboard": "https://github.com/zeroclipboard/ZeroClipboard.git#1.1.7",
+      "flight": "~1.1.0"
     }
   }
 }
