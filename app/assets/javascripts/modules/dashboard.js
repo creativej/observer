@@ -1,4 +1,4 @@
-//= require components/gridster.js/dist/jquery.gridster
+//= require bower_components/gridster.js/dist/jquery.gridster
 //= require modules/widget
 //= require modules/dashboard_widget
 //

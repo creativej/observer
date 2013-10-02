@@ -10,11 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require components/jquery/jquery
+//= require bower_components/jquery/jquery
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require mixins/eventable
-//= require components/zeroclipboard/ZeroClipboard
+//= require bower_components/zeroclipboard/ZeroClipboard
 //= require observer
 //= require observer/keyboard
 //= require modules/jqplot
@@ -22,8 +22,7 @@
 //= require foundation
 //= require modules/alert_modal
 //= require jquery_ujs
-//= require components/sugar/release/sugar.min
-//= require components/moment/moment
+//= require bower_components/moment/moment
 //= require queries
 //= require widgets
 //= require dashboards

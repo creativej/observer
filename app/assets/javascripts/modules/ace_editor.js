@@ -1,9 +1,9 @@
-//= require components/ace-builds/src/ace
-//= require components/ace-builds/src/theme-twilight
-//= require components/ace-builds/src/mode-sql
-//= require components/ace-builds/src/mode-javascript
-//= require components/ace-builds/src/mode-scss
-//= require components/ace-builds/src/mode-html
+//= require bower_components/ace-builds/src/ace
+//= require bower_components/ace-builds/src/theme-twilight
+//= require bower_components/ace-builds/src/mode-sql
+//= require bower_components/ace-builds/src/mode-javascript
+//= require bower_components/ace-builds/src/mode-scss
+//= require bower_components/ace-builds/src/mode-html
 //
 (function($, ace, window, Observer) {
 	'use strict';

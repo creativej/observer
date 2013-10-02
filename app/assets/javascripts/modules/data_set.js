@@ -1,4 +1,4 @@
-//= require components/moment/moment
+//= require bower_components/moment/moment
 //
 (function($, Observer, window) {
 	var dataSet = function(list, options) {
