@@ -4,7 +4,7 @@
 		axes:{
 			yaxis:{ min: 0 },
 			xaxis:{
-			renderer: $.jqplot.DateAxisRenderer,
+				renderer: $.jqplot.DateAxisRenderer,
 				tickOptions: {
 					formatString: '%Y-%#m-%#d'
 				}
@@ -15,7 +15,8 @@
 	Observer.jqplot = function(id, dataSets, options) {
 		var
 			instance = {},
-			defaultOptions = {}
+			defaultOptions = {},
+			verticalLines = []
 			;
 
 		defaultOptions.seriesDefaults = {
@@ -34,7 +35,7 @@
 		};
 		defaultOptions.grid = {
 			backgroundColor: 'transparent',
-			drawGridlines: false,
+			drawGridlines: true,
 			drawBorder: false,
 			shadow: false
 		};
@@ -43,6 +44,44 @@
 
 		instance.useDateChart = function(overrides) {
 			options = $.extend(true, options, dateChartOptions, overrides);
+			return this;
+		};
+
+		instance.addVerticalLine = function(overrides) {
+			verticalLines.push({
+				verticalLine: $.extend(true, {
+					lineWidth: 4,
+					color: 'rgb(255, 255, 255)',
+					shadow: false,
+					show: true,
+					lineCap: 'butt'
+				}, overrides)
+			});
+
+			console.log(verticalLines);
+
+			options.canvasOverlay = {
+				show: true,
+				objects: verticalLines
+			};
+
+			return this;
+		};
+
+		instance.useDateTimeChart = function(overrides) {
+			dateChartOptions.axes.xaxis.tickOptions = {
+				formatString: '%a %#I%p'
+			};
+
+			options = $.extend(
+				true,
+				options,
+				dateChartOptions,
+				overrides
+			);
+
+			console.log(options);
+
 			return this;
 		};
 

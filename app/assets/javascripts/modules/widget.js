@@ -87,7 +87,7 @@
 			refreshTimer = window.setTimeout(function() {
 				window.location.reload();
 			}, ms);
-		}
+		};
 
 		instance.jqplot = function(id, dataSets, options) {
 			return Observer.jqplot(id, dataSets, options);

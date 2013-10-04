@@ -10,7 +10,7 @@
 				outputFormat: 'YYYY-MM-DD',
 				filter: function(item) {
 					if (Object.has(item, 'datetime') || Object.has(item, 'value')) {
-						return [item.datetime, item.value];
+						return [item.datetime, item.value, item.timestamp];
 					} else {
 						throw 'Data object format is invalid';
 					}
@@ -38,8 +38,14 @@
 		};
 
 		instance.groupBy = function(period) {
-			groupBy = function(date, value) {
-				date = window.moment(date, options.format)
+			groupBy = function(date, value, timestamp) {
+				if (timestamp) {
+					date = window.moment.unix(timestamp);
+				} else {
+					date = window.moment(date, options.format);
+				}
+				date
+					.local()
 					.startOf(period)
 					.format(options.outputFormat)
 					;
@@ -70,7 +76,7 @@
 				var arr = options.filter.apply(item, [item, index]);
 
 				if (groupBy) {
-					arr = groupBy(arr[0], arr[1]);
+					arr = groupBy(arr[0], arr[1], arr[2]);
 				}
 
 				instance.add(arr[0], arr[1]);

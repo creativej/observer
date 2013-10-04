@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require bower_components/jquery/jquery
+//= require bower_components/sugar/release/sugar-full.development
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require mixins/eventable
