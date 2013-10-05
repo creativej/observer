@@ -2,7 +2,7 @@ class DashboardsController < ApplicationController
   # GET /dashboards
   # GET /dashboards.json
   def index
-    @dashboards = current_user.dashboards.all
+    @dashboards = Dashboard.all(:include => :user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,15 +22,15 @@ class DashboardsController < ApplicationController
 
   # GET /dashboards/1/edit
   def edit
-    @dashboard = current_user.dashboards.find(params[:id])
+    @dashboard = Dashboard.find(params[:id])
     @dashboard_widgets = @dashboard.dashboard_widgets
-    @widgets = current_user.widgets
+    @widgets = Widget.all(:include => :user)
   end
 
   # PUT /dashboards/1
   # PUT /dashboards/1.json
   def update
-    @dashboard = current_user.dashboards.find(params[:id])
+    @dashboard = Dashboard.find(params[:id])
 
     respond_to do |format|
       if @dashboard.update_attributes(params[:dashboard])
@@ -47,7 +47,7 @@ class DashboardsController < ApplicationController
   # PUT /dashboards/1/update-widgets
   # PUT /dashboards/1/update-widgets.json
   def update_widgets
-    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    @dashboard = Dashboard.find(params[:dashboard_id])
     widgets = ActiveSupport::JSON.decode(params[:widgets])
     respond_to do |format|
       if @dashboard.update_widgets(widgets)
@@ -60,7 +60,7 @@ class DashboardsController < ApplicationController
 
   # POST /dashboards/1/add-widget.json
   def add_widget
-    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    @dashboard = Dashboard.find(params[:dashboard_id])
     widget = ActiveSupport::JSON.decode(params[:widget]).first
     respond_to do |format|
       if @dashboard.add_widget(widget)
@@ -73,7 +73,7 @@ class DashboardsController < ApplicationController
 
   # DELETE /dashboards/1/remove-widgets.json
   def remove_widget
-    @dashboard = current_user.dashboards.find(params[:dashboard_id])
+    @dashboard = Dashboard.find(params[:dashboard_id])
     respond_to do |format|
       if @dashboard.remove_widget(params[:id])
         format.json { head :no_content }
@@ -86,7 +86,7 @@ class DashboardsController < ApplicationController
   # DELETE /dashboards/1
   # DELETE /dashboards/1.json
   def destroy
-    @dashboard = current_user.dashboards.find(params[:id])
+    @dashboard = Dashboard.find(params[:id])
     @dashboard.destroy
 
     respond_to do |format|

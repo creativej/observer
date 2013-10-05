@@ -57,22 +57,27 @@
           <!-- Right Nav Section -->
           <ul class="right">
               <li class="divider"></li>
+              <% if !user_signed_in? %>
+              <li>
+                <a class="login action" href="<%= new_user_session_path %>">
+                  <i class="icon-login"></i> Log in
+                </a>
+              </li>
+              <% else %>
               <li class="has-dropdown">
-                <a href="#"><i class="icon-user"></i></a>
+                <a href="#"><i class="icon-user"></i> <%= current_user.username %></a>
                 <ul class="dropdown">
                   <li>
-                  <% if !user_signed_in? %>
-                    <a class="login action" href="<%= new_user_session_path %>">
-                      <i class="icon-login"></i>
+                    <a href="<%= edit_user_registration_path %>">
+                      <i class="icon-pencil"></i> Update account
                     </a>
-                  <% else %>
                     <a href="<%= destroy_user_session_path %>" data-method="delete" class="logout action" title="logout">
-                      <i class="icon-logout"></i> <%= current_user.email %>
+                      <i class="icon-logout"></i> Log out
                     </a>
-                  <% end %>
                   </li>
                 </ul>
               </li>
+              <% end %>
           </ul>
           <%= yield :tools %>
         </section>

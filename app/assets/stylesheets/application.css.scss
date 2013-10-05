@@ -26,6 +26,7 @@
 @import "dashboards";
 @import "queries";
 @import "widgets";
+@import "devise";
 
 .reveal-modal__title {
     color: #fff;
@@ -38,6 +39,18 @@
 
 .reveal-modal__content {
     padding: 4px 5px 10px 5px
+}
+
+.content-group {
+	background-color: $panel-color;
+	padding: 20px;
+	@include drop-shadow;
+	color: #fff;
+
+	label {
+		font-size: emCalc(18px);
+		color: #ccffcc;
+	}
 }
 
 .components-menu {

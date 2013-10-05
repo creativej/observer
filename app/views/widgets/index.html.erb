@@ -3,6 +3,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Created by</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,7 +12,10 @@
   <tbody>
 <% @widgets.each do |widget| %>
     <tr>
-      <td><a href="<%= edit_widget_path(widget) %>" class="action"><%= widget.name %></a></td>
+      <td><a href="<%= edit_widget_path(widget) %>"><%= widget.name %></a></td>
+      <td>
+      <%= widget.user.username %>
+      </td>
       <td class="action-cell">
           <a href="<%= edit_widget_path(widget) %>" class="action"><i class="icon-pencil"></i></a>
       </td>

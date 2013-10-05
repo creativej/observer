@@ -7,7 +7,7 @@ class QueriesController < ApplicationController
   # GET /queries
   # GET /queries.json
   def index
-    @queries = current_user.queries
+    @queries = Query.all(:include => :user)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -31,7 +31,7 @@ class QueriesController < ApplicationController
   def edit
     @redirect = param(:redirect, queries_path)
 
-    @query = current_user.queries.find(params[:id])
+    @query = Query.find(params[:id])
   end
 
   # POST /queries/run
@@ -52,7 +52,7 @@ class QueriesController < ApplicationController
 
   # GET /queries/data/:token
   def data
-    @query = current_user.queries.find_by_token!(params[:token])
+    @query = Query.find_by_token!(params[:token])
 
     if (@query.nil?)
       raise ActionController::RoutingError.new('Not Found')
@@ -80,7 +80,7 @@ class QueriesController < ApplicationController
   # PUT /queries/1
   # PUT /queries/1.json
   def update
-    @query = current_user.queries.find(params[:id])
+    @query = Query.find(params[:id])
 
     respond_to do |format|
       if @query.update_attributes(params[:query])
@@ -103,7 +103,7 @@ class QueriesController < ApplicationController
   # DELETE /queries/1
   # DELETE /queries/1.json
   def destroy
-    @query = current_user.queries.find(params[:id])
+    @query = Query.find(params[:id])
     @query.destroy
 
     respond_to do |format|

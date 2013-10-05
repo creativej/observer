@@ -4,6 +4,7 @@
     <tr>
       <th>Name</th>
       <th>Token</th>
+      <th>created by</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,8 +12,13 @@
   <tbody>
   <% @queries.each do |query| %>
     <tr>
-      <td><%= query.name %></td>
+      <td>
+        <a href="<%= edit_query_path(query) %>">
+          <%= query.name %>
+        </a>
+      </td>
       <td><%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %></td>
+      <td><%= query.user.username %></td>
       <td class="action-cell">
           <a href="<%= edit_query_path(query) %>" class="action"><i class="icon-pencil"></i></a>
       </td>

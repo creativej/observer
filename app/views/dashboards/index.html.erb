@@ -6,6 +6,7 @@
       <th>Name</th>
       <th>Scale</th>
       <th>Is public</th>
+      <th>Created by</th>
       <th></th>
       <th></th>
     </tr>
@@ -13,9 +14,13 @@
   <tbody>
 <% @dashboards.each do |dashboard| %>
     <tr>
-      <td><%= dashboard.name %></td>
+      <td>
+        <a href="<%= edit_dashboard_path(dashboard) %>"><%= dashboard.name %>
+        </a>
+      </td>
       <td><%= dashboard.scale %></td>
       <td><%= dashboard.is_public %></td>
+      <td><%= dashboard.user.username %></td>
       <td class="action-cell">
         <a href="<%= edit_dashboard_path(dashboard) %>" class="action" title="edit this dashboard"><i class="icon-pencil"></i></a>
       </td>

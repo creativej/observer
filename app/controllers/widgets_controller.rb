@@ -1,8 +1,10 @@
 class WidgetsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /widgets
   # GET /widgets.json
   def index
-    @widgets = current_user.widgets.all
+    @widgets = Widget.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,15 +28,15 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/1/edit
   def edit
-    @widget = current_user.widgets.find(params[:id])
-    @queries = current_user.queries
+    @widget = Widget.find(params[:id])
+    @queries = Query.all
     @redirect = param(:redirect, widgets_path)
   end
 
   # PUT /widgets/1
   # PUT /widgets/1.json
   def update
-    @widget = current_user.widgets.find(params[:id])
+    @widget = Widget.find(params[:id])
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
@@ -57,7 +59,7 @@ class WidgetsController < ApplicationController
   # DELETE /widgets/1
   # DELETE /widgets/1.json
   def destroy
-    @widget = current_user.widgets.find(params[:id])
+    @widget = Widget.find(params[:id])
     @widget.destroy
 
     respond_to do |format|
@@ -74,7 +76,7 @@ class WidgetsController < ApplicationController
 
   # POST /widgets/1
   def show
-    @widget = current_user.widgets.find(params[:id])
+    @widget = Widget.find(params[:id])
     render :layout => 'basic'
   end
 end
