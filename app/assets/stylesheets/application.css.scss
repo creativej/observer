@@ -27,6 +27,18 @@
 @import "queries";
 @import "widgets";
 
+.reveal-modal__title {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.reveal-modal__item {
+    margin-bottom: 1px;
+}
+
+.reveal-modal__content {
+    padding: 4px 5px 10px 5px
+}
 
 .components-menu {
 	li {

@@ -33,13 +33,13 @@
 		}
 
 		$body.keypress(function(e) {
-			listeners.each(function(obj) {
+			listeners.forEach(function(obj) {
 				trigger('press', e.keyCode, obj);
 			});
 		});
 
 		$body.keyup(function(e) {
-			listeners.each(function(obj) {
+			listeners.forEach(function(obj) {
 				trigger('up', e.keyCode, obj);
 			});
 		});

@@ -9,7 +9,7 @@
 				format: 'YYYY-MM-DD',
 				outputFormat: 'YYYY-MM-DD',
 				filter: function(item) {
-					if (Object.has(item, 'datetime') || Object.has(item, 'value')) {
+					if (item.hasOwnProperty('datetime') || item.hasOwnProperty('value')) {
 						return [item.datetime, item.value, item.timestamp];
 					} else {
 						throw 'Data object format is invalid';
@@ -21,7 +21,7 @@
 		options = $.extend(true, defaultOptions, options);
 
 		instance.add = function(name, value) {
-			if (data[name] && Object.isNumber(value)) {
+			if (data[name] && typeof value === 'number') {
 				data[name] = data[name] + value;
 			} else {
 				data[name] = value;
@@ -71,8 +71,12 @@
 		};
 
 		instance.set = function(list) {
+			if (!list) {
+				return instance;
+			}
+
 			instance.clear();
-			list.each(function(item, index) {
+			list.forEach(function(item, index) {
 				var arr = options.filter.apply(item, [item, index]);
 
 				if (groupBy) {

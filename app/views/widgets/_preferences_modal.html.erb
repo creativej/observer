@@ -1,0 +1,34 @@
+<%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
+<div class="row">
+  <div class="large-12 columns">
+    <div class="large-7 columns">
+      <%= f.hidden_field :js %>
+      <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
+    </div>
+    <div class="large-5 columns">
+      <%= f.hidden_field :html, :placeholder => 'html' %>
+      <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
+      <%= f.hidden_field :css, :placeholder => 'css' %>
+      <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
+    </div>
+  </div>
+</div>
+<div class="widget-preferences-group reveal-modal" id="widget-preferences" data-url="<%= widget_path %>">
+  <div class="widget-preferences__title"><i class="icon-cog"></i> Preferences</div>
+  <div class="widget-preferences__content">
+    <%= overlay_spinner.html_safe %>
+    <div>
+      <%= label_tag :column, nil, :class => 'label--light' %>
+      <%= f.number_field :column, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[0] } %>
+    </div>
+    <div>
+      <%= label_tag :row, nil, :class => 'label--light' %>
+      <%= f.number_field :row, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[1] } %>
+    </div>
+
+    <a href="#" class="button secondary" tabindex="2" data-cancel><i class="icon-back"></i>Cancel</a>
+    <a href="#" class="button" tabindex="3" data-save><i class="icon-save"></i>OK</a>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<% end %>

@@ -5,7 +5,13 @@
 		var
 			instance = {
 				modules: {},
-				helpers: {},
+				helpers: {
+					arrayRemove: function(arr, removeItem) {
+						arr = $.grep(arr, function(value) {
+							return value != removeItem;
+						});
+					}
+				},
 				actions: {},
 				mixins: {}
 			}
@@ -27,7 +33,7 @@
 
 		instance.$spinner = function() {
 			return $('.global-spinner .spinner-container');
-		}
+		};
 
 		instance.onPageReady = function(page, callback) {
 			if (Array.isArray(page)) {

@@ -28,30 +28,18 @@
  * Widget selector group
  */
 .widgets-selector-group {
-	height: 200px;
-	bottom: 0px;
 	background-color: $panel-color;
-	padding: 10px;
-	margin-bottom: 10px;
 	display: none;
 }
 
-.widgets-selector-icon {
-	font-size: emCalc(48px);
-}
-
-.widgets-selector-actions {
+.widgets-selector__actions {
 	margin-top: 10px;
 }
 
-.widgets-selector-item {
-	@include inline-block;
-	width: 120px;
-	height: 80px;
+.widgets-selector__item {
 	background-color: #222;
-	font-size: emCalc(12px);
-	padding: 10px;
-	text-align: center;
+	font-size: emCalc(14px);
+	padding: 8px;
 	cursor: pointer;
 	color: $primary-color;
 
@@ -60,8 +48,9 @@
 	}
 }
 
-.widgets-selector-item:hover {
+.widgets-selector__item:hover {
 	color: $highlight-color;
+	background-color: $bg-highlight-color;
 }
 
 /**

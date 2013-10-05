@@ -1,0 +1,25 @@
+<div class="widget-resources-group reveal-modal" id="widget-resources">
+  <div class="reveal-modal__title">
+    <a href="<%= queries_path %>"><i class="icon-database"></i> Resources</a>
+  </div>
+  <div class="reveal-modal__content">
+    <div class="widget-resources__items">
+      <% if !@queries.nil? %>
+        <% @queries.each do |q| %>
+        <div class="widget-resources__item">
+          <div data-copy-token data-clipboard-text="<%= q.token %>" class="widget-resources__copy-token">
+            <div class="widget-resources__query-name"><%= q.name %></div>
+            <div class="widget-resources__query-token"><%= q.token %></div>
+          </div>
+          <a href="<%= edit_query_path(q, :redirect => request.fullpath) %>" title="edit this data" class="widget-resources__query-edit"><i class="icon-pencil" data-edit></i></a>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="widget-resources__actions">
+      <a href="#" class="button secondary small" data-cancel><i class="icon-back"></i> Cancel</a>
+      <a href="<%= new_query_path(:redirect => request.fullpath) %>" title="new data" class="button small widget-resources__action"><i class="icon-plus"></i> New</a>
+    </div>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>

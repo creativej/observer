@@ -1,0 +1,38 @@
+<div class="widgets-selector-group reveal-modal" id="widgets-selector" data-url="<%= dashboard_add_widget_path({ :dashboard_id => @dashboard.id }) %>">
+  <div class="reveal-modal__title">
+    <a href="<%= widgets_path %>"><i class="icon-line-graph"></i> Widgets</a>
+  </div>
+  <div class="reveal-modal__content">
+    <div class="widgets-selector-items">
+      <% @widgets.each do |widget| %>
+        <div
+          class="widgets-selector__item"
+          data-item
+          data-row="<%= widget.row %>"
+          data-col="<%= widget.column %>"
+          data-url="<%= widget_path widget %>"
+          data-id="<%= widget.id %>"
+          data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>"
+        >
+          <i class="widgets-selector-icon icon-line-graph"></i>
+          <%= widget.name %>
+          <a
+            href="<%= edit_widget_path(widget, :redirect => request.fullpath) %>"
+            title="edit this data"
+            class="widgets-selector__edit"
+          >
+            <i class="icon-pencil" data-edit></i>
+          </a>
+          <%= widget_sandbox.html_safe %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="widgets-selector__actions">
+      <a href="<%= new_widget_path(:redirect => request.fullpath) %>" class="button small">
+        <i class="icon-plus"></i>new widget
+      </a>
+    </div>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
+</div>

@@ -38,41 +38,7 @@
       </ul>
   </div>
 </div>
-<div class="widgets-selector-group reveal-modal" id="widgets-selector" data-url="<%= dashboard_add_widget_path({ :dashboard_id => @dashboard.id }) %>">
-  <% @widgets.each do |widget| %>
-  <div
-    class="widgets-selector-item"
-    data-row="<%= widget.row %>"
-    data-col="<%= widget.column %>"
-    data-url="<%= widget_path widget %>"
-    data-id="<%= widget.id %>"
-    data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>"
-  >
-    <div><i class="widgets-selector-icon icon-line-graph"></i></div>
-    <%= widget.name %>
-    <%= widget_sandbox.html_safe %>
-  </div>
-  <% end %>
-  <div class="widgets-selector-actions">
-    <a href="<%= new_widget_path(:redirect => request.fullpath) %>" class="button small"><i class="icon-plus"></i>new widget</a>
-  </div>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-<div class="dashboard-preferences-group reveal-modal" id="dashboard-preferences">
-  <%= spinner.html_safe %>
-  <%= form_for(@dashboard) do |f| %>
-  <div class="field">
-    <%= f.text_field :name, :class => 'dashboard-preference-text' %>
-  </div>
-  <div class="dashboard-preferences-action">
-    <a href="#" class="button secondary cancel-dashboard-action">
-      <i class="icon-back"></i> Cancel
-    </a>
-    <a href="#" class="button primary save-dashboard-action">
-      <i class="icon-save"></i> Save
-    </a>
-  </div>
-  <% end %>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
+<%= render 'widgets_modal' %>
+<%= render 'preferences_modal' %>
+
 

@@ -5,6 +5,8 @@
 (function($, Observer, window) {
 	'use strict';
 
+	var arrayRemove = Observer.helpers.arrayRemove;
+
 	Observer.modules.dashboard = function($el, options) {
 		var
 			instance = window.eventable(),
@@ -50,10 +52,10 @@
 			return dw
 				.on('removed', function(widget) {
 					gridster.remove_widget(widget);
-					widgets.remove(dw);
+					arrayRemove(widgets, dw);
 				})
 				.on('loaded', function() {
-					widgets.each(function(widget) {
+					widgets.forEach(function(widget) {
 						if (!widget.isLoaded) {
 							widget.load();
 							return false;

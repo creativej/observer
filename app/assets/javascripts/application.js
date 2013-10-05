@@ -10,8 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require bower_components/es5-shim/es5-shim
+//= require bower_components/es5-shim/es5-sham
 //= require bower_components/jquery/jquery
-//= require bower_components/sugar/release/sugar-full.development
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require mixins/eventable
