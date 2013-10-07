@@ -48,6 +48,13 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     coderay (1.1.0)
+    coffee-rails (3.2.2)
+      coffee-script (>= 2.2.0)
+      railties (~> 3.2.0)
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
     columnize (0.3.6)
     daemons (1.1.9)
     debug_inspector (0.0.2)
@@ -186,6 +193,7 @@ DEPENDENCIES
   bourbon
   bower-rails (~> 0.4.4)
   capistrano
+  coffee-rails
   debugger
   devise
   entypo-rails
