@@ -183,6 +183,7 @@ DEPENDENCIES
   debugger
   devise
   entypo-rails
+  execjs
   factory_girl_rails
   jquery-rails
   mysql2
