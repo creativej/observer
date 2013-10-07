@@ -87,6 +87,10 @@ class QueriesController < ApplicationController
   def update
     @query = Query.find(params[:id])
 
+    connection = Connection.find(params[:query][:connection_id])
+
+    @query.connection = connection
+
     respond_to do |format|
       if @query.update_attributes(params[:query])
         if (params[:redirect].nil?)

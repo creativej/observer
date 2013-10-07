@@ -1,5 +1,5 @@
 class Query < ActiveRecord::Base
-  attr_accessible :name, :token, :value
+  attr_accessible :name, :token, :value, :connection_id
   before_create :before_create
   belongs_to :user
   belongs_to :connection
