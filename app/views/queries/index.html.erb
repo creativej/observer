@@ -17,7 +17,11 @@
           <%= query.name %>
         </a>
       </td>
-      <td><%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %></td>
+      <td>
+      <% if query.connection.present? %>
+        <%= link_to query.token, data_queries_path({:token => query.token}), :target => '_blank' %>
+      <% end %>
+      </td>
       <td><%= query.user.username %></td>
       <td class="action-cell">
           <a href="<%= edit_query_path(query) %>" class="action"><i class="icon-pencil"></i></a>
