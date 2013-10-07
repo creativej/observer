@@ -14,6 +14,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'rails_config'
 gem 'requirejs-rails'
+gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,4 +49,5 @@ group :development do
   gem 'binding_of_caller'
   # Deploy with Capistrano
   gem 'capistrano'
+  gem 'rvm-capistrano'
 end

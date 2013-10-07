@@ -137,6 +137,8 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rvm-capistrano (1.2.7)
+      capistrano (>= 2.0.0)
     sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -172,6 +174,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
   better_errors
   binding_of_caller
   bourbon
@@ -187,6 +190,7 @@ DEPENDENCIES
   rails_config
   requirejs-rails
   rspec-rails (~> 2.0)
+  rvm-capistrano
   sass-rails (~> 3.2.3)
   sqlite3
   thin

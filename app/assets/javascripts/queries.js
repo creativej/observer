@@ -17,8 +17,9 @@
 		var
 			editor = modules.aceEditor($('.editor[rel="ace-editor"]')),
 			spinner = modules.spinner(Observer.$spinner()),
-			$runQueryBtn = $('.query-form').find('.run-btn'),
-			$queryForm = $('.query-form')
+			$queryForm = $('.query-form'),
+			$runQueryBtn = $queryForm.find('.run-btn'),
+			$resultContent = $('.result-content')
 			;
 
 		function runQuery() {
@@ -27,12 +28,13 @@
 				{
 					spinner: spinner,
 					data: {
-						value: editor.val()
+						value: editor.val(),
+						connection_id: $queryForm.find('#query_connection_id').val()
 					},
 					action: 'Executing query...'
 				}
 			).done(function(resp) {
-				$('.result-content').hide().html(resp).fadeIn('fast');
+				$resultContent.hide().html(resp).fadeIn('fast');
 			});
 		}
 

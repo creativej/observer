@@ -23,6 +23,7 @@ class QueriesController < ApplicationController
     @query.name = 'untitled'
     @query.value = ''
     @query.save
+
     # print @query.errors
     redirect_to(edit_query_path(@query, :redirect => params[:redirect]))
   end
@@ -32,6 +33,7 @@ class QueriesController < ApplicationController
     @redirect = param(:redirect, queries_path)
 
     @query = Query.find(params[:id])
+    @connections = Connection.all
   end
 
   # POST /queries/run
@@ -40,7 +42,10 @@ class QueriesController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
 
-    client = DBClient.create
+    connection = Connection.find request[:connection_id]
+
+    client = DBClient.create connection
+
     @result = client.query(request[:value])
     @queryError = client.last_query_error
     respond_to do |format|
@@ -58,7 +63,7 @@ class QueriesController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
 
-    client = DBClient.create
+    client = DBClient.create @query.connection
     @result = client.query(@query.value)
 
     if (@result)

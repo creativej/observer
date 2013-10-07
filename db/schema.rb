@@ -11,7 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131005230527) do
+ActiveRecord::Schema.define(:version => 20131006114120) do
+
+  create_table "connections", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "host",               :null => false
+    t.integer  "port"
+    t.string   "database"
+    t.string   "username",           :null => false
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.string   "database_type",      :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "dashboards", :force => true do |t|
     t.integer  "user_id"
@@ -37,12 +51,13 @@ ActiveRecord::Schema.define(:version => 20131005230527) do
   end
 
   create_table "queries", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.string   "name",       :null => false
-    t.text     "value",      :null => false
-    t.string   "token",      :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "user_id",       :null => false
+    t.string   "name",          :null => false
+    t.text     "value",         :null => false
+    t.string   "token",         :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "connection_id"
   end
 
   create_table "users", :force => true do |t|

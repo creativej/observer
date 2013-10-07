@@ -9,24 +9,44 @@
 </ul>
 <% end %>
 <div class="row query-edit-form-group">
-  <div class="query-name editable-name" data-url="<%= query_path %>" data-name="query[name]" contenteditable="true"><%= @query.name %></div>
-  <%= form_for(@query, :html => {:class => 'query-form' }) do |f| %>
-    <%= render '/form_errors' %>
-    <div class="query-editor-group field">
-      <%= f.hidden_field :value %>
-      <%=
-      render '/editor',
-        :mode => 'sql',
-        :url => query_path,
-        :prefix => 'query',
-        :bind => '#query_value'
-      %>
-      <div class="query-form-actions-group">
-        <div class="query-form-actions field">
-          <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>"><i class="icon-triangle-right"></i>Run</a>
-        </div>
-        <div class='result-content'><div class="result-content-empty-text"></div></div>
-      </div>
+  <div class="columns large-12">
+    <div
+      class="query-name editable-name"
+      data-url="<%= query_path %>"
+      data-name="query[name]"
+    >
+      <%= @query.name %>
     </div>
-  <% end %>
+    <%= form_for(@query, :html => {:class => 'custom query-form' }) do |f| %>
+      <%= render '/form_errors' %>
+      <div class="query-editor-group field">
+        <%= f.hidden_field :value %>
+        <%=
+        render '/editor',
+          :mode => 'sql',
+          :url => query_path,
+          :prefix => 'query',
+          :bind => '#query_value'
+        %>
+        <div class="row query-form-actions-group">
+          <div class="columns large-3 right query-form-actions field">
+            <%= select(
+              :query,
+              :connection_id,
+              @connections.collect { |c|
+                [connection_name(c), c.id]
+              },
+              :class => 'medium'
+            ) %>
+            <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>"><i class="icon-triangle-right"></i>Run</a>
+          </div>
+          <div class='columns large-9'>
+            <div class="result-content">
+              <div class="result-content-empty-text"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

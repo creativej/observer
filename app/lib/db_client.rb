@@ -1,14 +1,15 @@
 class DBClient
-  def self.create
+  def self.create(conn)
     self.new({
-      :host => '127.0.0.1',
-      :db => 'contests',
-      :user => 'contests',
-      :password => 'contests',
+      :host => conn.host,
+      :db => conn.database,
+      :user => conn.username,
+      :password => conn.decrypt_password,
     })
   end
 
   def initialize(options)
+
     @host = options[:host]
     @db = options[:db]
     @user = options[:user]

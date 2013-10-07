@@ -198,7 +198,7 @@ $anchor-font-color-hover: $highlight-color;
 // $input-font-family: inherit;
 $input-font-color: #fff;
 $input-font-size: emCalc(20px);
-$input-bg-color: #222;
+$input-bg-color: #133;
 $input-focus-bg-color: #333;
 $input-border-color: #444;
 $input-focus-border-color: #666;
@@ -440,14 +440,14 @@ $crumb-font-transform: normal;
 //
 
 // We use these to control the basic form styles input styles
-// $custom-form-border-color: #ccc;
+$custom-form-border-color: none;
 // $custom-form-bg: #fff;
 // $custom-form-bg-disabled: #ddd;
 // $custom-form-check-color: #222;
 
 // We use these to style the custom select form element.
 // $custom-select-bg: #fff;
-// $custom-select-fade-to-color: #f3f3f3;
+$custom-select-fade-to-color: none;
 // $custom-select-border-color: #ddd;
 // $custom-select-triangle-color: #aaa;
 // $custom-select-triangle-color-open: #222;
@@ -458,7 +458,7 @@ $crumb-font-transform: normal;
 
 // We use these to control the style of the custom select dropdown element.
 // $custom-dropdown-height: 200px;
-// $custom-dropdown-bg: #fff;
+$custom-dropdown-bg: $input-bg-color;
 // $custom-dropdown-border-color: darken(#fff, 20%);
 // $custom-dropdown-border-width: 1px;
 // $custom-dropdown-border-style: solid;

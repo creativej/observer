@@ -1,0 +1,48 @@
+<%= render 'warning' %>
+<hr/>
+<%= form_for(@connection) do |f| %>
+
+  <% if @connection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@connection.errors.count, "error") %> prohibited this connection from being saved:</h2>
+
+      <ul>
+      <% @connection.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label 'Name' %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label 'host *' %>
+    <%= f.text_field :host %>
+  </div>
+  <div>
+    <%= f.label :port %>
+    <%= f.number_field :port, :placeholder => '3306' %>
+  </div>
+  <div>
+    <%= f.label :database %>
+    <%= f.text_field :database %>
+  </div>
+  <div>
+    <%= f.label 'username *' %>
+    <%= f.text_field :username %>
+  </div>
+  <div>
+    <%= f.label 'password*' %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit :class => 'button primary' %>
+    <a href="<%= @redirect %>" class="button secondary">
+      Back
+    </a>
+  </div>
+
+<% end %>
+
