@@ -1,0 +1,16 @@
+{
+  "name": "gridster.js",
+  "version": "0.2.1",
+  "main": "dist/jquery.gridster.js",
+  "dependencies": {
+    "jquery": "2.0.0"
+  },
+  "devDependencies": {
+    "qunit": "1.4.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}

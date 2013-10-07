@@ -14,7 +14,7 @@
 /log/*.log
 /tmp
 
-/vendor/assets/javascripts
+# /vendor/assets/javascripts
 
 .rbenv-version
 
