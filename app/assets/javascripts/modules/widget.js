@@ -93,6 +93,45 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
+		instance.loadAndDrawDateChart = function(resources, callback) {
+			var urls = resources.map(function(item) {
+				return item.url;
+			});
+
+			instance
+				.load(urls)
+				.dataReady(function() {
+					var args = arguments;
+					var dataSets = resources.map(function(item, idx) {
+						var dataSet = Observer.modules.dataSet(args[idx].data);
+
+						if (item.groupBy) {
+							return dataSet
+								.groupBy(item.groupBy)
+								.output();
+						}
+
+						return dataSet.output();
+					});
+
+					this
+						.jqplot('chart', dataSets, {
+							series: resources.map(function(item) {
+								return item.option;
+							})
+						})
+						.useDateChart()
+						.draw()
+						;
+
+					if (callback) {
+						callback();
+					}
+				})
+				;
+
+		};
+
 		if (options.autoRefresh) {
 			instance.refresh(options.refresh);
 		}
