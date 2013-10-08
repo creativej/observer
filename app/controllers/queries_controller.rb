@@ -63,7 +63,7 @@ class QueriesController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
 
-    client = DBClient.create @query.connection
+    client = DBClient.create @query.db_connection
     @result = client.query(@query.value)
 
     if (@result)
@@ -89,7 +89,7 @@ class QueriesController < ApplicationController
 
     if params[:query][:connection_id].present?
       connection = Connection.find(params[:query][:connection_id])
-      @query.connection = connection
+      @query.db_connection = connection
     end
 
     respond_to do |format|
