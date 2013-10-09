@@ -33,7 +33,9 @@
 		var instance = window.eventable(),
 			dataSets = [],
 			loadingQueue = [],
-			refreshTimer
+			refreshTimer,
+			loadOptions = {},
+			templateId = 'widgetEJS'
 			;
 
 		options = $.extend({
@@ -42,13 +44,21 @@
 		}, options || {});
 
 		function loadData(url) {
+			if (url.match(/^http|https\:\/\//)) {
+				url = '/ajax-proxy?url=' + encodeURIComponent(url);
+			}
+
 			$
 				.ajax({
 					url: url,
 					dataType: "json"
 				})
 				.success(function(data) {
-					dataSets.push(widgetData(data));
+					if (!loadOptions.raw) {
+						dataSets.push(widgetData(data));
+					} else {
+						dataSets.push(data);
+					}
 
 					if (loadingQueue.length) {
 						loadNextInQueue();
@@ -69,7 +79,11 @@
 			return this.on('ready.data', callback);
 		};
 
-		instance.load = function(urls) {
+		instance.load = function(urls, options) {
+			if (options) {
+				loadOptions = options;
+			}
+
 			if (Array.isArray(urls)) {
 				loadingQueue = urls;
 			} else {
@@ -78,6 +92,23 @@
 
 			loadNextInQueue();
 
+			return this;
+		};
+
+		instance.enableEjs = function() {
+			options.ejs = true;
+			return this;
+		};
+
+		instance.bindDataToView = function(data) {
+			this.$el.html(can.view(templateId, data));
+			return this;
+		};
+
+		instance.initView = function() {
+			if (!options.ejs) {
+				this.$el.html($('#' + templateId).html());
+			}
 			return this;
 		};
 
@@ -138,4 +169,4 @@
 
 		return instance;
 	};
-}(jQuery, Observer, window));
+}(jQuery, Observer, window, can));

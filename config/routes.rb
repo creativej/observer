@@ -22,6 +22,8 @@ TheObserver::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "registrations" }
 
+  match 'ajax-proxy' => 'website#ajax'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

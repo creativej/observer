@@ -8,6 +8,8 @@
 //= require modules/widget_modifier
 //= require modules/widget_resources
 //= require modules/editable_name
+//= require canjs/can.jquery
+
 (function($, window, Observer, undefined) {
 	'use strict';
 

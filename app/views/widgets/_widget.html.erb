@@ -1,9 +1,8 @@
 <%= sandbox_css('widget-group', css).html_safe %>
-<div
-  class="widget-group"
-  >
+<div class="widget-group"></div>
+<script id="widgetEJS" type="text/ejs">
   <%= html_safe html %>
-</div>
+</script>
 <% content_for :javascript do %>
 <script type="text/javascript">
 (function($, Observer, window, undefined) {
@@ -16,12 +15,15 @@
       window = undefined
       ;
 
-    var widget = modules.widget($('.widget'), {
+    var widget = modules.widget($('.widget-group'), {
       autoRefresh: $('.show.widgets').length
     });
+
     <%= html_safe js_filter(js) %>
 
+    widget.initView();
+
   });
-}(jQuery, Observer, window));
+}(jQuery, Observer, window, can));
 </script>
 <% end %>
