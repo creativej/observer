@@ -1,5 +1,3 @@
-require 'HTTParty';
-
 class AjaxProxy
   include HTTParty
 
