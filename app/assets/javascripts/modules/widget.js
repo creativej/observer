@@ -113,11 +113,13 @@
 		};
 
 		instance.refresh = function(ms) {
-			if (!ms) { refreshTimer = null; return; }
+			if (!ms) { refreshTimer = null; return this; }
 
 			refreshTimer = window.setTimeout(function() {
 				window.location.reload();
 			}, ms);
+
+			return this;
 		};
 
 		instance.jqplot = function(id, dataSets, options) {
