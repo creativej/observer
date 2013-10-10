@@ -42,6 +42,7 @@ class QueriesController < ApplicationController
     attributes.delete('id')
     attributes.delete('created_at')
     attributes.delete('updated_at')
+    attributes.delete('token')
 
     query = Query.new
     query.attributes = attributes
