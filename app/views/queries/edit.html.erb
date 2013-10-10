@@ -2,6 +2,12 @@
 <ul class="right dashboard-tools">
   <li class="divider"></li>
   <li>
+    <a href="<%= copy_queries_path @query, :redirect => @rediect %>" class="query-done">
+      <i class="icon-docs dashboard-tools-icon" title="done"></i> New
+    </a>
+  </li>
+  <li class="divider"></li>
+  <li>
     <a href="<%= @redirect %>" class="query-done">
       <i class="icon-forward dashboard-tools-icon" title="done"></i> Done
     </a>

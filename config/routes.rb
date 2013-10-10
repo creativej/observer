@@ -10,6 +10,7 @@ TheObserver::Application.routes.draw do
   resources :widgets do
     collection do
       match 'preview', :as => :preview
+      match 'copy/:id' => 'widgets#copy', :as => :copy
     end
   end
 
@@ -17,6 +18,7 @@ TheObserver::Application.routes.draw do
     collection do
       post 'run'
       match 'data/:token' => 'queries#data', :constraints => {:format => /(html)/}, :as => :data
+      match 'copy/:id' => 'queries#copy', :as => :copy
     end
   end
 

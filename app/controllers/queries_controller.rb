@@ -36,6 +36,23 @@ class QueriesController < ApplicationController
     @connections = Connection.all
   end
 
+  def copy
+    @query = Query.find(params[:id])
+    attributes = @query.attributes
+    attributes.delete('id')
+    attributes.delete('created_at')
+    attributes.delete('updated_at')
+
+    query = Query.new
+    query.attributes = attributes
+    query.name = 'untitled'
+    query.save
+
+    redirect_to(
+      edit_query_path(query.id, :redirect => params[:redirect])
+    )
+  end
+
   # POST /queries/run
   def run
     if (!request.xhr?)

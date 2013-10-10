@@ -26,6 +26,23 @@ class WidgetsController < ApplicationController
     )
   end
 
+  def copy
+    @widget = Widget.find(params[:id])
+    attributes = @widget.attributes
+    attributes.delete('id')
+    attributes.delete('created_at')
+    attributes.delete('updated_at')
+
+    widget = Widget.new
+    widget.attributes = attributes
+    widget.name = 'untitled'
+    widget.save
+
+    redirect_to(
+      edit_widget_path(widget.id, :redirect => params[:redirect])
+    )
+  end
+
   # GET /widgets/1/edit
   def edit
     @widget = Widget.find(params[:id])
