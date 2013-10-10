@@ -16,40 +16,56 @@
 					}
 				}
 			},
-			groupBy
+			oldest,
+			latest,
+			groupBy,
+			groupByPeriod
 			;
 		options = $.extend(true, defaultOptions, options);
 
-		instance.add = function(name, value) {
-			if (data[name] && typeof value === 'number') {
-				data[name] = data[name] + value;
+		instance.add = function(dateKey, value) {
+			if (data[dateKey] && typeof value === 'number') {
+				data[dateKey] = data[dateKey] + value;
 			} else {
-				data[name] = value;
+				data[dateKey] = value;
 			}
+			console.log(dateKey);
+			var dateTime = window.moment(dateKey * 1000);
+			console.log(dateTime);
+			if (!oldest || dateTime.isBefore(oldest)) {
+				oldest = dateTime;
+			}
+
+			if (!latest || dateTime.isAfter(latest)) {
+				latest = dateTime;
+			}
+
 			return this;
 		};
 
-		instance.remove = function(name) {
-			if (data[name]) {
-				delete data[name];
+		instance.remove = function(dateKey) {
+			if (data[dateKey]) {
+				delete data[dateKey];
 			}
 
 			return this;
 		};
 
 		instance.groupBy = function(period) {
+			groupByPeriod = period;
+
 			groupBy = function(date, value, timestamp) {
 				if (timestamp) {
-					date = window.moment.unix(timestamp);
+					date = window.moment(timestamp * 1000);
 				} else {
 					date = window.moment(date, options.format);
 				}
-				date
-					.local()
-					.startOf(period)
-					.format(options.outputFormat)
+
+				timestamp = date
+					.endOf(period)
+					.unix()
 					;
-				return [date, value];
+				return [timestamp, value];
 			};
 
 			return this;
@@ -57,11 +73,20 @@
 
 		instance.output = function() {
 			this.set(list);
-
+			var dateTime;
 			var arr = [];
+
 			for (var index in data) {
-				arr.push([index, data[index]]);
+				if (groupBy) {
+					dateTime = window.moment(index * 1000)
+						.valueOf();
+				} else {
+					dateTime = index;
+				}
+
+				arr.push([dateTime, data[index]]);
 			}
+
 			return arr;
 		};
 
@@ -76,6 +101,7 @@
 			}
 
 			instance.clear();
+
 			list.forEach(function(item, index) {
 				var arr = options.filter.apply(item, [item, index]);
 
@@ -86,7 +112,25 @@
 				instance.add(arr[0], arr[1]);
 			});
 
+			if (groupBy) {
+				this.populateEmptyGaps();
+			}
+
 			return instance;
+		};
+
+		instance.populateEmptyGaps = function() {
+			var current = oldest;
+
+			do {
+				current.add(groupByPeriod, 1);
+
+				var dateKey = current.unix();
+
+				if (typeof data[dateKey] === 'undefined') {
+					data[dateKey] = 0;
+				}
+			} while (current.isBefore(latest));
 		};
 
 		return instance;

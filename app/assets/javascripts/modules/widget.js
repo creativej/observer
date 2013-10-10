@@ -35,6 +35,7 @@
 			loadingQueue = [],
 			refreshTimer,
 			loadOptions = {},
+			dataSetOptions = {},
 			templateId = 'widgetEJS'
 			;
 
@@ -126,6 +127,11 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
+		instance.setDataSetOptions = function(options) {
+			dataSetOptions = options;
+			return this;
+		};
+
 		instance.loadAndDrawDateChart = function(resources, chartOptions, callback) {
 			var urls = resources.map(function(item) {
 				return item.url;
@@ -136,7 +142,7 @@
 				.dataReady(function() {
 					var args = arguments;
 					var dataSets = resources.map(function(item, idx) {
-						var dataSet = Observer.modules.dataSet(args[idx].data);
+						var dataSet = Observer.modules.dataSet(args[idx].data, dataSetOptions);
 
 						if (item.groupBy) {
 							return dataSet

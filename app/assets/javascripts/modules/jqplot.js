@@ -24,7 +24,8 @@
 				smooth: true
 			},
 			showMarker: false,
-			shadow: false
+			shadow: false,
+			breakOnNull: true
 		};
 
 		defaultOptions.legend = {
