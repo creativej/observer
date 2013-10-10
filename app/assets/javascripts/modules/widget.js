@@ -126,7 +126,7 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
-		instance.loadAndDrawDateChart = function(resources, callback) {
+		instance.loadAndDrawDateChart = function(resources, chartOptions, callback) {
 			var urls = resources.map(function(item) {
 				return item.url;
 			});
@@ -153,7 +153,7 @@
 								return item.option;
 							})
 						})
-						.useDateChart()
+						.useDateChart(chartOptions)
 						.draw()
 						;
 
