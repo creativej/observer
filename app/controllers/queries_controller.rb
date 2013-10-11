@@ -83,6 +83,7 @@ class QueriesController < ApplicationController
 
     client = DBClient.create @query.db_connection
     @result = client.query(@query.value)
+    client.close
 
     if (@result)
       data = {

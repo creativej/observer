@@ -9,30 +9,36 @@ class DBClient
   end
 
   def initialize(options)
-
     @host = options[:host]
     @db = options[:db]
     @user = options[:user]
     @password = options[:password]
   end
 
-  def client
-      Mysql2::Client.new(
-        :host => @host,
-        :database => @db,
-        :username => @user,
-        :password => @password
-      )
+  def connect
+    if @client.nil?
+      @client = Mysql2::Client.new(
+          :host => @host,
+          :database => @db,
+          :username => @user,
+          :password => @password,
+          :read_timeout => 150
+        )
+    end
   end
-  private :client
 
   def query(q)
+    connect
     begin
-      client.query(q)
+      @client.query(q)
     rescue Mysql2::Error => error
       @last_query_error = error
-      false
+      result = false
     end
+  end
+
+  def close
+    @client.close
   end
 
   def last_query_error
