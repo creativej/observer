@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131006114120) do
+ActiveRecord::Schema.define(:version => 20131013090913) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20131006114120) do
     t.datetime "updated_at",                                 :null => false
     t.integer  "width",      :limit => 2
     t.integer  "height",     :limit => 2
+    t.string   "token"
   end
 
   create_table "dashboards_widgets", :force => true do |t|

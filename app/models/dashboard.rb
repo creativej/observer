@@ -1,10 +1,16 @@
 class Dashboard < ActiveRecord::Base
-  attr_accessible :data, :is_public, :name, :scale, :user_id, :width, :height
+  attr_accessible :data, :is_public, :name, :scale, :user_id, :width, :height, :token
   validates :name, :presence => true
   validates :user_id, :presence => true
 
   belongs_to :user
   has_many :widgets, :through => :dashboards_widgets
+
+  def before_create
+    if (self.token.nil?)
+      self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
+    end
+  end
 
   def update_widgets(widgets)
     self.transaction do
