@@ -1,0 +1,32 @@
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <% if user_signed_in? %>
+      <a href="<%= edit_dashboard_path @dashboard %>">Edit this dashboard</a>
+    <% else %>
+      <a href="#">Dashboard: <%= @dashboard.name %></a>
+    <% end %>
+  </li>
+</ul>
+<% end %>
+<div
+  class="dashboard gridster"
+  data-dimensions="<%= Settings.gridster.dimensions %>"
+  data-max-size="<%= Settings.gridster.max_size %>"
+  style="width: <%= dashboard_settings.width %>px"
+  >
+    <ul class="gridster-widgets">
+    <% @dashboard_widgets.each do |dw| %>
+      <li
+        data-col="<%= dw.col %>"
+        data-row="<%= dw.row %>"
+        data-sizex="<%= dw.size_x %>"
+        data-sizey="<%= dw.size_y %>"
+        data-url="<%= widget_path(dw.widget) %>"
+        data-id="<%= dw.id %>">
+        <%= widget_sandbox('', '', dw.widget_id).html_safe %>
+      </li>
+    <% end %>
+    </ul>
+</div>

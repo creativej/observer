@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013090913) do
+ActiveRecord::Schema.define(:version => 20131013104146) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20131013090913) do
     t.string   "token"
   end
 
+  add_index "dashboards", ["token"], :name => "index_dashboards_on_token"
+
   create_table "dashboards_widgets", :force => true do |t|
     t.integer  "dashboard_id", :null => false
     t.integer  "widget_id",    :null => false
@@ -60,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20131013090913) do
     t.datetime "updated_at",    :null => false
     t.integer  "connection_id"
   end
+
+  add_index "queries", ["token"], :name => "index_queries_on_token"
 
   create_table "users", :force => true do |t|
     t.string   "email"

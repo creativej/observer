@@ -29,7 +29,8 @@
       <nav class="top-bar userbar">
         <section class="top-bar-section components-menu">
           <ul class="left title-area">
-            <li class="has-dropdown name"><a href="/" class="brand-title">The observer</a>
+            <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">The observer</a>
+            <% if user_signed_in? %>
             <ul class="dropdown">
               <li>
                 <a
@@ -54,6 +55,7 @@
                   ><i class="icon-layout"></i>Dashboards</a>
               </li>
             </ul>
+            <% end %>
             </li>
             <li>
               <div class="global-spinner">

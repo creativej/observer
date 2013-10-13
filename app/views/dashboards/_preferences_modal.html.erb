@@ -1,18 +1,26 @@
 <div class="dashboard-preferences-group reveal-modal" id="dashboard-preferences">
-  <%= spinner.html_safe %>
-  <%= form_for(@dashboard) do |f| %>
-  <div class="field">
-    <%= f.text_field :name, :class => 'dashboard-preference-text' %>
+  <div class="reveal-modal__title"><i class="icon-cog"></i> Preferences</div>
+  <div class="reveal-modal__content">
+    <%= spinner.html_safe %>
+    <%= form_for(@dashboard) do |f| %>
+    <div class="field">
+      <%= f.text_field :name, :class => 'dashboard-preference-text' %>
+    </div>
+    <div class="field field--extra-margin">
+      <label>Shareable url:</label>
+      <a href="<%= dashboard_view_path @dashboard, :token => @dashboard.token %>" target="_blank">
+        <%= @dashboard.token %>
+      </a>
+    </div>
+    <div class="dashboard-preferences-action">
+      <button class="button secondary cancel-dashboard-action">
+        <i class="icon-back"></i> Cancel
+      </button>
+      <button type="submit" class="button primary save-dashboard-action">
+        <i class="icon-save"></i> Save
+      </button>
+    </div>
+    <% end %>
+    <a class="close-reveal-modal">&#215;</a>
   </div>
-
-  <div class="dashboard-preferences-action">
-    <button class="button secondary cancel-dashboard-action">
-      <i class="icon-back"></i> Cancel
-    </button>
-    <button type="submit" class="button primary save-dashboard-action">
-      <i class="icon-save"></i> Save
-    </button>
-  </div>
-  <% end %>
-  <a class="close-reveal-modal">&#215;</a>
 </div>

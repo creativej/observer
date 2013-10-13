@@ -1,5 +1,5 @@
 class WidgetsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
 
   # GET /widgets
   # GET /widgets.json

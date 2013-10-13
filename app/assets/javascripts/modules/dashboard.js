@@ -18,7 +18,8 @@
 			margin: $el.data('margin'),
 			dimensions: $el.data('dimensions'),
 			margins: [5, 5],
-			maxSize: $el.data('max-size')
+			maxSize: $el.data('max-size'),
+			disable: false
 		}, options || {});
 
 		var $ul = $el.find('ul');
@@ -45,6 +46,10 @@
 				};
 			}
 		}).data('gridster');
+
+		if (options.disable) {
+			gridster.disable();
+		}
 
 		function dashboardWidget($widget) {
 			var dw = Observer.modules.dashboardWidget($widget);
@@ -111,6 +116,11 @@
 				this.serialize(widget),
 				widget
 			);
+		};
+
+		instance.disable = function() {
+			gridster.disable();
+			return this;
 		};
 
 		return instance;

@@ -1,4 +1,6 @@
 class DashboardsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:view]
+
   # GET /dashboards
   # GET /dashboards.json
   def index
@@ -42,6 +44,12 @@ class DashboardsController < ApplicationController
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /dashboards/view/TOKEN
+  def view
+    @dashboard = Dashboard.find_by_token(params[:token])
+    @dashboard_widgets = @dashboard.dashboard_widgets
   end
 
   # PUT /dashboards/1/update-widgets

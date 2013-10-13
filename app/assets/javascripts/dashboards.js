@@ -5,6 +5,7 @@
 //= require modules/dashboard_fullscreen_switcher
 //= require actions/save_widget_to_dashboard
 //= require actions/update_dashboard_widgets
+//= require jquery.transit/jquery.transit.js
 //
 (function($, window, Observer, undefined) {
 	'use strict';
@@ -13,6 +14,48 @@
 		modules = Observer.modules,
 		actions = Observer.actions
 		;
+
+	Observer.onPageReady(['view.dashboards'], function() {
+		var
+			$dashboard = $('.dashboard.gridster'),
+			dashboard = modules.dashboard($dashboard, {
+				disable: true
+			}),
+			$window = $(window),
+			originalWidth = $('.dashboard.gridster').width(),
+			originalHeight = $('.dashboard.gridster').height()
+			;
+
+		$window.resize(function() {
+			if ($window.width() < 1200 || $(window).width() > 1600) {
+				var
+					scaleX = $window.width() / originalWidth,
+					diffX = originalWidth - (scaleX * originalWidth),
+					diffY = originalHeight - (scaleX * originalHeight)
+					;
+
+				var t = {
+					x: -(diffX/4) + 'px',
+					y: -(diffY/4) + 'px',
+					scale: [scaleX, scaleX]
+				};
+
+				console.log(t);
+
+				$('.dashboard.gridster')
+					.width($(window).width())
+					.css(t);
+			} else {
+				$('.dashboard.gridster')
+					.width(1320)
+					.css({
+						x: '0px',
+						y: '0px',
+						scale: [1, 1]
+					});
+			}
+		});
+	});
 
 	Observer.onPageReady(['edit.dashboards'], function() {
 		var

@@ -6,6 +6,7 @@ class Dashboard < ActiveRecord::Base
   belongs_to :user
   has_many :widgets, :through => :dashboards_widgets
 
+  before_create :before_create
   def before_create
     if (self.token.nil?)
       self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
