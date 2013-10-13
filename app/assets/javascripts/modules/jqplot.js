@@ -38,7 +38,9 @@
 			backgroundColor: 'transparent',
 			drawGridlines: true,
 			drawBorder: false,
-			shadow: false
+			shadow: false,
+			gridLineColor: '#ccc',
+			borderColor: '#ccc'
 		};
 
 		options = $.extend(true, defaultOptions, options);
@@ -80,8 +82,6 @@
 				dateChartOptions,
 				overrides
 			);
-
-			console.log(options);
 
 			return this;
 		};

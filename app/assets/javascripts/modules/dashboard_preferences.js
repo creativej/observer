@@ -11,6 +11,9 @@
 		var
 			instance = window.eventable(),
 			$name = findInput($el, 'name'),
+			$width = findInput($el, 'width'),
+			$height = findInput($el, 'height'),
+			$screenOptions = $el.find('[data-screen-option]'),
 			originalValues = {},
 			$cancel = $el.find('.close-reveal-modal'),
 			savePromise
@@ -50,6 +53,15 @@
 		});
 
 		$el.find('.cancel-dashboard-action').click(instance.close);
+
+		$screenOptions.click(function() {
+			$screenOptions.removeClass('selected');
+			var $selected = $(this);
+			$selected.addClass('selected');
+
+			$width.val($selected.data('width'));
+			$height.val($selected.data('height'));
+		});
 
 		return instance;
 	};

@@ -10,6 +10,9 @@
 						arr = $.grep(arr, function(value) {
 							return value != removeItem;
 						});
+					},
+					integer: function(value, octal) {
+						return parseInt(value, octal || 10);
 					}
 				},
 				actions: {},

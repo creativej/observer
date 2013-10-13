@@ -3,9 +3,10 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .dashboards {
 	.dashboard {
-		// border: 1px #555 solid;
+		border: 1px #eee solid;
 		min-height: 100px;
 		margin-bottom: 20px;
+		padding: 8px;
 	}
 
 	.dashboard ul {

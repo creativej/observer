@@ -4,13 +4,14 @@
   <div class="field">
     <%= f.text_field :name, :class => 'dashboard-preference-text' %>
   </div>
+
   <div class="dashboard-preferences-action">
-    <a href="#" class="button secondary cancel-dashboard-action">
+    <button class="button secondary cancel-dashboard-action">
       <i class="icon-back"></i> Cancel
-    </a>
-    <a href="#" class="button primary save-dashboard-action">
+    </button>
+    <button type="submit" class="button primary save-dashboard-action">
       <i class="icon-save"></i> Save
-    </a>
+    </button>
   </div>
   <% end %>
   <a class="close-reveal-modal">&#215;</a>

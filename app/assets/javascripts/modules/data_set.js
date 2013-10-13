@@ -29,9 +29,7 @@
 			} else {
 				data[dateKey] = value;
 			}
-			console.log(dateKey);
 			var dateTime = window.moment(dateKey * 1000);
-			console.log(dateTime);
 			if (!oldest || dateTime.isBefore(oldest)) {
 				oldest = dateTime;
 			}

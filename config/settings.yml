@@ -1,6 +1,5 @@
 gridster:
-    dimensions: [ 75, 75 ]
-    max_size: [ 10, 10 ]
+    dimensions: [ 250, 100 ]
+    max_size: [5, 5]
 dashboard:
-    mode:
-        standard: [ 1140, 800 ]
+    width: 1320

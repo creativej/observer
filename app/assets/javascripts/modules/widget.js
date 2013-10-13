@@ -80,6 +80,11 @@
 			return this.on('ready.data', callback);
 		};
 
+		instance.addClass = function(cls) {
+			this.$el.addClass(cls);
+			return this;
+		};
+
 		instance.load = function(urls, options) {
 			if (options) {
 				loadOptions = options;

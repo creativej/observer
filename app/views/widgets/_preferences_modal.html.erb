@@ -1,34 +1,28 @@
-<%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
-<div class="row">
-  <div class="large-12 columns">
-    <div class="large-7 columns">
-      <%= f.hidden_field :js %>
-      <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
-    </div>
-    <div class="large-5 columns">
-      <%= f.hidden_field :html, :placeholder => 'html' %>
-      <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
-      <%= f.hidden_field :css, :placeholder => 'css' %>
-      <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
-    </div>
-  </div>
-</div>
 <div class="widget-preferences-group reveal-modal" id="widget-preferences" data-url="<%= widget_path %>">
-  <div class="widget-preferences__title"><i class="icon-cog"></i> Preferences</div>
-  <div class="widget-preferences__content">
+  <div class="reveal-modal__title"><i class="icon-cog"></i> Preferences</div>
+  <div class="reveal-modal__content">
+  <%= form_for(@widget, html: { id: 'modal_edit_widget' } ) do |f| %>
+    <%= f.hidden_field :column %>
+    <%= f.hidden_field :row %>
     <%= overlay_spinner.html_safe %>
-    <div>
-      <%= label_tag :column, nil, :class => 'label--light' %>
-      <%= f.number_field :column, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[0] } %>
+    <div class="widget-size-options-group" data-size-options data-value="[<%= @widget.column %>, <%= @widget.row %>]">
+      <label>Select a size</label>
+      <% 1.upto(Settings.gridster.max_size[1]) do |row| %>
+      <div class="widget-size-options-row">
+        <% 1.upto(Settings.gridster.max_size[0]) do |column| %>
+        <div
+          class="widget-size-option widget-size-option-col"
+          data-option
+          data-col="<%= column %>"
+          data-row="<%= row %>"
+        ></div>
+        <% end %>
+      </div>
+      <% end %>
     </div>
-    <div>
-      <%= label_tag :row, nil, :class => 'label--light' %>
-      <%= f.number_field :row, { :class => 'widget-preferences__input', :tabindex => '1', :min => '1', :max => Settings.gridster.max_size[1] } %>
-    </div>
-
-    <a href="#" class="button secondary" tabindex="2" data-cancel><i class="icon-back"></i>Cancel</a>
-    <a href="#" class="button" tabindex="3" data-save><i class="icon-save"></i>OK</a>
+    <button class="button secondary" tabindex="2" data-cancel><i class="icon-back"></i>Cancel</button>
+    <button class="button" type="submit" tabindex="3" data-save><i class="icon-save"></i>OK</button>
   </div>
+  <% end %>
   <a class="close-reveal-modal">&#215;</a>
 </div>
-<% end %>

@@ -44,16 +44,20 @@
 
 
 .reveal-modal__title {
-    color: #fff;
-    margin-bottom: 10px;
+	color: #fff;
+	margin-bottom: 10px;
 }
 
 .reveal-modal__item {
-    margin-bottom: 1px;
+	margin-bottom: 1px;
 }
 
 .reveal-modal__content {
-    padding: 4px 5px 10px 5px
+	padding: 4px 5px 10px 5px;
+
+	label {
+		color: #fff;
+	}
 }
 
 .content-group {
@@ -93,6 +97,10 @@
 	margin-top: 20px;
 	@include box-sizing(border-box);
 	padding: 0 10px;
+}
+
+.field--extra-margin {
+	margin-bottom: 20px;
 }
 
 .userbar {

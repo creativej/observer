@@ -26,5 +26,21 @@
   <%= widget_modifier(:widget_id => @widget.id).html_safe %>
 </div>
 <%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
+<%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
+<div class="row">
+  <div class="large-12 columns">
+    <div class="large-7 columns">
+      <%= f.hidden_field :js %>
+      <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
+    </div>
+    <div class="large-5 columns">
+      <%= f.hidden_field :html, :placeholder => 'html' %>
+      <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
+      <%= f.hidden_field :css, :placeholder => 'css' %>
+      <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
+    </div>
+  </div>
+</div>
+<% end %>
 <%= render 'preferences_modal' %>
 <%= render 'resources_modal' %>

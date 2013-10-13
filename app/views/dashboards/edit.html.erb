@@ -27,6 +27,7 @@
     data-dimensions="<%= Settings.gridster.dimensions %>"
     data-max-size="<%= Settings.gridster.max_size %>"
     data-update-url="<%= dashboard_update_widgets_path({ :dashboard_id => @dashboard.id }) %>"
+    style="width: <%= dashboard_settings.width %>px"
     >
       <ul class="gridster-widgets">
       <% @dashboard_widgets.each do |dw| %>

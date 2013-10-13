@@ -55,6 +55,7 @@
     .preview-container {
         margin: 0 auto;
         position: relative;
+        // border: 1px solid #ccc;
     }
 }
 
@@ -74,8 +75,16 @@
 .widget-group {
     padding: 10px 20px 10px 10px;
     position: relative;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     padding-top: 20px;
+
+    background-color: #fff;
+    border: 10px solid #eee;
+    height: 100%;
+    &.widget-group--transparent {
+        background: transparent;
+        border: none;
+    }
 }
 
 .widget-group:hover {
@@ -147,5 +156,27 @@
 
     .jqplot-table-legend-label {
         color: $panel-color
+    }
+}
+
+.widget-size-options-group {
+    width: 391px; //312px;
+    margin: 20px auto;
+    .widget-size-option {
+        width: 75px;
+        height: 34px;
+        @include inline-block;
+        vertical-align: top;
+        background-color: #aaa;
+        margin-bottom: 4px;
+        cursor: pointer;
+
+        &.widget-size-option:hover {
+            background-color: #ccc;
+        }
+
+        &.selected {
+            background-color: #fff;
+        }
     }
 }
