@@ -35,7 +35,7 @@ class WidgetsController < ApplicationController
 
     widget = Widget.new
     widget.attributes = attributes
-    widget.name = 'untitled'
+    widget.name = "#{widget.name} (1)"
     widget.save
 
     redirect_to(

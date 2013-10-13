@@ -46,7 +46,7 @@ class QueriesController < ApplicationController
 
     query = Query.new
     query.attributes = attributes
-    query.name = 'untitled'
+    query.name = "#{query.name} (1)"
     query.save
 
     redirect_to(
