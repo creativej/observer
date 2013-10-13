@@ -27,7 +27,7 @@
 			;
 
 		$window.resize(function() {
-			if ($window.width() < 1200 || $(window).width() > 1600) {
+			if ($window.width() < 1200 || $window.width() > 1600) {
 				var
 					scaleX = $window.width() / originalWidth,
 					diffX = originalWidth - (scaleX * originalWidth),
@@ -40,14 +40,12 @@
 					scale: [scaleX, scaleX]
 				};
 
-				console.log(t);
-
-				$('.dashboard.gridster')
+				$dashboard
 					.width($(window).width())
 					.css(t);
 			} else {
-				$('.dashboard.gridster')
-					.width(1320)
+				$dashboard
+					.width(originalWidth)
 					.css({
 						x: '0px',
 						y: '0px',
