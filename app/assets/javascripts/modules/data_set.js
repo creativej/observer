@@ -60,7 +60,7 @@
 				}
 
 				timestamp = date
-					.endOf(period)
+					.startOf(period)
 					.unix()
 					;
 				return [timestamp, value];
