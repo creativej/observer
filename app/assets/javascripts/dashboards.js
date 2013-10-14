@@ -29,19 +29,15 @@
 		$window.resize(function() {
 			if ($window.width() < 1200 || $window.width() > 1600) {
 				var
-					scaleX = $window.width() / originalWidth,
-					diffX = originalWidth - (scaleX * originalWidth),
-					diffY = originalHeight - (scaleX * originalHeight)
+					scaleX = $window.width() / (originalWidth + 50)
 					;
 
 				var t = {
-					x: -(diffX/4) + 'px',
-					y: -(diffY/4) + 'px',
+					width: $window.width() + 'px',
 					scale: [scaleX, scaleX]
 				};
 
 				$dashboard
-					.width($(window).width())
 					.css(t);
 			} else {
 				$dashboard

@@ -28,6 +28,9 @@
 	.dashboard {
 		margin: 0 auto 20px;
 		border: none;
+		transform-origin: 0% 0%;
+		-webkit-transform-origin: 0% 0%;
+		-moz-transform-origin: 0% 0%;
 	}
 }
 
