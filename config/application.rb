@@ -60,7 +60,7 @@ module TheObserver
     config.assets.version = '1.0'
 
     config.assets.paths << Rails.root.join("app", "assets", "swf")
-
+    config.assets.precompile += ['widget-all']
     config.autoload_paths += %W(#{config.root}/lib)
 
   end
