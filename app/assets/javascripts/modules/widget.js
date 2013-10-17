@@ -148,16 +148,23 @@
 				.load(urls)
 				.dataReady(function() {
 					var args = arguments;
+					var latestTime = 0;
 					var dataSets = resources.map(function(item, idx) {
 						var dataSet = Observer.modules.dataSet(args[idx].data, dataSetOptions);
-
+						var output;
 						if (item.groupBy) {
-							return dataSet
+							output = dataSet
 								.groupBy(item.groupBy)
 								.output();
+						} else {
+							output = dataSet.output();
 						}
 
-						return dataSet.output();
+						// A hack to make sure stack series doesn't error
+						if (chartOptions && chartOptions.stackSeries) {
+							output = dataSet.output().shift();
+						}
+						return output;
 					});
 
 					this
