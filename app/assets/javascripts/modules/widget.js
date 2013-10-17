@@ -1,3 +1,5 @@
+//= require canjs/can.jquery
+
 (function($, Observer, window) {
 	'use strict';
 

@@ -26,9 +26,11 @@
 			return name + '.' + instance.body().data('triggerjs');
 		}
 
-		window.ZeroClipboard.setDefaults({
-			moviePath: '/assets/ZeroClipboard.swf'
-		});
+		if (window.ZeroClipboard) {
+			window.ZeroClipboard.setDefaults({
+				moviePath: '/assets/ZeroClipboard.swf'
+			});
+		}
 
 		instance.body = function() {
 			return $('#app_body');
