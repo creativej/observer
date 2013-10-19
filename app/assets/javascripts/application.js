@@ -15,6 +15,7 @@
 //= require mixins/eventable
 //= require bower_components/zeroclipboard/ZeroClipboard
 //= require observer
+//= require observer/debugger
 //= require observer/keyboard
 //= require modules/jqplot
 //= require modules/data_set
