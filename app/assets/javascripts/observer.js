@@ -13,6 +13,9 @@
 					},
 					integer: function(value, octal) {
 						return parseInt(value, octal || 10);
+					},
+					isCallable: function(value) {
+						return typeof value === 'function';
 					}
 				},
 				actions: {},

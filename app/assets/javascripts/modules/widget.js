@@ -4,6 +4,8 @@
 (function($, Observer, window) {
 	'use strict';
 
+	var helpers = Observer.helpers;
+
 	Observer.modules.widget = function($el, options) {
 		var instance = window.eventable({
 				dataSets: [],
@@ -107,7 +109,7 @@
 				}
 			});
 
-			instance
+			this
 				.load(widgetDataOptions)
 				.dataReady(function() {
 					var dataSets = [];
@@ -137,8 +139,8 @@
 						.draw()
 						;
 
-					if (callback) {
-						callback();
+					if (helpers.isCallable(callback)) {
+						callback.apply(this, []);
 					}
 				})
 				;
