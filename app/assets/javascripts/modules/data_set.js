@@ -3,78 +3,82 @@
 (function($, Observer, window) {
 	var dataSet = function(list, options) {
 		var
-			instance = {},
-			data = {},
+			instance = {
+				dataList: {},
+				columns: [{
+					field: 'value'
+				}]
+			},
 			defaultOptions = {
 				format: 'YYYY-MM-DD',
 				outputFormat: 'YYYY-MM-DD',
-				filter: function(item) {
-					if (item.hasOwnProperty('datetime') || item.hasOwnProperty('value')) {
-						return [item.datetime, item.value, item.timestamp];
-					} else {
-						throw 'Data object format is invalid';
-					}
+				preprocessor: function(item, column) {
+					item[column] = parseFloat(item[column], 10);
+					return item;
 				}
 			},
-			oldest,
-			latest,
 			groupBy,
 			groupByPeriod
 			;
+
 		options = $.extend(true, defaultOptions, options);
 
-		instance.add = function(dateKey, value) {
-			if (data[dateKey] && typeof value === 'number') {
-				data[dateKey] = data[dateKey] + value;
-			} else {
-				data[dateKey] = value;
-			}
-			var dateTime = window.moment(dateKey * 1000);
-			if (!oldest || dateTime.isBefore(oldest)) {
-				oldest = dateTime;
-			}
-
-			if (!latest || dateTime.isAfter(latest)) {
-				latest = dateTime;
+		instance.setColumns = function(columns) {
+			if (Array.isArray(columns)) {
+				this.columns = columns;
 			}
 
 			return this;
 		};
 
-		instance.remove = function(dateKey) {
-			if (data[dateKey]) {
-				delete data[dateKey];
+		instance.add = function(column, dateKey, value) {
+			this.dataList[column] = this.dataList[column] || {};
+
+			if (this.dataList[column][dateKey] && typeof value === 'number') {
+				this.dataList[column][dateKey] = this.dataList[column][dateKey] + value;
+			} else {
+				this.dataList[column][dateKey] = value;
+			}
+			var dateTime = window.moment(dateKey * 1000);
+			if (!this.oldest || dateTime.isBefore(this.oldest)) {
+				this.oldest = dateTime;
+			}
+
+			if (!this.latest || dateTime.isAfter(this.latest)) {
+				this.latest = dateTime;
 			}
 
 			return this;
 		};
 
 		instance.groupBy = function(period) {
+			if (!period) {
+				return this;
+			}
+
 			groupByPeriod = period;
 
-			groupBy = function(date, value, timestamp) {
-				if (timestamp) {
-					date = window.moment(timestamp * 1000);
+			groupBy = function(column, data) {
+				if (data.timestamp) {
+					date = window.moment(data.timestamp * 1000);
 				} else {
-					date = window.moment(date, options.format);
+					date = window.moment(data.datetime, options.format);
 				}
 
-				timestamp = date
+				var timestamp = date
 					.startOf(period)
 					.unix()
 					;
-				return [timestamp, value];
+				return [timestamp, data[column]];
 			};
 
 			return this;
 		};
 
-		instance.output = function() {
-			this.set(list);
-			var dateTime;
+		instance.outputColumn = function(column) {
 			var arr = [];
 
-			for (var index in data) {
+			for (var index in this.dataList[column]) {
 				if (groupBy) {
 					dateTime = window.moment(index * 1000)
 						.valueOf();
@@ -82,14 +86,21 @@
 					dateTime = index;
 				}
 
-				arr.push([dateTime, data[index]]);
+				arr.push([dateTime, this.dataList[column][index]]);
 			}
-
 			return arr;
 		};
 
+		instance.output = function() {
+			this.set(list);
+
+			return this.columns.map(function(column) {
+				return instance.outputColumn(column.field);
+			});
+		};
+
 		instance.clear = function() {
-			data = {};
+			this.dataList = {};
 			return instance;
 		};
 
@@ -101,34 +112,45 @@
 			instance.clear();
 
 			list.forEach(function(item, index) {
-				var arr = options.filter.apply(item, [item, index]);
+				instance.columns.forEach(function(column) {
+					var arr = [];
 
-				if (groupBy) {
-					arr = groupBy(arr[0], arr[1], arr[2]);
-				}
+					if (options.preprocessor) {
+						item = options.preprocessor(item, column.field);
+					}
 
-				instance.add(arr[0], arr[1]);
+					if (groupBy) {
+						arr = groupBy(column.field, item);
+					}
+
+					instance.add(column.field, arr[0], arr[1]);
+				});
 			});
 
 			if (groupBy) {
-				this.populateEmptyGaps();
+				this.columns.forEach(function(column) {
+					instance.populateEmptyGaps(column.field);
+				});
 			}
 
-			return instance;
+			return this;
 		};
 
-		instance.populateEmptyGaps = function() {
-			var current = oldest;
+		instance.populateEmptyGaps = function(column) {
+			var current = this.oldest;
 
 			do {
 				current.add(groupByPeriod, 1);
 
 				var dateKey = current.unix();
 
-				if (typeof data[dateKey] === 'undefined') {
-					data[dateKey] = 0;
+				if (
+					current.isBefore(this.latest) &&
+					this.dataList[column][dateKey] === undefined
+				) {
+					this.dataList[column][dateKey] = 0;
 				}
-			} while (current.isBefore(latest));
+			} while (current.isBefore(this.latest));
 		};
 
 		return instance;

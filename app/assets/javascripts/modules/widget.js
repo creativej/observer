@@ -1,82 +1,48 @@
 //= require canjs/can.jquery
+//= require modules/widget_data
 
 (function($, Observer, window) {
 	'use strict';
 
-	var widgetData = function(data) {
-		var instance = {};
-
-		instance.data = data.result;
-		instance.raw = data;
-
-		instance.first = function(name) {
-			return this.data[0];
-		};
-
-		instance.val = function(name) {
-			var first = this.first();
-			var keys = Object.keys(first);
-
-			if (!name) {
-				if (keys.length === 1 && first.hasOwnProperty(keys[0])) {
-					return first[keys[0]];
-				}
-			} else {
-				if (first.hasOwnProperty(name)) {
-					return first[name];
-				}
-			}
-		};
-
-		return instance;
-	};
-
 	Observer.modules.widget = function($el, options) {
-		var instance = window.eventable(),
-			dataSets = [],
-			loadingQueue = [],
-			refreshTimer,
-			loadOptions = {},
-			dataSetOptions = {},
-			templateId = 'widgetEJS'
+		var instance = window.eventable({
+				dataSets: [],
+				loadingQueue: [],
+				refreshTimer: null,
+				templateId: 'widgetEJS',
+				$el: $el
+			})
 			;
 
-		options = $.extend({
+		instance.options = $.extend({
 			refresh: 100000, // Refresh every 10 minutes
 			autoRefresh: 1,
 		}, options || {});
 
-		function loadData(url) {
-			if (url.match(/^http|https\:\/\//)) {
-				url = '/ajax-proxy?url=' + encodeURIComponent(url);
-			}
+		function loadData(widgetDataOptions) {
+			var widgetData = Observer.modules.widgetData(widgetDataOptions);
 
-			$
-				.ajax({
-					url: url,
-					dataType: "json"
-				})
-				.success(function(data) {
-					if (!loadOptions.raw) {
-						dataSets.push(widgetData(data));
-					} else {
-						dataSets.push(data);
-					}
+			widgetData
+				.init()
+				.on('done', function() {
+					instance.dataSets.push(this);
 
-					if (loadingQueue.length) {
+					if (instance.loadingQueue.length) {
 						loadNextInQueue();
 					} else {
-						instance.trigger.apply(instance, ['ready.data'].concat(dataSets));
+						instance.trigger.apply(instance, ['ready.data'].concat(instance.dataSets));
 					}
 				})
-				;
+				.on('fail', function(xhr, status, error) {
+					console.log(
+						error + ' occurred while trying to load ' + this.url()
+					);
+				});
 		}
 
 		function loadNextInQueue() {
-			loadData(loadingQueue.shift());
+			loadData(instance.loadingQueue.shift());
 		}
-
-		instance.$el = $el;
 
 		instance.dataReady = function(callback) {
 			return this.on('ready.data', callback);
@@ -88,14 +54,12 @@
 		};
 
 		instance.load = function(urls, options) {
-			if (options) {
-				loadOptions = options;
-			}
+			var widgetDataOptions = urls.slice(0);
 
-			if (Array.isArray(urls)) {
-				loadingQueue = urls;
+			if (Array.isArray(widgetDataOptions)) {
+				this.loadingQueue = widgetDataOptions;
 			} else {
-				loadingQueue.push(urls);
+				this.loadingQueue.push(widgetDataOptions);
 			}
 
 			loadNextInQueue();
@@ -104,26 +68,26 @@
 		};
 
 		instance.enableEjs = function() {
-			options.ejs = true;
+			this.options.ejs = true;
 			return this;
 		};
 
 		instance.bindDataToView = function(data) {
-			this.$el.html(can.view(templateId, data));
+			this.$el.html(can.view(this.templateId, data));
 			return this;
 		};
 
 		instance.initView = function() {
-			if (!options.ejs) {
-				this.$el.html($('#' + templateId).html());
+			if (!this.options.ejs) {
+				this.$el.html($('#' + this.templateId).html());
 			}
 			return this;
 		};
 
 		instance.refresh = function(ms) {
-			if (!ms) { refreshTimer = null; return this; }
+			if (!ms) { this.refreshTimer = null; return this; }
 
-			refreshTimer = window.setTimeout(function() {
+			this.refreshTimer = window.setTimeout(function() {
 				window.location.reload();
 			}, ms);
 
@@ -134,44 +98,40 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
-		instance.setDataSetOptions = function(options) {
-			dataSetOptions = options;
-			return this;
-		};
+		instance.loadAndDrawDateChart = function(widgetDataOptions, chartOptions, callback) {
+			var series = [];
 
-		instance.loadAndDrawDateChart = function(resources, chartOptions, callback) {
-			var urls = resources.map(function(item) {
-				return item.url;
+			widgetDataOptions.forEach(function(item) {
+				if (!item.columns) {
+					series.push(item.series);
+				}
 			});
 
 			instance
-				.load(urls)
+				.load(widgetDataOptions)
 				.dataReady(function() {
-					var args = arguments;
-					var latestTime = 0;
-					var dataSets = resources.map(function(item, idx) {
-						var dataSet = Observer.modules.dataSet(args[idx].data, dataSetOptions);
-						var output;
-						if (item.groupBy) {
-							output = dataSet
-								.groupBy(item.groupBy)
-								.output();
-						} else {
-							output = dataSet.output();
-						}
+					var dataSets = [];
 
-						// A hack to make sure stack series doesn't error
-						if (chartOptions && chartOptions.stackSeries) {
-							output = dataSet.output().shift();
+					for (var idx in arguments) {
+						var widgetData = arguments[idx];
+						var output = widgetData.output();
+
+						if (widgetData.options.columns) {
+							dataSets = dataSets.concat(output);
+							series = series.concat(widgetData.series());
+						} else {
+							dataSets.push(output[0]);
 						}
-						return output;
-					});
+					}
+
+					if (!dataSets.length) {
+						console.log('No data is loaded... ');
+						return;
+					}
 
 					this
 						.jqplot('chart', dataSets, {
-							series: resources.map(function(item) {
-								return item.option;
-							})
+							series: series
 						})
 						.useDateChart(chartOptions)
 						.draw()
@@ -185,7 +145,7 @@
 
 		};
 
-		if (options.autoRefresh) {
+		if (instance.options.autoRefresh) {
 			instance.refresh(options.refresh);
 		}
 

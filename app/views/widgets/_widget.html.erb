@@ -18,9 +18,11 @@
       autoRefresh: $('.show.widgets').length
     });
 
-    <%= html_safe js_filter(js) %>
+    $.proxy(function(modules, undefined) {
+      <%= html_safe js_filter(js) %>
 
-    widget.initView();
+      this.initView();
+    }, widget)(Observer.modules);
 
   });
 }(jQuery, Observer, window));
