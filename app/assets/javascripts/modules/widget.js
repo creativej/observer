@@ -1,10 +1,9 @@
 //= require canjs/can.jquery
 //= require modules/widget_data
+//= require modules/datechart_widget
 
 (function($, Observer, window) {
 	'use strict';
-
-	var helpers = Observer.helpers;
 
 	Observer.modules.widget = function($el, options) {
 		var instance = window.eventable({
@@ -100,51 +99,15 @@
 			return Observer.jqplot(id, dataSets, options);
 		};
 
-		instance.loadAndDrawDateChart = function(widgetDataOptions, chartOptions, callback) {
-			var series = [];
+		instance.setChartOptions = function (options) {
+			this.options.chartOptions = options;
+			return this;
+		};
 
-			widgetDataOptions.forEach(function(item) {
-				if (!item.columns) {
-					series.push(item.series);
-				}
-			});
-
-			this
-				.load(widgetDataOptions)
-				.dataReady(function() {
-					var dataSets = [];
-
-					for (var idx in arguments) {
-						var widgetData = arguments[idx];
-						var output = widgetData.output();
-
-						if (widgetData.options.columns) {
-							dataSets = dataSets.concat(output);
-							series = series.concat(widgetData.series());
-						} else {
-							dataSets.push(output[0]);
-						}
-					}
-
-					if (!dataSets.length) {
-						console.log('No data is loaded... ');
-						return;
-					}
-
-					this
-						.jqplot('chart', dataSets, {
-							series: series
-						})
-						.useDateChart(chartOptions)
-						.draw()
-						;
-
-					if (helpers.isCallable(callback)) {
-						callback.apply(this, []);
-					}
-				})
-				;
-
+		instance.loadAndDrawDateChart = function(widgetDataOptions, callback) {
+			Observer.modules.dateChartWidget(this)
+				.loadAndDraw(widgetDataOptions, callback);
+			return this;
 		};
 
 		if (instance.options.autoRefresh) {
