@@ -1,0 +1,21 @@
+{
+  "name": "stacktrace.js",
+  "version": "0.5.3",
+  "main": "./stacktrace.js",
+  "dependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "homepage": "https://github.com/eriwen/javascript-stacktrace",
+  "_release": "0.5.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.3",
+    "commit": "822f2903818db92481fa68ae9be9e93caa774b83"
+  },
+  "_source": "git://github.com/eriwen/javascript-stacktrace.git",
+  "_target": "~0.5.3",
+  "_originalSource": "stacktrace"
+}
