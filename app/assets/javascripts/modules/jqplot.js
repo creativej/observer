@@ -62,7 +62,6 @@
 				}, options)
 			});
 
-
 			this.options.canvasOverlay = {
 				show: true,
 				objects: verticalLines

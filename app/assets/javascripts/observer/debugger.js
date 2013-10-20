@@ -13,6 +13,10 @@
         }
     };
 
+    Observer.isDebugMode = function() {
+        return get(logKey);
+    };
+
     Observer.debugger.enable = function() {
         this.log(true);
     };

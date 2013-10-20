@@ -16,6 +16,9 @@
 					},
 					isCallable: function(value) {
 						return typeof value === 'function';
+					},
+					isString: function(value) {
+						return typeof value === 'string';
 					}
 				},
 				actions: {},
