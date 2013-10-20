@@ -79,8 +79,9 @@
 		};
 
 		instance.initView = function() {
-			if (!this.options.ejs) {
+			if (!this.options.ejs && !this.viewInitiated) {
 				this.$el.html($('#' + this.templateId).html());
+				this.viewInitiated = true;
 			}
 			return this;
 		};
@@ -104,10 +105,9 @@
 			return this;
 		};
 
-		instance.loadAndDrawDateChart = function(widgetDataOptions, callback) {
-			Observer.modules.dateChartWidget(this)
-				.loadAndDraw(widgetDataOptions, callback);
-			return this;
+		instance.loadDateChart = function(widgetDataOptions, callback) {
+			return Observer.modules.dateChartWidget(this)
+				.loadAndDraw(widgetDataOptions);
 		};
 
 		if (instance.options.autoRefresh) {

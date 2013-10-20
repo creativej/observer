@@ -1,4 +1,5 @@
 //= require modules/jqplot_themes
+//= require jqplot/plugins/jqplot.canvasOverlay
 (function($, Observer) {
 	var dateChartOptions = {
 		axes:{
@@ -43,51 +44,51 @@
 			borderColor: '#ccc'
 		};
 
-		options = $.extend(true, defaultOptions, options);
+		instance.options = $.extend(true, defaultOptions, options);
 
-		instance.useDateChart = function(overrides) {
-			options = $.extend(true, options, dateChartOptions, overrides);
+		instance.useDateChart = function(options) {
+			this.options = $.extend(true, this.options, dateChartOptions, options);
 			return this;
 		};
 
-		instance.addVerticalLine = function(overrides) {
+		instance.addVerticalLine = function(options) {
 			verticalLines.push({
 				verticalLine: $.extend(true, {
-					lineWidth: 4,
-					color: 'rgb(255, 255, 255)',
+					lineWidth: 2,
+					color: 'red',
 					shadow: false,
-					show: true,
-					lineCap: 'butt'
-				}, overrides)
+					yOffset: 0,
+					show: true
+				}, options)
 			});
 
-			console.log(verticalLines);
 
-			options.canvasOverlay = {
+			this.options.canvasOverlay = {
 				show: true,
 				objects: verticalLines
 			};
 
+			console.log(this.options);
 			return this;
 		};
 
-		instance.useDateTimeChart = function(overrides) {
+		instance.useDateTimeChart = function(options) {
 			dateChartOptions.axes.xaxis.tickOptions = {
 				formatString: '%a %#I%p'
 			};
 
-			options = $.extend(
+			this.options = $.extend(
 				true,
-				options,
+				this.options,
 				dateChartOptions,
-				overrides
+				options
 			);
 
 			return this;
 		};
 
 		instance.draw = function() {
-			var plot = $.jqplot(id, dataSets, options);
+			var plot = $.jqplot(id, dataSets, this.options);
 
 			return plot;
 		};

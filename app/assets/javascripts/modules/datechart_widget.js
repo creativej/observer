@@ -4,19 +4,19 @@
     var helpers = Observer.helpers;
 
     Observer.modules.dateChartWidget = function(widget) {
-        var instance = {
+        var instance = window.eventable({
             series: [],
             widget: widget
-        };
+        });
 
-        instance.loadAndDraw = function(widgetDataOptions, callback) {
+        instance.loadAndDraw = function(widgetDataOptions) {
             widgetDataOptions.forEach(function(item) {
                 if (!item.columns) {
                     instance.series.push(item.series);
                 }
             });
 
-            widget
+            this.widget
                 .load(widgetDataOptions)
                 .dataReady(function() {
                     var dataSets = [];
@@ -38,19 +38,19 @@
                         return;
                     }
 
-                    this
+                    var jqplot = this
                         .jqplot('chart', dataSets, {
                             series: instance.series
                         })
                         .useDateChart(widget.options.chartOptions)
-                        .draw()
                         ;
 
-                    if (helpers.isCallable(callback)) {
-                        callback.apply(this, []);
-                    }
+                    instance.trigger('beforeDraw', jqplot);
+                    jqplot.draw();
+                    instance.trigger('afterDraw', jqplot);
                 })
-            ;
+                ;
+            return this;
         };
 
         return instance;
