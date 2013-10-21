@@ -9,6 +9,30 @@
             widget: widget
         });
 
+        instance.normalizeDataSets = function(dataSets) {
+            var largestSet;
+
+            dataSets.forEach(function(dataSet) {
+                if (!largestSet || largestSet.length < dataSet.length) {
+                    largestSet = dataSet;
+                }
+            });
+
+            dataSets.forEach(function(dataSet) {
+                var diff = largestSet.length - dataSet.length;
+                var lastIndex = largestSet.length - 1;
+                if (diff) {
+                    for (var i = lastIndex - diff; i <= lastIndex; i++) {
+                        if (dataSet[i]) {
+                            dataSet.push(
+                                [largestSet[i][0], 0]
+                            );
+                        }
+                    }
+                }
+            });
+        };
+
         instance.loadAndDraw = function(widgetDataOptions) {
             widgetDataOptions.forEach(function(item) {
                 if (!item.columns) {
@@ -36,6 +60,10 @@
                     if (!dataSets.length) {
                         console.log('No data is loaded... ');
                         return;
+                    }
+
+                    if (widget.options.chartOptions.stackSeries) {
+                        instance.normalizeDataSets(dataSets);
                     }
 
                     var jqplot = this

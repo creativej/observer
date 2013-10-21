@@ -1,6 +1,7 @@
 //= require bower_components/moment/moment
 //
 (function($, Observer, window) {
+	var helpers = Observer.helpers;
 	var dataSet = function(list, options) {
 		var
 			instance = {
@@ -34,7 +35,7 @@
 		instance.add = function(column, dateKey, value) {
 			this.dataList[column] = this.dataList[column] || {};
 
-			if (this.dataList[column][dateKey] && typeof value === 'number') {
+			if (this.dataList[column][dateKey] && helpers.isNumber(value)) {
 				this.dataList[column][dateKey] = this.dataList[column][dateKey] + value;
 			} else {
 				this.dataList[column][dateKey] = value;
