@@ -1,3 +1,4 @@
+//= require bower_components/moment/moment
 (function($, window) {
 	"use strict";
 
@@ -22,6 +23,29 @@
 					},
 					isNumber: function(value) {
 						return typeof value === 'number';
+					},
+					countDownTimer: function(callback, options) {
+						function periodDifference(period) {
+							var now = moment.utc().endOf(period).valueOf();
+							var startOfDay = moment.utc().valueOf();
+							diff = now - startOfDay;
+							return diff;
+						}
+
+						options = $.extend({
+							interval: 1,
+							period: null
+						}, options);
+
+						setInterval(function(){
+						if (options.period) {
+							callback(
+								moment.duration(periodDifference(options.period))
+							);
+						} else {
+							callback();
+						}
+						}, options.interval);
 					}
 				},
 				actions: {},
