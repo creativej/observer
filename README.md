@@ -9,7 +9,7 @@ Allowing user to create custom widget to put on their dashboard online without t
 __Current features:__
 - mysql queries
 - Custom HTML/CSS/Javascript widgets
-- JqPlot charts with datetime chart helpers
+- jqPlot charts with datetime chart helpers
 
 __To do:__
 - tests!
@@ -35,21 +35,23 @@ bundle install
 script/observer
 
 
-Creating a dashboard
----
+Overview
+--
 
 Observer is made up 3 components
 - Resources (Database queries or external resources(e.g. twitter feed))
 - Widget (HTML/CSS/javascript)
 - Dashboard
 
-To create a dashboard, you need to first create some widgets.
+Resource
+---
+Coming soon...
 
-Creating a widget
+Widget
 --
 Coming soon...
 
-Creating a database querie
+Dashboard
 --
 Coming soon...
 
