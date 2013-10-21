@@ -18,6 +18,7 @@
 		instance.options = $.extend({
 			refresh: 100000, // Refresh every 10 minutes
 			autoRefresh: 1,
+			chartOptions: {},
 		}, options || {});
 
 		function loadData(widgetDataOptions) {
