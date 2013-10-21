@@ -11,12 +11,12 @@ __Current features:__
 - Custom HTML/CSS/Javascript widgets
 - jqPlot charts with datetime chart helpers
 
-__To do:__
+__To do/Roadmap:__
 - tests!
 - MongoDB support
 - Useable widget templates (So many widgets can use share the same widget codes)
 - Built in support for polling data/widget updates without refreshing the whole page
-- Integrate more jqplot charts in the Observer api. e.g. Bar charts
+- Integrate more jqPlot charts in the Observer api. e.g. Bar charts
 - Mobile dashboard mode
 - Better display of dashboard on fullscreen
 
