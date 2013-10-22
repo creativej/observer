@@ -75,6 +75,7 @@
 		};
 
 		instance.bindDataToView = function(data) {
+			this.viewInitiated = true;
 			this.$el.html(can.view(this.templateId, data));
 			return this;
 		};
