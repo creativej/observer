@@ -16,7 +16,7 @@
 			;
 
 		instance.options = $.extend({
-			refresh: 100000, // Refresh every 10 minutes
+			refresh: 5 * 60 * 1000, // Refresh every 5 minutes
 			autoRefresh: 1,
 			chartOptions: {},
 		}, options || {});
@@ -112,7 +112,7 @@
 		};
 
 		if (instance.options.autoRefresh) {
-			instance.refresh(options.refresh);
+			instance.refresh(instance.options.refresh);
 		}
 
 		return instance;
