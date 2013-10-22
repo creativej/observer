@@ -18,6 +18,7 @@
 		instance.options = $.extend({
 			refresh: 5 * 60 * 1000, // Refresh every 5 minutes
 			autoRefresh: 1,
+			ejs: 1,
 			chartOptions: {},
 		}, options || {});
 
@@ -81,7 +82,7 @@
 		};
 
 		instance.initView = function() {
-			if (!this.options.ejs && !this.viewInitiated) {
+			if (!this.viewInitiated) {
 				this.$el.html($('#' + this.templateId).html());
 				this.viewInitiated = true;
 			}

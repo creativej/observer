@@ -33,7 +33,7 @@
 						}
 
 						options = $.extend({
-							interval: 1,
+							interval: 1000,
 							period: null
 						}, options);
 
