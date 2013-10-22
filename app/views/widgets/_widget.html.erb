@@ -20,11 +20,12 @@
     });
 
     $.proxy(function(modules, undefined) {
+      <% if js.present? %>
       <%= html_safe js_filter(js) %>
+      <% end %>
 
       this.initView();
     }, widget)(Observer.modules);
-
   });
 }(jQuery, Observer, window));
 </script>
