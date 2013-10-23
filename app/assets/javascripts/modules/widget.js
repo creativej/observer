@@ -81,7 +81,7 @@
 		};
 
 		instance.initView = function() {
-			if (!this.viewInitiated) {
+			if (!this.options.ejs && !this.viewInitiated) {
 				this.$el.html($('#' + this.templateId).html());
 				this.viewInitiated = true;
 			}
