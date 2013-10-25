@@ -27,9 +27,10 @@
 			;
 
 		$window.resize(function() {
-			if ($window.width() < 1200 || $window.width() > 1600) {
+			// if ($window.width() < 1200 || $window.width() > 1600) {
 				var
-					scaleX = $window.width() / (originalWidth + 50)
+					scaleX = $window.width() / (originalWidth + 50),
+					scaleY = $window.height() / (originalHeight)
 					;
 
 				var t = {
@@ -39,15 +40,15 @@
 
 				$dashboard
 					.css(t);
-			} else {
-				$dashboard
-					.width(originalWidth)
-					.css({
-						x: '0px',
-						y: '0px',
-						scale: [1, 1]
-					});
-			}
+			// } else {
+			// 	$dashboard
+			// 		.css({
+			// 			width: originalWidth + 'px',
+			// 			x: '0px',
+			// 			y: '0px',
+			// 			scale: [1, 1]
+			// 		});
+			// }
 		});
 	});
 

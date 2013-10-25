@@ -58,7 +58,7 @@
                     }
 
                     if (!dataSets.length) {
-                        console.log('No data is loaded... ');
+                        Observer.debugger.log('No data is loaded... ');
                         return;
                     }
 

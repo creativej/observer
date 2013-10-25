@@ -36,7 +36,7 @@
 					}
 				})
 				.on('fail', function(xhr, status, error) {
-					console.log(
+					Observer.debugger.log(
 						error + ' occurred while trying to load ' + this.url()
 					);
 				});

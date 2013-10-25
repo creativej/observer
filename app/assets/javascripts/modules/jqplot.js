@@ -67,7 +67,6 @@
 				objects: verticalLines
 			};
 
-			console.log(this.options);
 			return this;
 		};
 

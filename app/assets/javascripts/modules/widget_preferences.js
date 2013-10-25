@@ -79,6 +79,7 @@
 		widgetOptions.on('change', function(col, row) {
 			$row.val(row);
 			$col.val(col);
+			cache($inputs);
 		});
 
 		return instance;

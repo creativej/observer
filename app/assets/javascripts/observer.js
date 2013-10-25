@@ -7,6 +7,9 @@
 			instance = {
 				modules: {},
 				helpers: {
+					argsToArr: function(args) {
+						return Array.prototype.slice.apply(args);
+					},
 					arrayRemove: function(arr, removeItem) {
 						arr = $.grep(arr, function(value) {
 							return value != removeItem;

@@ -28,7 +28,7 @@
 				instance.isLoaded = true;
 				instance.trigger('loaded');
 			});
-		}
+		};
 
 		return instance;
 	};

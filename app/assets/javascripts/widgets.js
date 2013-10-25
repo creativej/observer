@@ -8,7 +8,7 @@
 //= require modules/widget_modifier
 //= require modules/widget_resources
 //= require modules/editable_name
-//= require canjs/can.jquery
+//= require modules/widget_debugger
 
 (function($, window, Observer, undefined) {
 	'use strict';
@@ -58,17 +58,26 @@
 				;
 
 				function save() {
+					Observer.trigger('reset.log');
+					editor.lintJs();
+
 					Observer.actions.saveAttribute(
 						$saveBtn.data('url'),
 						spinner,
 						editor.serialize()
 					).done(function() {
-						// previewWidget(sandbox);
+						previewWidget(sandbox);
 					});
 				}
 
 				editor.on('save.shortcut', save);
-				editor.on('preview.shortcut', function() { previewWidget(sandbox); });
+				editor.on('preview.shortcut', function() {
+					Observer.trigger('reset.log');
+					editor.lintJs();
+
+					previewWidget(sandbox);
+				});
+				editor.lintJs();
 				$saveBtn.click(save);
 		});
 
@@ -89,12 +98,26 @@
 		var resources = modules.widgetResources($('[data-widget-resources]'));
 
 		modules.editableName($('.widget-name'));
+
+		var d = modules.widgetDebugger($('[data-widget-debugger]'));
+
+		Observer
+			.on('log', d.log)
+			.on('reset.log', d.reset)
+			;
 	});
 
 	Observer.onPageLoaded(['preview.widgets', 'show.widgets'], function() {
-		var $el = $('.widget-group');
-		$el.css('width', $(window).width());
-		$el.css('height', $(window).height());
+		var
+			$el = $('.widget-group'),
+			$window = $(window)
+			;
+		$el.css('width', $window.width());
+		$el.css('height', $window.height());
+
+		Observer.on('log', function (log) {
+			window.parent.Observer.trigger('log', log);
+		});
 	});
 
 }(jQuery, window, Observer));

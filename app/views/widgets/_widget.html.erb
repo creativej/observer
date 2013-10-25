@@ -10,22 +10,26 @@
   var helpers = Observer.helpers;
 
   Observer.on('ready.body', function() {
-    var
-      document = undefined,
-      window = undefined
-      ;
-
     var widget = modules.widget($('.widget-group'), {
       autoRefresh: $('.show.widgets').length
     });
 
-    $.proxy(function(modules, undefined) {
-      <% if js.present? %>
-      <%= html_safe js_filter(js) %>
-      <% end %>
+    try {
+      $.proxy(function(modules, undefined) {
+        var
+          document = undefined,
+          window = undefined
+          ;
+        <% if js.present? %>
+          <%= html_safe js_filter(js) %>
+        <% end %>
 
-      this.initView();
-    }, widget)(Observer.modules);
+        this.initView();
+      }, widget)(Observer.modules);
+    } catch (e) {
+      console.log(e);
+      window.parent.Observer.trigger('log', e.stack);
+    }
   });
 }(jQuery, Observer, window));
 </script>

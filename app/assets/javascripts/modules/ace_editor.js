@@ -23,8 +23,9 @@
 			editor
 			;
 
-		if (!$el.length)
+		if (!$el.length) {
 			return;
+		}
 
 		editor = ace.edit($el.prop('id'));
 		mode = modeReference[$el.data('mode')];
@@ -32,7 +33,6 @@
 		$field = $($el.data('bind'));
 		editor.setTheme('ace/theme/twilight');
 		editor.getSession().setMode('ace/mode/'+mode);
-		editor.renderer.setShowGutter(false);
 
 		instance.update = function() {
 			editor.setValue($field.val());
@@ -52,6 +52,18 @@
 
 		instance.updateLastSavedValue = function() {
 			return lastSavedValue = $field.val();
+		};
+
+		instance.lintJs = function() {
+			if (mode === 'javascript') {
+				try {
+					eval('throw 0;' + editor.getSession().getValue());
+				} catch (e) {
+					if (e !== 0) {
+						Observer.debugger.log(e);
+					}
+				}
+			}
 		};
 
 		if ($field.val().trim()) {

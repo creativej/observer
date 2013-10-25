@@ -2,36 +2,40 @@
     "use strict";
     var
         debugKey = 'observer-debug',
-        logKey = 'observer-log',
-        systemLog = window.console.log;
+        logKey = 'observer-log'
+        ;
 
-    Observer.debugger = {};
-
-    window.console.log = function() {
-        if (get(logKey)) {
-            systemLog.apply(window.console, arguments);
-        }
+    Observer.debugger = {
+        logs: [],
     };
 
     Observer.isDebugMode = function() {
         return get(logKey);
     };
 
-    Observer.debugger.enable = function() {
-        this.log(true);
+    Observer.debugger.enableLog = function() {
+        set(logKey, true);
     };
 
-    Observer.debugger.disable = function() {
-        this.log(false);
+    Observer.debugger.disableLog = function() {
+        set(logKey, false);
     };
 
-    Observer.debugger.log = function(enableLog) {
-        set(logKey, enableLog);
-    };
+    Observer.debugger.log = function() {
+        if (get(logKey)) {
+            var log = '';
 
-    // Observer.debugger.debug = function(isDebug) {
-    //     setConfig(debugKey, isDebug);
-    // };
+            for (var index in arguments) {
+                log += arguments[index] + ' ';
+            }
+
+            log += '\n';
+
+            Observer.debugger.logs.push(log);
+            console.log.apply(console, arguments);
+            Observer.trigger('log', log);
+        }
+    };
 
     function set(key, value)
     {

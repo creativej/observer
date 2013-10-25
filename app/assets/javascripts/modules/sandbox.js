@@ -11,7 +11,6 @@
 		}
 
 		instance.resize = function(row, column) {
-			console.log(dimensions);
 			$el.css('width', column * dimensions[0]);
 			$el.css('height', row * dimensions[1]);
 

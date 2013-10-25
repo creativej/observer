@@ -10,8 +10,12 @@ module WidgetsHelper
   end
 
   def sandbox_css(cls, css)
-    engine = Sass::Engine.new(".#{cls} { #{css} }", :syntax => :scss)
-    "<style>#{engine.render}</style>"
+    begin
+      engine = Sass::Engine.new(".#{cls} { #{css} }", :syntax => :scss)
+      "<style>#{engine.render}</style>"
+    rescue
+      ""
+    end
   end
 
   def options_value(widget, name, default)
@@ -38,6 +42,7 @@ eos
 <<eos
 <iframe
   id="#{id}"
+  name="#{id}"
   class="widget-sandbox"
   seemless="seemless"
   src="#{src}"

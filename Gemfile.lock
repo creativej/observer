@@ -93,6 +93,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.0)
     kgio (2.7.4)
+    liquid (2.5.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -203,6 +204,7 @@ DEPENDENCIES
   factory_girl_rails
   httparty
   jquery-rails
+  liquid
   mysql2
   rails (= 3.2.14)
   rails_config
