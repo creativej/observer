@@ -23,11 +23,15 @@
             });
         };
 
-        $el.on('webkitTransitionEnd, otransitionend, oTransitionEnd, msTransitionEnd, transitionend', function(e) {
-            if (e.target === $el.get(0)) {
-                editor.resize();
-            }
-        });
+        $el
+            .on('webkitTransitionEnd, otransitionend, oTransitionEnd, msTransitionEnd, transitionend', function(e) {
+                if (e.target === $el.get(0)) {
+                    editor.resize();
+                }
+            })
+            .click(function() {
+                editor.focus();
+            });
 
         editor
             .on('save.shortcut', instance.save)

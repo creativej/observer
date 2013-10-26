@@ -62,6 +62,10 @@
 			editor.resize();
 		};
 
+		instance.focus = function() {
+			editor.focus();
+		};
+
 		instance.lintJs = function() {
 			if (mode === 'javascript') {
 				try {
