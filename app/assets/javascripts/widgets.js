@@ -9,6 +9,7 @@
 //= require modules/widget_resources
 //= require modules/editable_name
 //= require modules/widget_debugger
+//= require modules/widget_editor
 
 (function($, window, Observer, undefined) {
 	'use strict';
@@ -35,6 +36,7 @@
 
 	Observer.onPageReady(['edit.widgets'], function() {
 		var
+			$editorLayout = $('#widget-editor-layout'),
 			$previewContainer = $('.preview-container'),
 			spinner = modules.spinner(
 				$previewContainer.find('.spinner-container')
@@ -47,61 +49,38 @@
 			$previewContainer.height(this.height());
 		});
 
-		$('.editor-group').each(function() {
-			var
-				$component = $(this),
-				$spinner = $component.find('.spinner-container'),
-				$editor = $component.find('.editor[rel="ace-editor"]'),
-				$saveBtn = $component.find('.save-btn'),
-				spinner = modules.spinner($spinner),
-				editor = modules.aceEditor($editor)
-				;
-
-				function save() {
-					Observer.trigger('reset.log');
-					editor.lintJs();
-
-					Observer.actions.saveAttribute(
-						$saveBtn.data('url'),
-						spinner,
-						editor.serialize()
-					).done(function() {
-						previewWidget(sandbox);
-					});
-				}
-
-				editor.on('save.shortcut', save);
-				editor.on('preview.shortcut', function() {
-					Observer.trigger('reset.log');
-					editor.lintJs();
-
-					previewWidget(sandbox);
-				});
-				editor.lintJs();
-				$saveBtn.click(save);
-		});
-
-		$('.button.preview').click(function() {
-			previewWidget(sandbox);
-			return false;
-		});
+		var
+			$editorGroups =  $('.editor-group'),
+			jsEditor = modules.widgetEditor($editorGroups.filter('.js')),
+			htmlEditor = modules.widgetEditor($editorGroups.filter('.html')),
+			cssEditor = modules.widgetEditor($editorGroups.filter('.css'));
 
 		previewWidget(sandbox);
 
-		var $tools = $('.widget-tools');
-
-		var preferences = modules.widgetPreferences($('[data-widget-preferences]'));
-		preferences.on('save', function() {
-			previewWidget(sandbox);
-		});
-		var modifier = modules.widgetModifier($('[data-widget-modifier]'));
-		var resources = modules.widgetResources($('[data-widget-resources]'));
-
+		modules.widgetPreferences($('[data-widget-preferences]'))
+			.on('save', function() {
+				previewWidget(sandbox);
+			});
+		modules.widgetModifier($('[data-widget-modifier]'));
+		modules.widgetResources($('[data-widget-resources]'));
 		modules.editableName($('.widget-name'));
 
 		var d = modules.widgetDebugger($('[data-widget-debugger]'));
 
 		Observer
+			.on('htmlModeRequested', function() {
+				$editorLayout
+					.removeAttr('data-scss-mode')
+					.attr('data-html-mode', true);
+			})
+			.on('scssModeRequested', function() {
+				$editorLayout
+					.removeAttr('data-html-mode')
+					.attr('data-scss-mode', true);
+			})
+			.on('previewWidgetRequested', function() {
+				previewWidget(sandbox);
+			})
 			.on('log', d.log)
 			.on('reset.log', d.reset)
 			;

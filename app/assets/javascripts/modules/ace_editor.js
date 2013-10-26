@@ -54,6 +54,14 @@
 			return lastSavedValue = $field.val();
 		};
 
+		instance.mode = function() {
+			return mode;
+		};
+
+		instance.resize = function() {
+			editor.resize();
+		};
+
 		instance.lintJs = function() {
 			if (mode === 'javascript') {
 				try {
@@ -64,6 +72,7 @@
 					}
 				}
 			}
+			return this;
 		};
 
 		if ($field.val().trim()) {
@@ -75,6 +84,10 @@
 
 		editor.on('change', function(e){
 			$field.val(editor.getValue());
+		});
+
+		editor.on('focus', function() {
+			instance.trigger('focus');
 		});
 
 		editor.commands.addCommand({

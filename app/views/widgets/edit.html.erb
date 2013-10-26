@@ -32,7 +32,7 @@
 <%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
 <%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 columns" id="widget-editor-layout" data-scss-mode>
     <div class="large-7 columns">
       <%= f.hidden_field :js %>
       <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>

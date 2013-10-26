@@ -6,23 +6,6 @@
     .container {
         max-width: 100%;
     }
-
-    .widget-preview {
-        margin: 0 auto;
-        margin-bottom: 15px;
-    }
-
-    .editor-group.js {
-        height: 480px;
-    }
-
-    .editor-group.css {
-        height: 320px;
-    }
-
-    .editor-group.html {
-        height: 150px;
-    }
 }
 
 .widget-sandbox {
@@ -79,6 +62,39 @@
         margin: 0 auto;
         position: relative;
         // border: 1px solid #ccc;
+    }
+
+    .widget-preview {
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
+    .editor-group.js {
+        height: 480px;
+    }
+}
+
+#widget-editor-layout {
+    .editor-group.css, .editor-group.html {
+        transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+        -webkit-transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1); /* Safari */
+    }
+
+    &[data-scss-mode] {
+        .editor-group.css {
+            height: 320px;
+        }
+        .editor-group.html {
+            height: 150px;
+        }
+    }
+    &[data-html-mode] {
+        .editor-group.css {
+            height: 150px;
+        }
+        .editor-group.html {
+            height: 320px;
+        }
     }
 }
 
