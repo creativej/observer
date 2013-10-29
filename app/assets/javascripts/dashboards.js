@@ -21,13 +21,14 @@
 			dashboard = modules.dashboard($dashboard, {
 				disable: true
 			}),
+			$body = $('body'),
 			$window = $(window),
-			originalWidth = $('.dashboard.gridster').width(),
-			originalHeight = $('.dashboard.gridster').height()
+			originalWidth = $dashboard.width(),
+			originalHeight = $dashboard.height()
 			;
 
 		$window.resize(function() {
-			// if ($window.width() < 1200 || $window.width() > 1600) {
+			if ($window.width() < 1200 || $window.width() > 1600) {
 				var
 					scaleX = $window.width() / (originalWidth + 50),
 					scaleY = $window.height() / (originalHeight)
@@ -37,18 +38,19 @@
 					width: $window.width() + 'px',
 					scale: [scaleX, scaleX]
 				};
-
+				$body.css('overflow-x', 'hidden');
 				$dashboard
 					.css(t);
-			// } else {
-			// 	$dashboard
-			// 		.css({
-			// 			width: originalWidth + 'px',
-			// 			x: '0px',
-			// 			y: '0px',
-			// 			scale: [1, 1]
-			// 		});
-			// }
+			} else {
+				$body.css('overflow-x', 'auto');
+				$dashboard
+					.css({
+						width: originalWidth + 'px',
+						x: '0px',
+						y: '0px',
+						scale: [1, 1]
+					});
+			}
 		});
 	});
 

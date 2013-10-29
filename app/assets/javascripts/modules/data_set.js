@@ -1,6 +1,6 @@
 //= require bower_components/moment/moment
 //
-(function($, Observer, window) {
+(function($, Observer, window, undefined) {
 	var helpers = Observer.helpers;
 	var dataSet = function(list, options) {
 		var
