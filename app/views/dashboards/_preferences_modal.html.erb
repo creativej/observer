@@ -8,7 +8,7 @@
     </div>
     <div class="field field--extra-margin">
       <label>Shareable url:</label>
-      <a href="<%= dashboard_view_path @dashboard, :token => @dashboard.token %>" target="_blank">
+      <a href="<%= view_dashboards_path :token => @dashboard.token %>" target="_blank">
         <%= @dashboard.token %>
       </a>
     </div>

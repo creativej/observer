@@ -1,5 +1,4 @@
 require 'base64'
-require 'AjaxProxy'
 
 class WebsiteController < ApplicationController
   before_filter :authenticate_user!, :except => [:ajax]

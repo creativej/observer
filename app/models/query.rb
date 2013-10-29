@@ -11,4 +11,8 @@ class Query < ActiveRecord::Base
       self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
     end
   end
+
+  def value_as_query
+    Liquid::Template.parse(self.value).render
+  end
 end

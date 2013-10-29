@@ -77,15 +77,15 @@ class QueriesController < ApplicationController
   def data
     @query = Query.find_by_token!(params[:token])
 
-    if (@query.nil?)
+    if @query.nil?
       raise ActionController::RoutingError.new('Not Found')
     end
 
     client = DBClient.create @query.db_connection
-    @result = client.query(@query.value)
+    @result = client.query @query.value_as_query
     client.close
 
-    if (@result)
+    if @result
       data = {
         :result => @result,
         :fields => @result.fields
