@@ -14,8 +14,8 @@ __Current features:__
 __To do/Roadmap:__
 - tests!
 - MongoDB support
-- Useable widget templates (So many widgets can use share the same widget codes)
-- Built in support for polling data/widget updates without refreshing the whole page
+- Reuseable widget templates (So many widgets can use share the same widget codes)
+- Built in support for polling data/widget updates without refreshing the whole widget
 - Integrate more jqPlot charts in the Observer api. e.g. Bar charts
 - Mobile dashboard mode
 - Better display of dashboard on fullscreen
