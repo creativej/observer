@@ -43,7 +43,7 @@ Observer is made up 3 components
 - Widget (HTML/CSS/javascript)
 - Dashboard
 
-Resource
+Data source
 ---
 Coming soon...
 
