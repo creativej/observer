@@ -39,7 +39,7 @@ Overview
 --
 
 Observer is made up 3 components
-- Resources (Database queries or external resources(e.g. twitter feed))
+- Data source (Database queries or external resources(e.g. twitter feed))
 - Widget (HTML/CSS/javascript)
 - Dashboard
 
