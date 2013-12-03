@@ -46,6 +46,7 @@ eos
   class="widget-sandbox"
   seemless="seemless"
   src="#{src}"
+  scrolling="no"
   data-widget-id="#{widget_id}"
   data-dimensions="#{Settings.gridster.dimensions}"></iframe>
 eos
