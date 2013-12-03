@@ -10,5 +10,9 @@ FactoryGirl.define do
     trait :with_group_by do
       value 'SELECT title, {% group timecreated by day %} as datetime FROM t'
     end
+
+    trait :with_date_range do
+      value 'SELECT title FROM t WHERE {% datefrom timestamp %}TEST{% enddatefrom %}'
+    end
   end
 end

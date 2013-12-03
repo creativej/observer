@@ -12,7 +12,7 @@ class Query < ActiveRecord::Base
     end
   end
 
-  def value_as_query
-    Liquid::Template.parse(self.value).render
+  def value_as_query(vars = {})
+    Liquid::Template.parse(self.value).render vars
   end
 end

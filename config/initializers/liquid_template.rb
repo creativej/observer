@@ -6,10 +6,19 @@ class GroupTag < Liquid::Tag
   end
 
   def render(context)
-    year = "YEAR(FROM_UNIXTIME(#{@name}))"
-    month = "MONTH(FROM_UNIXTIME(#{@name}))"
-    day = "DAY(FROM_UNIXTIME(#{@name}))"
-    hour = "HOUR(FROM_UNIXTIME(#{@name}))"
+    date = "FROM_UNIXTIME(#{@name})"
+
+    year = "YEAR(#{date})"
+    month = "MONTH(#{date})"
+    day = "DAY(#{date})"
+    hour = "HOUR(#{date})"
+
+    vars = context.environments.first
+
+    if vars.has_key?('group_by')
+      @period = vars['group_by']
+    end
+    @period = @period.downcase
 
     if @period == 'year'
       return year
@@ -23,21 +32,30 @@ class GroupTag < Liquid::Tag
   end
 end
 
-class RangeTag < Liquid::Tag
-  def render(context)
-    filter = ' '
-    if @start_date.present?
-      filter += "#{@timestamp} > #{@start_date}"
-    end
-    if @end_date.present?
-      if @start_date.present?
-        filter += ' AND '
-      end
+class DateRangeBlock < Liquid::Block
+  def initialize(tag_name, content, tokens)
+    super
+    @tag_name = tag_name
+    @name = content.strip
+    @tokens = tokens
+  end
 
-      filter += "#{@timestamp} <= #{@end_date} "
+  def render(context)
+    vars = context.environments.first
+
+    operators = {
+      "datefrom" => '>',
+      "datetill" => '<='
+    }
+
+    if vars.has_key?(@tag_name)
+      return "#{@name} #{operators[@tag_name]} #{vars[@tag_name]}"
     end
-    filter
+
+    super
   end
 end
 
 Liquid::Template.register_tag('group', GroupTag)
+Liquid::Template.register_tag('datefrom', DateRangeBlock)
+Liquid::Template.register_tag('datetill', DateRangeBlock)
