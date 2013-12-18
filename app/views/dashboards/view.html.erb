@@ -5,7 +5,7 @@
     <% if user_signed_in? %>
       <a href="<%= edit_dashboard_path @dashboard %>">Edit this dashboard</a>
     <% else %>
-      <a href="#">Dashboard: <%= @dashboard.name %></a>
+      <a href="#"><%= @dashboard.name %></a>
     <% end %>
   </li>
 </ul>
