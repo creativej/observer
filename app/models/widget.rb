@@ -4,4 +4,8 @@ class Widget < ActiveRecord::Base
 
   belongs_to :user
   has_many :dashboards, :through => :dashboards_widgets
+
+  def js_parsed(params = {})
+    LiquidTemplate.for_widget.parse(self.js).render params
+  end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 def parse(content)
-  Liquid::Template.parse(content)
+  LiquidTemplate.for_query.parse(content)
 end
 
 describe Query do

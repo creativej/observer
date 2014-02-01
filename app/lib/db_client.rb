@@ -33,7 +33,6 @@ class DBClient
       @client.query(q)
     rescue Mysql2::Error => error
       @last_query_error = error
-      result = false
     end
   end
 

@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :query do
     name 'test query'
     user_id 1
+    connection_id 1
     value 'SELECT title FROM t'
     token '#123'
 

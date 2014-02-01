@@ -85,7 +85,11 @@ class QueriesController < ApplicationController
     end
 
     client = DBClient.create @query.db_connection
-    @result = client.query @query.value_as_query
+    query = @query.value_as_query(params)
+
+    logger.debug "Executing query: #{query}"
+
+    @result = client.query query
     client.close
 
     if @result
@@ -122,11 +126,9 @@ class QueriesController < ApplicationController
           redirect_path = params[:redirect]
         end
 
-        format.html { redirect_to redirect_path }
         format.json { head :no_content }
       else
         flash[:errors] = @query.errors
-        format.html { redirect_to(edit_query_path()) }
         format.json { render json: @query.errors, status: :unprocessable_entity }
       end
     end

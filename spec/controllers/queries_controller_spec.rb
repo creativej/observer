@@ -46,18 +46,10 @@ describe QueriesController do
       end
     end
 
-    describe "GET show" do
-      it "assigns the requested query as @query" do
-        query = create_query()
-        get :show, {:id => query.to_param}
-        expect(response.code).to eq("200")
-      end
-    end
-
     describe "GET new" do
       it "assigns a new query as @query" do
         get :new
-        expect(response.code).to eq("200")
+        response.should redirect_to(edit_query_path(Query.last))
       end
     end
 
@@ -69,42 +61,42 @@ describe QueriesController do
       end
     end
 
-    describe "POST create" do
-      describe "with valid params" do
-        it "creates a new Query" do
-          expect {
-            post :create, {:query => valid_attributes}
-          }.to change(Query, :count).by(1)
-        end
+  #   describe "POST create" do
+  #     describe "with valid params" do
+  #       it "creates a new Query" do
+  #         expect {
+  #           post :create, {:query => valid_attributes}
+  #         }.to change(Query, :count).by(1)
+  #       end
 
-        it "assigns a newly created query as @query" do
-          post :create, {:query => valid_attributes}
-          assigns(:query).should be_a(Query)
-          assigns(:query).should be_persisted
-        end
+  #       it "assigns a newly created query as @query" do
+  #         post :create, {:query => valid_attributes}
+  #         assigns(:query).should be_a(Query)
+  #         assigns(:query).should be_persisted
+  #       end
 
-        it "redirects to the created query" do
-          post :create, {:query => valid_attributes}
-          response.should redirect_to(Query.last)
-        end
-      end
+  #       it "redirects to the created query" do
+  #         post :create, {:query => valid_attributes}
+  #         response.should redirect_to(Query.last)
+  #       end
+  #     end
 
-      describe "with invalid params" do
-        it "assigns a newly created but unsaved query as @query" do
-          # Trigger the behavior that occurs when invalid params are submitted
-          Query.any_instance.stub(:save).and_return(false)
-          post :create, {:query => { "name" => "invalid value" }}
-          response.should redirect_to(new_query_path)
-        end
+  #     describe "with invalid params" do
+  #       it "assigns a newly created but unsaved query as @query" do
+  #         # Trigger the behavior that occurs when invalid params are submitted
+  #         Query.any_instance.stub(:save).and_return(false)
+  #         post :create, {:query => { "name" => "invalid value" }}
+  #         response.should redirect_to(new_query_path)
+  #       end
 
-        it "re-renders the 'new' template" do
-          # Trigger the behavior that occurs when invalid params are submitted
-          Query.any_instance.stub(:save).and_return(false)
-          post :create, {:query => { "name" => "invalid value" }}
-          response.should redirect_to(new_query_path)
-        end
-      end
-    end
+  #       it "re-renders the 'new' template" do
+  #         # Trigger the behavior that occurs when invalid params are submitted
+  #         Query.any_instance.stub(:save).and_return(false)
+  #         post :create, {:query => { "name" => "invalid value" }}
+  #         response.should redirect_to(new_query_path)
+  #       end
+  #     end
+  #   end
 
     describe "PUT update" do
       describe "with valid params" do
@@ -114,40 +106,41 @@ describe QueriesController do
           # specifies that the Query created on the previous line
           # receives the :update_attributes message with whatever params are
           # submitted in the request.
-          Query.any_instance.should_receive(:update_attributes).with({ "name" => "MyString" })
-          put :update, {:id => query.to_param, :query => { "name" => "MyString" }}
+          Query.any_instance.should_receive(:update_attributes).with({ "name" => 'query name' })
+
+          put :update, {:id => query.to_param, :query => { "name" => 'query name' }, :format => :json}
         end
 
-        it "assigns the requested query as @query" do
-          query = create_query()
-          put :update, {:id => query.to_param, :query => valid_attributes}
-          assigns(:query).should eq(query)
-        end
+        # it "assigns the requested query as @query" do
+        #   query = create_query()
+        #   put :update, {:id => query.to_param, :query => valid_attributes}
+        #   assigns(:query).should eq(query)
+        # end
 
-        it "redirects to the query" do
-          query = create_query()
-          put :update, {:id => query.to_param, :query => valid_attributes}
-          response.should redirect_to(queries_path)
-        end
+        # it "redirects to the query" do
+        #   query = create_query()
+        #   put :update, {:id => query.to_param, :query => valid_attributes}
+        #   response.should redirect_to(queries_path)
+        # end
       end
 
-      describe "with invalid params" do
-        it "assigns the query as @query" do
-          query = create_query()
-          # Trigger the behavior that occurs when invalid params are submitted
-          Query.any_instance.stub(:save).and_return(false)
-          put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
-          response.should redirect_to(edit_query_path)
-        end
+      # describe "with invalid params" do
+      #   it "assigns the query as @query" do
+      #     query = create_query()
+      #     # Trigger the behavior that occurs when invalid params are submitted
+      #     Query.any_instance.stub(:save).and_return(false)
+      #     put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
+      #     response.should redirect_to(edit_query_path)
+      #   end
 
-        it "re-renders the 'edit' template" do
-          query = create_query()
-          # Trigger the behavior that occurs when invalid params are submitted
-          Query.any_instance.stub(:save).and_return(false)
-          put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
-          response.should redirect_to(edit_query_path)
-        end
-      end
+      #   it "re-renders the 'edit' template" do
+      #     query = create_query()
+      #     # Trigger the behavior that occurs when invalid params are submitted
+      #     Query.any_instance.stub(:save).and_return(false)
+      #     put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
+      #     response.should redirect_to(edit_query_path)
+      #   end
+      # end
     end
 
     describe "DELETE destroy" do
@@ -168,7 +161,7 @@ describe QueriesController do
         response.should redirect_to(queries_url)
       end
     end
-  end
+  # end
 
   # describe "unauthenticated" do
   #   it "get index page" do
