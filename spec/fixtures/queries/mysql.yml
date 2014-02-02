@@ -1,0 +1,13 @@
+group_by:
+>
+SELECT id,
+    {{ group_by: 'timecreated', 'month' }}
+FROM table
+ORDER BY timecreated DESC
+filter_date:
+>
+SELECT id
+FROM table
+WHERE
+    {{ filter_date: 'timecreated' }}
+ORDER BY timecreated DESC

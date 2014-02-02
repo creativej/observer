@@ -41,11 +41,11 @@
 				this.dataList[column][dateKey] = value;
 			}
 			var dateTime = window.moment(dateKey * 1000);
-			if (!this.oldest || dateTime.isBefore(this.oldest)) {
+
+			if (!this.oldest || dateTime.millisecond() < this.oldest.millisecond()) {
 				this.oldest = dateTime;
 			}
-
-			if (!this.latest || dateTime.isAfter(this.latest)) {
+			if (!this.latest || dateTime.millisecond() > this.latest.millisecond()) {
 				this.latest = dateTime;
 			}
 

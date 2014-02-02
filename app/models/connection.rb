@@ -29,7 +29,7 @@ class Connection < ActiveRecord::Base
         TheObserver::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
-      encryptor.decrypt(self.encrypted_password)
+      encryptor.decrypt_and_verify(self.encrypted_password)
   end
 
   def encrypt_password
@@ -38,7 +38,7 @@ class Connection < ActiveRecord::Base
         TheObserver::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
-      self.encrypted_password = encryptor.encrypt(self.password)
+      self.encrypted_password = encryptor.encrypt_and_sign(self.password)
     end
   end
 
