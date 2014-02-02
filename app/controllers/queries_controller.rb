@@ -64,7 +64,7 @@ class QueriesController < ApplicationController
 
     client = DBClient.create connection
 
-    queryTemplate = Liquid::Template.parse(request[:value])
+    queryTemplate = LiquidTemplate.for_query.parse(request[:value])
 
     @result = client.query queryTemplate.render
 

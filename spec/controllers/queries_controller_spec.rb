@@ -161,7 +161,7 @@ describe QueriesController do
         response.should redirect_to(queries_url)
       end
     end
-  # end
+  end
 
   # describe "unauthenticated" do
   #   it "get index page" do
