@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131013104146) do
+ActiveRecord::Schema.define(:version => 20140202082858) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
