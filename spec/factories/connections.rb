@@ -2,11 +2,12 @@
 
 FactoryGirl.define do
   factory :connection do
-    host "MyString"
+    host "localhost"
     port 1
-    db "MyString"
-    user "MyString"
-    password "MyString"
-    type ""
+    database "database"
+    database_type "mysql"
+    username "username"
+    user_id 1
+    password "password"
   end
 end

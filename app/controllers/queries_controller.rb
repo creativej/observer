@@ -60,14 +60,13 @@ class QueriesController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
 
-    connection = Connection.find request[:connection_id]
+    connection = Connection.find params[:connection_id]
 
     client = DBClient.create connection
 
-    queryTemplate = LiquidTemplate.for_query.parse(request[:value])
+    queryTemplate = LiquidTemplate.for_query.parse(params[:value])
 
     @result = client.query queryTemplate.render
-
     @queryError = client.last_query_error
     respond_to do |format|
       format.html {
@@ -120,13 +119,7 @@ class QueriesController < ApplicationController
 
     respond_to do |format|
       if @query.update_attributes(params[:query])
-        if (params[:redirect].nil?)
-          redirect_path = queries_path
-        else
-          redirect_path = params[:redirect]
-        end
-
-        format.json { head :no_content }
+        format.json { head :ok }
       else
         flash[:errors] = @query.errors
         format.json { render json: @query.errors, status: :unprocessable_entity }

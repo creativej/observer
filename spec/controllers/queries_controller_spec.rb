@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe QueriesController do
+
   describe "Authenticated" do
     include Devise::TestHelpers
 
@@ -35,7 +36,8 @@ describe QueriesController do
     end
 
     def create_query()
-      FactoryGirl.create(:query, :user_id => @user.id)
+      connection = FactoryGirl.create(:connection)
+      FactoryGirl.create(:query, :user_id => @user.id, :connection_id => connection.id)
     end
 
     describe "GET index" do
@@ -61,86 +63,65 @@ describe QueriesController do
       end
     end
 
-  #   describe "POST create" do
-  #     describe "with valid params" do
-  #       it "creates a new Query" do
-  #         expect {
-  #           post :create, {:query => valid_attributes}
-  #         }.to change(Query, :count).by(1)
-  #       end
+    describe "run" do
+      it "post to action not using ajax" do
+        query = create_query()
+        expect {
+          post :run, {
+            :connection_id => 1,
+            :value => 'SELECT * FROM queries'
+          }
+        }.to raise_error(ActionController::RoutingError)
+      end
 
-  #       it "assigns a newly created query as @query" do
-  #         post :create, {:query => valid_attributes}
-  #         assigns(:query).should be_a(Query)
-  #         assigns(:query).should be_persisted
-  #       end
+      it "ajax post to action" do
+        DBClient.any_instance.stub(:query).and_return(true)
 
-  #       it "redirects to the created query" do
-  #         post :create, {:query => valid_attributes}
-  #         response.should redirect_to(Query.last)
-  #       end
-  #     end
+        query = create_query()
+        xhr :post, :run, {
+          :connection_id => 1,
+          :value => 'SELECT * FROM queries'
+        }
 
-  #     describe "with invalid params" do
-  #       it "assigns a newly created but unsaved query as @query" do
-  #         # Trigger the behavior that occurs when invalid params are submitted
-  #         Query.any_instance.stub(:save).and_return(false)
-  #         post :create, {:query => { "name" => "invalid value" }}
-  #         response.should redirect_to(new_query_path)
-  #       end
-
-  #       it "re-renders the 'new' template" do
-  #         # Trigger the behavior that occurs when invalid params are submitted
-  #         Query.any_instance.stub(:save).and_return(false)
-  #         post :create, {:query => { "name" => "invalid value" }}
-  #         response.should redirect_to(new_query_path)
-  #       end
-  #     end
-  #   end
+        expect(response.code).to eq("200")
+      end
+    end
 
     describe "PUT update" do
       describe "with valid params" do
         it "updates the requested query" do
           query = create_query()
-          # Assuming there are no other queries in the database, this
-          # specifies that the Query created on the previous line
-          # receives the :update_attributes message with whatever params are
-          # submitted in the request.
-          Query.any_instance.should_receive(:update_attributes).with({ "name" => 'query name' })
 
-          put :update, {:id => query.to_param, :query => { "name" => 'query name' }, :format => :json}
+          put :update, {
+            :id => query.to_param,
+            :query => {
+              "name" => 'query name',
+              "connection_id" => Connection.last.id
+            },
+            :format => :json
+          }
+
+          query.reload
+
+          expect(query.name).to eq('query name')
+          expect(query.db_connection.id).to eq(Connection.last.id)
+
+          expect(response.code).to eq("200")
         end
-
-        # it "assigns the requested query as @query" do
-        #   query = create_query()
-        #   put :update, {:id => query.to_param, :query => valid_attributes}
-        #   assigns(:query).should eq(query)
-        # end
-
-        # it "redirects to the query" do
-        #   query = create_query()
-        #   put :update, {:id => query.to_param, :query => valid_attributes}
-        #   response.should redirect_to(queries_path)
-        # end
       end
 
-      # describe "with invalid params" do
-      #   it "assigns the query as @query" do
-      #     query = create_query()
-      #     # Trigger the behavior that occurs when invalid params are submitted
-      #     Query.any_instance.stub(:save).and_return(false)
-      #     put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
-      #     response.should redirect_to(edit_query_path)
-      #   end
-
-      #   it "re-renders the 'edit' template" do
-      #     query = create_query()
-      #     # Trigger the behavior that occurs when invalid params are submitted
-      #     Query.any_instance.stub(:save).and_return(false)
-      #     put :update, {:id => query.to_param, :query => { "name" => "invalid value" }}
-      #     response.should redirect_to(edit_query_path)
-      #   end
-      # end
+      describe "with invalid params" do
+        it "assigns the query as @query" do
+          query = create_query()
+          # Trigger the behavior that occurs when invalid params are submitted
+          put :update, {
+            :id => query.to_param,
+            :query => { "name" => nil },
+            :format => :json
+          }
+          expect(response.code).to eq('422')
+        end
+      end
     end
 
     describe "DELETE destroy" do
@@ -163,10 +144,10 @@ describe QueriesController do
     end
   end
 
-  # describe "unauthenticated" do
-  #   it "get index page" do
-  #     get :index
-  #     response.should redirect_to('users/sign_in')
-  #   end
-  # end
+  describe "unauthenticated" do
+    it "get index page" do
+      get :index
+      response.should redirect_to(new_user_session_path)
+    end
+  end
 end
