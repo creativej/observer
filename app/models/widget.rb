@@ -4,8 +4,17 @@ class Widget < ActiveRecord::Base
   has_paper_trail :only => [:css, :html, :js]
   belongs_to :user
   has_many :dashboards, :through => :dashboards_widgets
+  has_many :wiget_tags
 
   def js_parsed(params = {})
     LiquidTemplate.for_widget.parse(self.js).render params
+  end
+
+  def tags
+    WidgetTag.find_by_widget_id self.id
+  end
+
+  def last_tagged_version
+    self.tags.last.version
   end
 end
