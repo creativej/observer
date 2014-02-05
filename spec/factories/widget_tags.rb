@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :widget_tag do
     version_id 1
-    name "MyString"
-    desc "MyText"
+    name "0.0.1"
+    desc "Production use"
   end
 end
