@@ -111,6 +111,9 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     orm_adapter (0.5.0)
+    paper_trail (3.0.0)
+      activerecord (>= 3.0, < 5.0)
+      activesupport (>= 3.0, < 5.0)
     polyglot (0.3.4)
     rack (1.4.5)
     rack-cache (1.2)
@@ -209,6 +212,7 @@ DEPENDENCIES
   jquery-rails
   liquid
   mysql2
+  paper_trail (~> 3.0.0)
   rails (~> 3.2.17)
   rails_config
   rspec-rails (~> 2.0)

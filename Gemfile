@@ -15,6 +15,7 @@ gem 'rails_config'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'httparty'
 gem 'liquid'
+gem 'paper_trail', '~> 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
