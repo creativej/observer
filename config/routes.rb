@@ -14,6 +14,7 @@ TheObserver::Application.routes.draw do
 
   resources :widgets do
     collection do
+      match 'tag/:tag' => 'widgets#show_tag', :as => :show_tag
       match 'preview', :as => :preview
       match 'copy/:id' => 'widgets#copy', :as => :copy
     end

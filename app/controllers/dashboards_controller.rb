@@ -13,7 +13,6 @@ class DashboardsController < ApplicationController
   end
 
   # GET /dashboards/new
-  # GET /dashboards/new.json
   def new
     @dashboard = Dashboard.new
     @dashboard.user = current_user
@@ -30,17 +29,14 @@ class DashboardsController < ApplicationController
   end
 
   # PUT /dashboards/1
-  # PUT /dashboards/1.json
   def update
     @dashboard = Dashboard.find(params[:id])
 
     respond_to do |format|
       if @dashboard.update_attributes(params[:dashboard])
-        format.html { redirect_to(edit_dashboard_path) }
         format.json { head :no_content }
       else
         flash[:errors] = @dashboard.errors
-        format.html { redirect_to(edit_dashboard_path) }
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
     end
@@ -84,7 +80,7 @@ class DashboardsController < ApplicationController
     @dashboard = Dashboard.find(params[:dashboard_id])
     respond_to do |format|
       if @dashboard.remove_widget(params[:id])
-        format.json { head :no_content }
+        format.json { head :ok }
       else
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end

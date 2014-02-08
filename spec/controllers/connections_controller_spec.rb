@@ -19,142 +19,156 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ConnectionsController do
+  describe "Authenticated" do
+    include Devise::TestHelpers
 
-  # This should return the minimal set of attributes required to create a valid
-  # Connection. As you add validations to Connection, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) { { "host" => "MyString" } }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ConnectionsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  describe "GET index" do
-    it "assigns all connections as @connections" do
-      connection = Connection.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:connections).should eq([connection])
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
     end
-  end
 
-  describe "GET show" do
-    it "assigns the requested connection as @connection" do
-      connection = Connection.create! valid_attributes
-      get :show, {:id => connection.to_param}, valid_session
-      assigns(:connection).should eq(connection)
+    def valid_attributes
+      {
+        :host => 'localhost',
+        :port => '8000',
+        :database_type => 'mysql',
+        :username => 'new name',
+        :password => ''
+      }
     end
-  end
 
-  describe "GET new" do
-    it "assigns a new connection as @connection" do
-      get :new, {}, valid_session
-      assigns(:connection).should be_a_new(Connection)
+    def new_connection
+      FactoryGirl.create :connection
     end
-  end
 
-  describe "GET edit" do
-    it "assigns the requested connection as @connection" do
-      connection = Connection.create! valid_attributes
-      get :edit, {:id => connection.to_param}, valid_session
-      assigns(:connection).should eq(connection)
-    end
-  end
+    describe "GET index" do
+      it "assigns all connections as @connections" do
+        new_connection
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Connection" do
-        expect {
-          post :create, {:connection => valid_attributes}, valid_session
-        }.to change(Connection, :count).by(1)
-      end
+        get :index
 
-      it "assigns a newly created connection as @connection" do
-        post :create, {:connection => valid_attributes}, valid_session
-        assigns(:connection).should be_a(Connection)
-        assigns(:connection).should be_persisted
-      end
-
-      it "redirects to the created connection" do
-        post :create, {:connection => valid_attributes}, valid_session
-        response.should redirect_to(Connection.last)
+        expect(response.status).to eq(200)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved connection as @connection" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Connection.any_instance.stub(:save).and_return(false)
-        post :create, {:connection => { "host" => "invalid value" }}, valid_session
-        assigns(:connection).should be_a_new(Connection)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Connection.any_instance.stub(:save).and_return(false)
-        post :create, {:connection => { "host" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested connection" do
-        connection = Connection.create! valid_attributes
-        # Assuming there are no other connections in the database, this
-        # specifies that the Connection created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Connection.any_instance.should_receive(:update_attributes).with({ "host" => "MyString" })
-        put :update, {:id => connection.to_param, :connection => { "host" => "MyString" }}, valid_session
-      end
-
+    describe "GET show" do
       it "assigns the requested connection as @connection" do
-        connection = Connection.create! valid_attributes
-        put :update, {:id => connection.to_param, :connection => valid_attributes}, valid_session
-        assigns(:connection).should eq(connection)
-      end
+        conn = new_connection
 
-      it "redirects to the connection" do
-        connection = Connection.create! valid_attributes
-        put :update, {:id => connection.to_param, :connection => valid_attributes}, valid_session
-        response.should redirect_to(connection)
+        get :show, {:id => conn.to_param}
+
+        response.should redirect_to(edit_connection_path(conn.id))
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the connection as @connection" do
-        connection = Connection.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Connection.any_instance.stub(:save).and_return(false)
-        put :update, {:id => connection.to_param, :connection => { "host" => "invalid value" }}, valid_session
-        assigns(:connection).should eq(connection)
+    describe "GET new" do
+      it "assigns a new connection as @connection" do
+        get :new
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "GET edit" do
+      it "assigns the requested connection as @connection" do
+        connection = new_connection
+        get :edit, {:id => connection.to_param}
+        expect(response.status).to eq(200)
+      end
+    end
+
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new Connection" do
+          expect(Connection.all.length).to eq(0)
+
+          post :create, {:connection => valid_attributes}
+
+          expect(Connection.all.length).to eq(1)
+
+          conn = Connection.first
+
+          expect(conn.host).to eq(valid_attributes[:host])
+          expect(conn.username).to eq(valid_attributes[:username])
+          expect(conn.user_id).to eq(@user.id)
+
+          response.should redirect_to(connections_path)
+        end
+
+        it "redirects to the connection the specific redirect" do
+          post :create, { :connection => valid_attributes, :redirect => '/' }
+          response.should redirect_to('/')
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        connection = Connection.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Connection.any_instance.stub(:save).and_return(false)
-        put :update, {:id => connection.to_param, :connection => { "host" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved connection as @connection" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Connection.any_instance.stub(:save).and_return(false)
+          post :create, {:connection => { "host" => "invalid value" }}
+          assigns(:connection).should be_a_new(Connection)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Connection.any_instance.stub(:save).and_return(false)
+          post :create, {:connection => { "host" => "invalid value" }}
+          response.should render_template("new")
+        end
+      end
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested connection" do
+          conn = new_connection
+
+          put :update, {:id => conn.to_param, :connection => valid_attributes}
+          conn.reload
+          expect(conn.host).to eq(valid_attributes[:host])
+          expect(conn.username).to eq(valid_attributes[:username])
+
+          response.should redirect_to(edit_connection_path(conn))
+        end
+
+        it "redirects to the connection to the specific url" do
+          conn = new_connection
+          put :update, {:id => conn.to_param, :connection => valid_attributes, :redirect => '/'}
+          response.should redirect_to('/')
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the connection as @connection" do
+          connection = new_connection
+          # Trigger the behavior that occurs when invalid params are submitted
+          Connection.any_instance.stub(:save).and_return(false)
+          put :update, {:id => connection.to_param, :connection => { "host" => "invalid value" }}
+          assigns(:connection).should eq(connection)
+        end
+
+        it "re-renders the 'edit' template" do
+          connection = new_connection
+          # Trigger the behavior that occurs when invalid params are submitted
+          Connection.any_instance.stub(:save).and_return(false)
+          put :update, {:id => connection.to_param, :connection => { "host" => "invalid value" }}
+          response.should render_template("edit")
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "destroys the requested connection" do
+        connection = new_connection
+        expect {
+          delete :destroy, {:id => connection.to_param}
+        }.to change(Connection, :count).by(-1)
+      end
+
+      it "redirects to the connections list" do
+        connection = new_connection
+        delete :destroy, {:id => connection.to_param}
+        response.should redirect_to(connections_url)
       end
     end
   end
-
-  describe "DELETE destroy" do
-    it "destroys the requested connection" do
-      connection = Connection.create! valid_attributes
-      expect {
-        delete :destroy, {:id => connection.to_param}, valid_session
-      }.to change(Connection, :count).by(-1)
-    end
-
-    it "redirects to the connections list" do
-      connection = Connection.create! valid_attributes
-      delete :destroy, {:id => connection.to_param}, valid_session
-      response.should redirect_to(connections_url)
-    end
-  end
-
 end

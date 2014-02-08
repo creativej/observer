@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :dashboard do
     name "MyString"
-    userid 1
+    user_id 1
     data "MyText"
     scale false
     is_public false

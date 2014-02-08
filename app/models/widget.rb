@@ -6,17 +6,36 @@ class Widget < ActiveRecord::Base
   has_many :dashboards, :through => :dashboards_widgets
   has_many :widget_tags
 
-  def js_parsed(params = {})
-    LiquidTemplate.for_widget.parse(self.js).render params
+  def parsed_js(params = {})
+    self.parse(self.js, params)
+  end
+
+  def parsed_css(params = {})
+    self.parse(self.css, params)
+  end
+
+  def parsed_html(params = {})
+    self.parse(self.html, params)
+  end
+
+  def parse(content, params)
+    LiquidTemplate.for_widget.parse(content).render params
   end
 
   def last_tag
     self.widget_tags.last
   end
 
+  def find_tag(name)
+    self.widget_tags.find_by_name(name)
+  end
+
   def add_tag(name, desc)
-    tag = WidgetTag.new :name => name, :desc => desc
+    tag = WidgetTag.new
+    tag.name = name
+    tag.desc = desc
     tag.widget = self
+    tag.version_id = self.versions.last.id
     tag.save
   end
 end
