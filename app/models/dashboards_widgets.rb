@@ -1,5 +1,5 @@
 class DashboardsWidgets < ActiveRecord::Base
-  attr_accessor :tag_id, :col, :dashboard_id, :row, :size_x, :size_y, :widget_id, :widget_tag
+  attr_accessible :tag_id, :col, :dashboard_id, :row, :size_x, :size_y, :widget_id, :widget_tag
   belongs_to :dashboard
   belongs_to :widget
   has_one :widget_tag
@@ -9,7 +9,10 @@ class DashboardsWidgets < ActiveRecord::Base
 
     dw = self.new
     dw.widget_id = widget.id
-    dw.widget_tag = widget.last_tag
+
+    if (!widget.last_tag.nil?)
+      dw.widget_tag_id = widget.last_tag.id
+    end
     dw.dashboard_id = data['dashboard_id']
     dw.col = data['col']
     dw.row = data['row']

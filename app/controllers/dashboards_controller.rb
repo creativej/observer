@@ -65,10 +65,10 @@ class DashboardsController < ApplicationController
   # POST /dashboards/1/add-widget.json
   def add_widget
     @dashboard = Dashboard.find(params[:dashboard_id])
-    widget = ActiveSupport::JSON.decode(params[:widget]).first
+    widget = params[:widget]
     respond_to do |format|
-      if @dashboard.add_widget(widget)
-        format.json { render json: { :id => @dashboard.last_added_widget.id } }
+      if @dashboard.add_widget_from_data(widget)
+        format.json { render json: { :id => @dashboard.last_dashboard_widget.id } }
       else
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end

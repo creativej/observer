@@ -20,6 +20,7 @@ describe DashboardsWidgets do
     expect(dw.size_x).to eq(3)
     expect(dw.size_y).to eq(4)
     expect(dw.widget_tag_id).to eq(nil)
+    dw.save
   end
 
   it 'create DW with tag' do
@@ -34,7 +35,7 @@ describe DashboardsWidgets do
       'size_x' => 3,
       'size_y' => 4
     })
-
-    expect(dw.widget_tag.id).to eq(tag.id)
+    expect(dw.widget_tag_id).to eq(tag.id)
+    dw.save
   end
 end

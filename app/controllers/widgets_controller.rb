@@ -56,7 +56,7 @@ class WidgetsController < ApplicationController
 
     respond_to do |format|
       if @widget.update_attributes(params[:widget])
-        format.json { head :ok }
+        format.json { head :no_content }
       else
         flash[:errors] = @widget.errors
         format.json { render json: @widget.errors, status: :unprocessable_entity }

@@ -29,14 +29,14 @@ class Dashboard < ActiveRecord::Base
     end
   end
 
-  def add_widget(widget)
+  def add_widget_from_data(widget)
     widget['dashboard_id'] = self.id
-    @last_added_widget = DashboardsWidgets.create_from_data(widget)
-    @last_added_widget.save
+    @last_dashboard_widget = DashboardsWidgets.create_from_data(widget)
+    @last_dashboard_widget.save
   end
 
-  def last_added_widget
-    @last_added_widget
+  def last_dashboard_widget
+    @last_dashboard_widget
   end
 
   def remove_widget(id)

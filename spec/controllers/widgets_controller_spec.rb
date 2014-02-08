@@ -127,7 +127,7 @@ describe WidgetsController do
         expect(widget.css).to eq(valid_attributes['css'])
         expect(widget.html).to eq(valid_attributes['html'])
 
-        expect(response.status).to eq(200)
+        expect(response.status).to eq(204)
       end
 
       it "update the widget with invalid parameters" do
