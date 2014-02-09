@@ -1,0 +1,14 @@
+assets_path 'assets/javascripts'
+
+group :vendor, :assets_path => 'assets/javascripts' do
+  asset 'modernizr', '~2.7.1'
+  asset 'ace-builds', '~1.1.0'
+  asset 'jquery', '~2.0.0'
+  asset 'gridster.js', 'git@github.com:creativej/gridster.js.git#~0.2.2'
+  asset 'moment', '~2.5.1'
+  asset 'zeroclipboard', 'git://github.com/zeroclipboard/zeroclipboard.git#1.1.7'
+  asset 'flight', '~1.1.0'
+  asset 'sugar', '~1.3.8'
+  asset 'canjs', '~1.1.8'
+  asset 'jquery.transit', 'git@github.com:rstacruz/jquery.transit.git#~0.9.9'
+end

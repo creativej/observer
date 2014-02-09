@@ -80,7 +80,7 @@ class DashboardsController < ApplicationController
     @dashboard = Dashboard.find(params[:dashboard_id])
     respond_to do |format|
       if @dashboard.remove_widget(params[:id])
-        format.json { head :ok }
+        format.json { head :no_content }
       else
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end

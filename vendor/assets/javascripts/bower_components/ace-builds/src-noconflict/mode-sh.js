@@ -44,33 +44,8 @@ oop.inherits(Mode, TextMode);
 
 (function() {
 
-    this.toggleCommentLines = function(state, doc, startRow, endRow) {
-        var outdent = true;
-        var re = /^(\s*)#/;
-
-        for (var i=startRow; i<= endRow; i++) {
-            if (!re.test(doc.getLine(i))) {
-                outdent = false;
-                break;
-            }
-        }
-
-        if (outdent) {
-            var deleteRange = new Range(0, 0, 0, 0);
-            for (var i=startRow; i<= endRow; i++)
-            {
-                var line = doc.getLine(i);
-                var m = line.match(re);
-                deleteRange.start.row = i;
-                deleteRange.end.row = i;
-                deleteRange.end.column = m[0].length;
-                doc.replace(deleteRange, m[1]);
-            }
-        }
-        else {
-            doc.indentRows(startRow, endRow, "#");
-        }
-    };
+   
+    this.lineCommentStart = "#";
 
     this.getNextLineIndent = function(state, line, tab) {
         var indent = this.$getIndent(line);
@@ -108,8 +83,6 @@ oop.inherits(Mode, TextMode);
 
         if (!tokens)
             return false;
-
-        // ignore trailing comments
         do {
             var last = tokens.pop();
         } while (last && (last.type == "comment" || (last.type == "text" && last.value.match(/^\s+$/))));
@@ -121,8 +94,6 @@ oop.inherits(Mode, TextMode);
     };
 
     this.autoOutdent = function(state, doc, row) {
-        // outdenting in sh is slightly different because it always applies
-        // to the next line and only of a new line is inserted
 
         row += 1;
         var indent = this.$getIndent(doc.getLine(row));
@@ -142,34 +113,32 @@ ace.define('ace/mode/sh_highlight_rules', ['require', 'exports', 'module' , 'ace
 var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
-var ShHighlightRules = function() {
-
-    var reservedKeywords = (
+var reservedKeywords = exports.reservedKeywords = (
         '!|{|}|case|do|done|elif|else|'+
         'esac|fi|for|if|in|then|until|while|'+
         '&|;|export|local|read|typeset|unset|'+
         'elif|select|set'
     );
 
-    var languageConstructs = (
-        '[|]|alias|bg|bind|break|builtin|'+
-         'cd|command|compgen|complete|continue|'+
-         'dirs|disown|echo|enable|eval|exec|'+
-         'exit|fc|fg|getopts|hash|help|history|'+
-         'jobs|kill|let|logout|popd|printf|pushd|'+
-         'pwd|return|set|shift|shopt|source|'+
-         'suspend|test|times|trap|type|ulimit|'+
-         'umask|unalias|wait'
-    );
+var languageConstructs = exports.languageConstructs = (
+    '[|]|alias|bg|bind|break|builtin|'+
+     'cd|command|compgen|complete|continue|'+
+     'dirs|disown|echo|enable|eval|exec|'+
+     'exit|fc|fg|getopts|hash|help|history|'+
+     'jobs|kill|let|logout|popd|printf|pushd|'+
+     'pwd|return|set|shift|shopt|source|'+
+     'suspend|test|times|trap|type|ulimit|'+
+     'umask|unalias|wait'
+);
 
+var ShHighlightRules = function() {
     var keywordMapper = this.createKeywordMapper({
         "keyword": reservedKeywords,
-        "constant.language": languageConstructs,
+        "support.function.builtin": languageConstructs,
         "invalid.deprecated": "debugger"
     }, "identifier");
 
     var integer = "(?:(?:[1-9]\\d*)|(?:0))";
-    // var integer = "(?:" + decimalInteger + ")";
 
     var fraction = "(?:\\.\\d+)";
     var intPart = "(?:\\d+)";
@@ -187,8 +156,8 @@ var ShHighlightRules = function() {
 
     this.$rules = {
         "start" : [ {
-            token : "comment",
-            regex : "#.*$"
+            token : ["text", "comment"],
+            regex : /(^|\s)(#.*)$/
         }, {
             token : "string",           // " string
             regex : '"(?:[^\\\\]|\\\\.)*?"'
@@ -200,7 +169,7 @@ var ShHighlightRules = function() {
             regex : variable
         }, {
             token : "support.function",
-            regex : func,
+            regex : func
         }, {
             token : "support.function",
             regex : fileDescriptor
@@ -225,9 +194,6 @@ var ShHighlightRules = function() {
         }, {
             token : "paren.rparen",
             regex : "[\\]\\)\\}]"
-        }, {
-            token : "text",
-            regex : "\\s+"
         } ]
     };
 };
