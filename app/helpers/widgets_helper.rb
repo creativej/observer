@@ -111,6 +111,7 @@ eos
   src="#{src}"
   scrolling="no"
   data-widget-id="#{widget_id}"
+  data-sandbox
   data-dimensions="#{Settings.gridster.dimensions}"></iframe>
 eos
   end

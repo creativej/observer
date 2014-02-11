@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def spinner(classes = '')
-    '<div class="spinner-container ' << classes << '"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
+    '<div data-spinner class="spinner-container ' << classes << '"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
   end
 
   def overlay_spinner

@@ -1,51 +1,54 @@
-(function($, Observer, window) {
-    var modules = Observer.modules;
-    Observer.modules.widgetEditor = function($el) {
-        var
-            instance = window.eventable(),
-            $spinner = $el.find('.spinner-container'),
-            $editor = $el.find('.editor[rel="ace-editor"]'),
-            $saveBtn = $el.find('.save-btn'),
-            spinner = modules.spinner($spinner),
-            editor = modules.aceEditor($editor)
-            ;
+//= require modules/spinner
+//= require actions/save_attribute
+//= require mixins/with_ace_editor
 
-        instance.save = function() {
-            Observer.trigger('reset.log');
-            editor.lintJs();
+(function($, Observer, flight, window) {
+    'use strict';
+
+    var modules = Observer.modules;
+
+    var WidgetEditor = function() {
+        this.defaultAttrs({
+            spinner: modules.spinner(Observer.$spinner()),
+            saveBtnSelector: '[data-save-btn]'
+        });
+
+        this.save = function() {
+            var self = this;
+
+            this.lintJs();
 
             Observer.actions.saveAttribute(
-                $saveBtn.data('url'),
-                spinner,
-                editor.serialize()
+                this.select('saveBtnSelector').data('url'),
+                this.attr.spinner,
+                this.serialize()
             ).done(function() {
-                Observer.trigger('previewWidgetRequested');
+                self.trigger('previewWidgetRequested');
             });
         };
 
-        $el
-            .on('webkitTransitionEnd, otransitionend, oTransitionEnd, msTransitionEnd, transitionend', function(e) {
-                if (e.target === $el.get(0)) {
-                    editor.resize();
-                }
-            })
-            .click(function() {
-                editor.focus();
-            });
+        this.after('initialize', function() {
+            this.on(
+                'webkitTransitionEnd, otransitionend, oTransitionEnd, msTransitionEnd, transitionend',
+                this.resize
+            );
 
-        editor
-            .on('save.shortcut', instance.save)
-            .on('preview.shortcut', function() {
+            this.on('click', this.focus);
+
+            this.on('saveRequested', this.save);
+            this.on('previewRequested', function() {
                 this.lintJs();
                 Observer.trigger('previewWidgetRequested');
-            })
-            .on('focus', function() {
+            });
+            this.on('focus', function() {
                 Observer.trigger(this.mode() + 'ModeRequested');
-            })
-            .lintJs();
+            });
 
-        $saveBtn.click(instance.save);
-
-        return instance;
+            this.on('click', {
+                saveBtnSelector: this.save
+            });
+        });
     };
-}(jQuery, Observer, window));
+
+    Observer.modules.WidgetEditor = flight.component(Observer.mixins.withAceEditor, WidgetEditor);
+}(jQuery, Observer, flight, window));

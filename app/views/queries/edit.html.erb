@@ -24,7 +24,7 @@
     >
       <%= @query.name %>
     </div>
-    <%= form_for(@query, :html => {:class => 'custom query-form' }) do |f| %>
+    <%= form_for(@query, :html => {:class => 'custom query-form', 'data-query-form' => true }) do |f| %>
       <%= render '/form_errors' %>
       <div class="query-editor-group field">
         <%= f.hidden_field :value %>
@@ -45,10 +45,10 @@
               },
               :class => 'medium'
             ) %>
-            <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>"><i class="icon-triangle-right"></i>Run</a>
+            <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>" data-run-btn><i class="icon-triangle-right"></i>Run</a>
           </div>
           <div class='columns large-9'>
-            <div class="result-content">
+            <div class="result-content" data-result-content>
               <div class="result-content-empty-text"></div>
             </div>
           </div>

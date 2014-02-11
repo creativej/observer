@@ -8,7 +8,7 @@
   </li>
   <li class="divider"></li>
   <li>
-    <a href="#" title="Preferences" data-widget-preferences data-modal-id="widget-preferences">
+    <a href="#" title="Preferences" data-reveal-id="widget-preferences" data-reveal>
       <i class="icon-cog dashboard-tools-icon"></i> Preferences
     </a>
   </li>
@@ -18,20 +18,20 @@
   <li><a href="<%= @redirect %>"><i class="icon-forward"></i> Done</a></li>
 </ul>
 <% end %>
-<div class="widget-name editable-name" data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
+<div class="widget-name editable-name" data-editable-name data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
 
-<div class="preview-container">
+<div class="preview-container" data-widget-previewer>
   <%= overlay_spinner.html_safe %>
   <%= widget_sandbox('', 'widget-sandbox', '', 'interactive').html_safe %>
   <div class="widget-debugger-group" data-widget-debugger>
     <pre class="widget-debugger__console" data-console></pre>
     <div class="widget-debugger__tip">Check your JS console for more details. </div>
   </div>
+  <%= form_tag preview_widgets_path, :target => 'widget-sandbox', 'data-widget-preview-form' => true do %><% end %>
 </div>
-<%= form_tag preview_widgets_path, :class => 'preview-widget-form', :target => 'widget-sandbox' do %><% end %>
-<%= form_for(@widget, :html => { :class => 'widget-form' }) do |f| %>
+<%= form_for(@widget, :html => { :class => 'widget-form', 'data-widget-form' => true }) do |f| %>
 <div class="row">
-  <div class="large-12 columns" id="widget-editor-layout" data-scss-mode>
+  <div class="large-12 columns" id="widget-editor-layout" data-scss-mode data-widget-editor-layout>
     <div class="large-7 columns">
       <%= f.hidden_field :js %>
       <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>

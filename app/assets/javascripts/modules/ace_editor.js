@@ -5,7 +5,7 @@
 //= require bower_components/ace-builds/src/mode-scss
 //= require bower_components/ace-builds/src/mode-html
 //
-(function($, ace, window, Observer) {
+(function($, ace, window, Observer, flight) {
 	'use strict';
 
 	Observer.modules.aceEditor = function($el) {
@@ -114,4 +114,4 @@
 
 		return instance;
 	};
-}(jQuery, ace, window, Observer));
+}(jQuery, ace, window, Observer, flight));
