@@ -37,10 +37,20 @@
       <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
     </div>
     <div class="large-5 columns">
-      <%= f.hidden_field :html, :placeholder => 'html' %>
-      <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
-      <%= f.hidden_field :css, :placeholder => 'css' %>
-      <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
+      <dl class="tabs" data-tab>
+        <dd class="active"><a href="#panel-html">HTML</a></dd>
+        <dd><a href="#panel-css">CSS</a></dd>
+      </dl>
+      <div class="tabs-content">
+        <div class="content active" id="panel-html">
+          <%= f.hidden_field :html, :placeholder => 'html' %>
+          <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
+        </div>
+        <div class="content" id="panel-css">
+          <%= f.hidden_field :css, :placeholder => 'css' %>
+          <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@ group :assets do
   gem 'execjs'
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'zurb-foundation', '~> 4.2.2'
+  gem 'foundation-rails', '~> 5.1.1.0'
   gem 'entypo-rails'
   gem 'uglifier', '>= 1.0.3'
 end

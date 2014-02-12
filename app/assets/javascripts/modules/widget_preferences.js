@@ -78,9 +78,7 @@
 			this.attr.spinner = modules.spinner(this.select('spinnerSelector'));
 			this.attr.widgetOptions = modules.widgetSizeOptions(this.select('sizeOptionsSelector'));
 
-			this.$node.foundation('reveal', {
-				closed: $.proxy(this.resetInputs, this)
-			});
+			this.on('closed', this.resetInputs);
 
 			this.on(this.select('formSelector'), 'submit', this.save);
 			this.on('click', {

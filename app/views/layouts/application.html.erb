@@ -17,7 +17,7 @@
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
   	<%= stylesheet_link_tag    "application" %>
-  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-sham.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.min.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
@@ -31,7 +31,7 @@
     class="<%= "#{controller.controller_name} #{controller.action_name}" %>"
     data-triggerjs="<%= "#{controller.action_name}.#{controller.controller_name}" %>"
   >
-      <nav class="top-bar userbar">
+      <nav class="top-bar userbar" data-topbar>
         <section class="top-bar-section components-menu">
           <ul class="left title-area">
             <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">Observer</a>
