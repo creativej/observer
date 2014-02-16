@@ -1,0 +1,23 @@
+<script id="widget-builder-ejs" type="text/ejs">
+    <form class="form--dark-panel">
+    <%% for (var name in meta) { %>
+        <%% var field = meta[name]; %>
+        <div class="row">
+            <div class="large-12 columns">
+                <%% if (field.type === 'string') { %>
+                  <label>
+                    <%% if (field.label) { %>
+                        <%%= field.label %>
+                    <%% } else { %>
+                        <%%= name %>
+                    <%% } %>
+                    <input type="text" placeholder="<%%= field.placeholder || '' %>" />
+                  </label>
+                <%% } else if (field.type === 'array') { %>
+                    ARRAY
+                <%% } %>
+            </div>
+        </div>
+    <%% } %>
+    </form>
+</script>

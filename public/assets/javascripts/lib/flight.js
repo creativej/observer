@@ -1041,8 +1041,9 @@ define('lib/index', [
     './compose',
     './logger',
     './registry',
-    './utils'
-], function (advice, component, compose, logger, registry, utils) {
+    './utils',
+    './debug'
+], function (advice, component, compose, logger, registry, utils, debug) {
     'use strict';
     return {
         advice: advice,
@@ -1050,7 +1051,8 @@ define('lib/index', [
         compose: compose,
         logger: logger,
         registry: registry,
-        utils: utils
+        utils: utils,
+        debug: debug
     };
 });
 

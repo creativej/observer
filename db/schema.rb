@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205113634) do
+ActiveRecord::Schema.define(:version => 20140213111354) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20140205113634) do
     t.datetime "updated_at", :null => false
     t.integer  "column"
     t.integer  "row"
+    t.text     "meta"
   end
 
 end

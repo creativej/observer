@@ -31,25 +31,70 @@
 </div>
 <%= form_for(@widget, :html => { :class => 'widget-form', 'data-widget-form' => true }) do |f| %>
 <div class="row">
-  <div class="large-12 columns" id="widget-editor-layout" data-scss-mode data-widget-editor-layout>
+  <div class="large-12 columns" id="widget-editor-layout" data-widget-editor-layout>
     <div class="large-7 columns">
-      <%= f.hidden_field :js %>
-      <%= render '/editor', :mode => 'js', :url => widget_path, :prefix => 'widget'  %>
+      <div data-tabs>
+        <dl class="tabs" data-flight-tabs>
+          <dd class="active" data-target="js"><a href="#">JS</a></dd>
+          <dd data-target="meta"><a href="#">Meta</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" data-id="js">
+            <%= f.hidden_field :js %>
+            <%= render '/editor',
+              :mode => 'js',
+              :url => widget_path,
+              :prefix => 'widget',
+              :auto_preview => true
+            %>
+          </div>
+          <div class="content" data-id="meta">
+            <%= f.hidden_field :meta, "data-meta-field" => true %>
+            <%= render '/editor',
+              :mode => 'yaml',
+              :url => widget_path,
+              :prefix => 'widget',
+              :bind => '[data-meta-field]',
+              :auto_preview => false
+            %>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="large-5 columns">
-      <dl class="tabs" data-tab>
-        <dd class="active"><a href="#panel-html">HTML</a></dd>
-        <dd><a href="#panel-css">CSS</a></dd>
-      </dl>
-      <div class="tabs-content">
-        <div class="content active" id="panel-html">
-          <%= f.hidden_field :html, :placeholder => 'html' %>
-          <%= render '/editor', :mode => 'html', :url => widget_path, :prefix => 'widget' %>
+      <div data-tabs>
+        <dl class="tabs">
+          <dd class="active" data-target="html"><a href="#">HTML</a></dd>
+          <dd data-target="css"><a href="#">CSS</a></dd>
+          <dd data-target="builder"><a href="#">Widget builder</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" data-id="html">
+            <%= f.hidden_field :html, :placeholder => 'html' %>
+            <%= render '/editor',
+              :mode => 'html',
+              :url => widget_path,
+              :prefix => 'widget',
+              :auto_preview => true
+            %>
+          </div>
+          <div class="content" data-id="css">
+            <%= f.hidden_field :css, :placeholder => 'css' %>
+            <%= render '/editor',
+              :mode => 'css',
+              :url => widget_path,
+              :prefix => 'widget',
+              :auto_preview => true
+            %>
+          </div>
+          <div class="content" data-id="builder">
+            <div class="widget-builder-group" data-widget-builder data-meta="<%= @widget.meta %>">
+              <%= render 'builder.ejs', :format => 'ejs' %>
+              <div data-content></div>
+            </div>
+          </div>
         </div>
-        <div class="content" id="panel-css">
-          <%= f.hidden_field :css, :placeholder => 'css' %>
-          <%= render '/editor', :mode => 'css', :url => widget_path, :prefix => 'widget' %>
-        </div>
+
       </div>
     </div>
   </div>

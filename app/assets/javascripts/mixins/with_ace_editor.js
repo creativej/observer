@@ -4,100 +4,101 @@
 //= require bower_components/ace-builds/src/mode-javascript
 //= require bower_components/ace-builds/src/mode-scss
 //= require bower_components/ace-builds/src/mode-html
+//= require bower_components/ace-builds/src/mode-yaml
+//= require bower_components/js-yaml/js-yaml.min
 //
-(function($, ace, window, Observer) {
+(function($, ace, window, Observer, yaml, undefined) {
     'use strict';
 
-    Observer.mixins.withAceEditor = function() {
+    Observer.mixin('withAceEditor', function() {
         this.defaultAttrs({
             editorSelector: '[data-ace-editor]'
         });
+
+        this.isValid = true;
+        this.lastLintError = {};
+        this.isDirty = false;
 
         this.mode = function() {
             return {
                 js: 'javascript',
                 css: 'scss',
                 html: 'html',
-                sql: 'sql'
+                sql: 'sql',
+                yaml: 'yaml'
             }[this.$editor.data('mode')];
         };
 
         this.update = function() {
-            this.attr.editor.setValue(this.val());
+            this.editor.setValue(this.val());
+        };
+
+        this.setDirty = function(isDirty) {
+            if (this.isDefined(isDirty)) {
+                this.isDirty = isDirty;
+                return;
+            }
+
+            this.isDirty = true;
         };
 
         this.val = function(value) {
-            if (!this.attr.$field) {
-                this.attr.$field = $(this.$editor.data('bind'));
-            }
-
-            if (value) {
-                this.attr.$field.val(value);
+            if (this.isDefined(value)) {
+                this.$field.val(value);
+                this.setDirty();
                 return this;
             }
-            return this.attr.$field.val();
+
+            return this.$field.val();
         };
 
         this.serialize = function() {
-            return this.attr.$field.serialize();
+            return this.$field.serialize();
         };
 
         this.hasUnsavedContent = function() {
-            return this.attr.lastSavedValue !== this.val();
+            return this.lastSavedValue !== this.val();
         };
 
         this.updateLastSavedValue = function() {
-            this.attr.lastSavedValue = this.val();
+            this.lastSavedValue = this.val();
             return this.val();
         };
 
         this.resize = function() {
-            this.attr.editor.resize();
+            this.editor.resize();
         };
 
         this.focus = function() {
-            this.attr.editor.focus();
-        };
-
-        this.lintJs = function() {
-            if (this.mode() === 'javascript') {
-                try {
-                    eval('throw 0;' + this.attr.editor.getSession().getValue());
-                } catch (e) {
-                    if (e !== 0) {
-                        Observer.debugger.log(e);
-                    }
-                }
-            }
-            return this;
+            this.editor.focus();
         };
 
         this.bindKeyCommandsToEditor = function(editor) {
             editor.commands.addCommand({
                 name: 'save',
                 bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
-                exec: $.proxy(function(editor) {
+                exec: this.proxy(function(editor) {
                     this.trigger('saveRequested');
-                }, this),
+                }),
                 readOnly: true // false if this command should not apply in readOnly mode
             });
 
             editor.commands.addCommand({
                 name: 'preview',
                 bindKey: {win: 'Ctrl-ENTER',  mac: 'Command-ENTER'},
-                exec: $.proxy(function(editor) {
-                    this.trigger('previewRequested');
-                }, this),
+                exec: this.proxy(function(editor) {
+                    this.trigger('previewWidgetRequested');
+                }),
                 readOnly: true // false if this command should not apply in readOnly mode
             });
         };
 
         this.handleUnloadEvent = function(e) {
-            var
-                message = "You still have unsaved content. Are you sure you want to leave this page",
-                e = e || window.event;
+            var message = "You still have unsaved content. Are you sure you want to leave this page";
 
-            if (editor.hasUnsavedContent()) {
+            e = e || window.event;
+
+            if (this.isDirty) {
                 // For IE and Firefox
                 if (e) {
                     e.returnValue = message;
@@ -111,33 +112,72 @@
             var editor = ace.edit(id);
             editor.setTheme('ace/theme/twilight');
             editor.getSession().setMode('ace/mode/'+this.mode());
-            this.attr.editor = editor;
+            this.editor = editor;
             return editor;
-        }
+        };
+
+        this.handleChangeEvent = function(e) {
+            var value = this.editor.getValue();
+
+            this.val(value);
+
+            if (this.isMode('yaml')) {
+                this.lintYaml(value);
+            }
+        };
+
+        this.isMode = function(mode) {
+            return this.mode() === mode;
+        };
+
+        this.isAutoPreview = function() {
+            return this.$node.data('auto-preview');
+        };
+
+        this.lintYaml = function(value) {
+            try {
+                yaml.safeLoad(value);
+                this.isValid = true;
+                this.trigger('valid');
+            } catch(e) {
+                this.isValid = false;
+                this.trigger('invalid', e);
+                this.lastLintError = e;
+            }
+        };
+
+        this.lintJs = function() {
+            if (this.isMode('javascript')) {
+                try {
+                    eval('throw 0;' + this.editor.getSession().getValue());
+                } catch (e) {
+                    if (e !== 0) {
+                        Observer.debugger.log(e);
+                    }
+                }
+            }
+            return this;
+        };
 
         this.after('initialize', function() {
             this.$editor = this.select('editorSelector');
+            this.editor = this.aceEditor(this.$editor.prop('id'));
+            this.$field = $(this.$editor.data('bind'));
 
-            var editor = this.aceEditor(this.$editor.prop('id'));
-
-            if (this.val().trim()) {
+            if (this.val() && this.val().trim()) {
                 this.update();
                 this.updateLastSavedValue();
             }
 
-            window.onbeforeunload = this.handleUnloadEvent;
+            this.on('click', this.focus);
+            this.editor.clearSelection();
 
-            editor.clearSelection();
+            // window.onbeforeunload = this.proxy(this.handleUnloadEvent);
 
-            editor.on('change', $.proxy(function(e){
-                this.val(editor.getValue());
-            }, this));
+            this.bubbleEvent(this.editor, 'change', this.handleChangeEvent);
+            this.bubbleEvent(this.editor, 'focus');
 
-            editor.on('focus', $.proxy(function() {
-                this.trigger('focus');
-            }, this));
-
-            this.bindKeyCommandsToEditor(editor);
+            this.bindKeyCommandsToEditor(this.editor);
         });
-    };
-}(jQuery, ace, window, Observer));
+    });
+}(jQuery, ace, window, Observer, jsyaml));

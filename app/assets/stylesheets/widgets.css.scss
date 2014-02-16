@@ -74,32 +74,23 @@
         margin-bottom: 15px;
     }
 
-    .editor-group.js {
-        height: 480px;
+    .editor-group, .widget-builder-group {
+        height: 580px;
+    }
+
+    .widget-builder-group {
+        background-color: $dark-grey;
+        padding: 30px 6em 10px;
     }
 }
 
-#widget-editor-layout {
-    .editor-group.css, .editor-group.html {
-        transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
-        -webkit-transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1); /* Safari */
+.form--dark-panel {
+    label {
+        color: white;
     }
 
-    &[data-scss-mode] {
-        .editor-group.css {
-            height: 320px;
-        }
-        .editor-group.html {
-            height: 150px;
-        }
-    }
-    &[data-html-mode] {
-        .editor-group.css {
-            height: 150px;
-        }
-        .editor-group.html {
-            height: 320px;
-        }
+    input, input:active {
+        background-color: $dark-grey;
     }
 }
 

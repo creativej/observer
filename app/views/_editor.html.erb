@@ -1,4 +1,10 @@
-        <div class="editor-group <%= mode %>" data-editor>
+        <div
+          class="editor-group <%= mode %>"
+          data-<% if defined? name %><%= name %><% else %><%= mode %><% end %>-editor
+          <% if defined? auto_preview %>
+          data-auto-preview="<%= auto_preview %>"
+          <% end %>
+        >
           <div class="header">
             <% if !defined? no_save %>
             <i class="action icon-save save-btn" data-url="<%= url %>" data-save-btn></i>
@@ -6,6 +12,13 @@
             <span class="title"><%= mode.upcase %></span>
           </div>
           <div class="editor-container">
-            <div id="<%= prefix %>_<%= mode %>_editor" class="editor" rel="ace-editor" data-bind="<%= defined?(bind) ? bind : "##{prefix}_#{mode}" %>" data-mode="<%= mode %>" data-ace-editor></div>
+            <div
+              id="<%= prefix %>_<%= mode %>_editor"
+              class="editor"
+              rel="ace-editor"
+              data-bind="<%= defined?(bind) ? bind : "##{prefix}_#{mode}" %>"
+              data-mode="<%= mode %>"
+              data-ace-editor
+            ></div>
           </div>
         </div>

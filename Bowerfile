@@ -11,4 +11,5 @@ group :vendor, :assets_path => 'assets/javascripts' do
   asset 'sugar', '~1.3.8'
   asset 'canjs', '~1.1.8'
   asset 'jquery.transit', 'git@github.com:rstacruz/jquery.transit.git#~0.9.9'
+  asset 'js-yaml', '~3.0.1'
 end

@@ -18,6 +18,7 @@
 //= require mixins/eventable
 //= require bower_components/zeroclipboard/ZeroClipboard
 //= require observer
+//= require mixins/with_core
 //= require observer/debugger
 //= require observer/keyboard
 //= require modules/jqplot
@@ -32,6 +33,8 @@
 
 (function(window, Observer, $, document) {
 	"use strict";
+
+	Observer.enableDebug();
 
 	$(function() {
 		Observer.trigger('ready.body');

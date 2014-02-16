@@ -1,6 +1,5 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-//= require modules/ace_editor
 //= require modules/spinner
 //= require modules/sandbox
 //= require modules/widget_preferences
@@ -9,8 +8,10 @@
 //= require modules/editable_name
 //= require modules/widget_debugger
 //= require modules/widget_editor
+//= require modules/widget_meta_editor
 //= require modules/widget_previewer
-//= require modules/widget_editors_layout
+//= require modules/widget_builder
+//= require modules/tabs
 
 (function($, window, Observer, undefined) {
 	'use strict';
@@ -22,8 +23,14 @@
 			$widgetForm: $('[data-widget-form]')
 		});
 
-		modules.WidgetEditor.attachTo('[data-editor]');
-		modules.WidgetEditorsLayout.attachTo('[data-widget-editor-layout]');
+		modules.Tabs.attachTo('[data-tabs]');
+
+		modules.WidgetEditor.attachTo('[data-js-editor]');
+		modules.WidgetEditor.attachTo('[data-yaml-editor]');
+		modules.WidgetEditor.attachTo('[data-css-editor]');
+		modules.WidgetEditor.attachTo('[data-html-editor]');
+		modules.WidgetBuilder.attachTo('[data-widget-builder]');
+
 		modules.EditableName.attachTo('[data-editable-name]');
 		modules.WidgetPreferences.attachTo('[data-widget-preferences]');
 
@@ -34,6 +41,12 @@
 
 		$('[data-widget-preferences]').on('saved', function() {
 			$(document).trigger('previewWidgetRequested');
+		});
+
+		Observer.on('saved', function(mode, value) {
+			if (mode === 'yaml') {
+				$('[data-widget-builder]').trigger('renderRequested', value);
+			}
 		});
 
 		Observer
