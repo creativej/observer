@@ -26,6 +26,14 @@
             return !this.isUndefined(value);
         };
 
+        this.isString = function(value) {
+            return Observer.helpers.isString(value);
+        };
+
+        this.isArray = function(value) {
+            return value instanceof Array;
+        };
+
         this.find = function(selector) {
             return this.$node.find(selector);
         };

@@ -53,7 +53,7 @@ $body-font-family: "Ubuntu", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // We use these as default colors throughout
 $primary-color: #cfc;
-// $secondary-color: #e7e7e7;
+$secondary-color: $medium-grey;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
@@ -314,7 +314,7 @@ $crumb-font-transform: normal;
 
 // We use these to build padding for buttons.
 // $button-tny: rem-calc(10);
-// $button-sml: rem-calc(14);
+$button-sml: rem-calc(12);
 // $button-med: rem-calc(16);
 // $button-lrg: rem-calc(18);
 
@@ -345,7 +345,7 @@ $button-border-width: 0;
 // $button-round: $global-rounded;
 
 // We use this to set default opacity for disabled buttons.
-// $button-disabled-opacity: 0.7;
+$button-disabled-opacity: 0.5;
 
 // Button Groups
 
@@ -1210,7 +1210,7 @@ $topbar-breakpoint: #{upper-bound($small-range)}; // Change to 9999px for always
 }
 
 .top-bar-section ul {
-    background-color: $panel-color;
+    background-color: $medium-grey;
 }
 
 .top-bar .name .brand-title {

@@ -32,8 +32,11 @@
                     },
                     action: 'Executing query...'
                 }
-            ).done(function(resp) {
+            )
+            .then(function(resp) {
                 $resultContent.hide().html(resp).fadeIn('fast');
+            }, function(error) {
+                console.log(error);
             });
         };
 
@@ -59,13 +62,14 @@
 
             this.on('saveRequested', this.saveQuery);
             this.on('previewRequested', this.runQuery);
-            this.runQuery();
+
+            // this.runQuery();
         });
     };
 
-    Observer.modules.QueryForm = flight.component(
+    Observer.module('QueryForm', Observer.flightComponent(
         Observer.mixins.withAceEditor,
         QueryForm
-    );
+    ));
 
 }(jQuery, window, Observer, flight));

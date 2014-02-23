@@ -88,9 +88,20 @@
             %>
           </div>
           <div class="content" data-id="builder">
-            <div class="widget-builder-group" data-widget-builder data-meta="<%= @widget.meta %>">
+            <div
+              class="widget-builder-group"
+              data-widget-builder
+              data-meta="<%= @widget.meta %>"
+              data-save-url="<%= widget_path %>"
+            >
+              <%= f.hidden_field :data, :placeholder => 'css', "data-value" => true %>
               <%= render 'builder.ejs', :format => 'ejs' %>
               <div data-content></div>
+              <div class="clearfix">
+                <button class="button secondary" type="button" data-save>
+                  <i class="icon-save"></i> Save
+                </button>
+              </div>
             </div>
           </div>
         </div>

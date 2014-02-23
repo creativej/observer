@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213111354) do
+ActiveRecord::Schema.define(:version => 20140222121852) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20140213111354) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "widget_tag_id"
+    t.text     "data"
   end
 
   create_table "queries", :force => true do |t|
@@ -120,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20140213111354) do
     t.integer  "column"
     t.integer  "row"
     t.text     "meta"
+    t.text     "data"
   end
 
 end

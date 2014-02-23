@@ -1,5 +1,5 @@
 class DashboardsWidgets < ActiveRecord::Base
-  attr_accessible :tag_id, :col, :dashboard_id, :row, :size_x, :size_y, :widget_id, :widget_tag
+  attr_accessible :tag_id, :col, :dashboard_id, :row, :size_x, :size_y, :widget_id, :widget_tag, :data
   belongs_to :dashboard
   belongs_to :widget
   has_one :widget_tag
