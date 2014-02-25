@@ -12,7 +12,7 @@
 		;
 
 	Observer.onPageReady(['edit.queries'], function() {
-		modules.QueryForm.attachTo('[data-query-form');
+		modules.QueryForm.attachTo('[data-query-form]');
 		modules.EditableName.attachTo($('.query-name'));
 	});
 }(jQuery, window, Observer));
