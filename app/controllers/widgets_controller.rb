@@ -78,9 +78,15 @@ class WidgetsController < ApplicationController
 
   # POST /widgets/preview
   def preview
-    @widget = !params[:widget].nil? ? params[:widget] : {}
+    @widget = params[:widget].nil? ? {} : params[:widget]
 
-    @widget[:js] = LiquidTemplate.for_widget.parse(@widget[:js]).render
+    begin
+      data = JSON.parse(@widget[:data])
+    rescue
+      data = {}
+    end
+
+    @widget[:js] = LiquidTemplate.for_widget.parse(@widget[:js]).render data
 
     render :layout => 'basic'
   end
