@@ -22,8 +22,7 @@
 
 <div class="preview-container">
   <%= overlay_spinner.html_safe %>
-  <%= widget_sandbox('', 'widget-sandbox').html_safe %>
-  <%= widget_modifier(:widget_id => @widget.id).html_safe %>
+  <%= widget_sandbox('', 'widget-sandbox', '', 'interactive').html_safe %>
   <div class="widget-debugger-group" data-widget-debugger>
     <pre class="widget-debugger__console" data-console></pre>
     <div class="widget-debugger__tip">Check your JS console for more details. </div>
