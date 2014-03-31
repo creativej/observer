@@ -119,7 +119,7 @@ class QueriesController < ApplicationController
 
     respond_to do |format|
       if @query.update_attributes(params[:query])
-        format.json { head :ok }
+        format.json { head :no_content }
       else
         flash[:errors] = @query.errors
         format.json { render json: @query.errors, status: :unprocessable_entity }
