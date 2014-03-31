@@ -25,7 +25,7 @@
         data-sizey="<%= dw.size_y %>"
         data-url="<%= widget_path(dw.widget) %>"
         data-id="<%= dw.id %>">
-        <%= widget_sandbox('', '', dw.widget_id).html_safe %>
+        <%= widget_sandbox('', '', dw.widget_id, 'interactive').html_safe %>
       </li>
     <% end %>
     </ul>

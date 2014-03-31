@@ -38,12 +38,12 @@ module WidgetsHelper
 eos
   end
 
-  def widget_sandbox(src = '', id = '', widget_id = '')
+  def widget_sandbox(src = '', id = '', widget_id = '', widget_class = '')
 <<eos
 <iframe
   id="#{id}"
   name="#{id}"
-  class="widget-sandbox"
+  class="widget-sandbox #{widget_class}"
   seemless="seemless"
   src="#{src}"
   scrolling="no"

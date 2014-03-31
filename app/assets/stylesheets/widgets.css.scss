@@ -21,6 +21,10 @@
     overflow: hidden;
 }
 
+.widget-sandbox.interactive {
+    pointer-events: auto;
+}
+
 .widget-debugger-group {
     position: absolute;
     left: 0px;
