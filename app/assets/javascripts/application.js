@@ -12,6 +12,8 @@
 //
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
+//= require jqplot/plugins/jqplot.cursor
+//= require jqplot/plugins/jqplot.highlighter
 //= require mixins/eventable
 //= require bower_components/zeroclipboard/ZeroClipboard
 //= require observer
