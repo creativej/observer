@@ -28,7 +28,7 @@
 			dfd.resolve(resp);
 		})
 		.fail(function(resp, status, error) {
-			Observer.alert(options.failedTitle, resp.responseText, 'medium');
+			console.log(options.failedTitle);
 			dfd.reject();
 		})
 		;

@@ -78,7 +78,9 @@
 				runQuery();
 			});
 
-		runQuery();
+		if ($.trim(editor.val()) !== '') {
+			runQuery();
+		}
 
 		Observer.modules.editableName($('.query-name'));
 	});
