@@ -117,21 +117,8 @@
 }
 
 .widget-group {
-    padding: 10px 20px 10px 10px;
-    position: relative;
     @include box-sizing(border-box);
-    padding-top: 20px;
-
-    background-color: #fff;
-    border: 10px solid #eee;
     height: 100%;
-    &.widget-group--transparent {
-        background: transparent;
-        border: none;
-    }
-}
-
-.widget-group:hover {
 }
 
 .widget-edit-form-group {
