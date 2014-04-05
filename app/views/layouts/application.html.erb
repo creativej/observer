@@ -13,7 +13,7 @@
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  	<title><%= content_for?(:title) ? yield(:title) : "The Observer" %></title>
+  	<title><%= content_for?(:title) ? yield(:title) : "Observer" %></title>
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
   	<%= stylesheet_link_tag    "application" %>
@@ -32,7 +32,7 @@
       <nav class="top-bar userbar">
         <section class="top-bar-section components-menu">
           <ul class="left title-area">
-            <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">The observer</a>
+            <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">Observer</a>
             <% if user_signed_in? %>
             <ul class="dropdown">
               <li>
