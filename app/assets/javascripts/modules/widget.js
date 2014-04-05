@@ -1,4 +1,4 @@
-//= require canjs/can.jquery
+//= require knockout-3.1.0
 //= require modules/widget_data
 //= require modules/datechart_widget
 
@@ -10,7 +10,6 @@
 				dataSets: [],
 				loadingQueue: [],
 				refreshTimer: null,
-				templateId: 'widgetEJS',
 				$el: $el
 			})
 			;
@@ -69,25 +68,6 @@
 			return this;
 		};
 
-		instance.enableEjs = function() {
-			this.options.ejs = true;
-			return this;
-		};
-
-		instance.bindDataToView = function(data) {
-			this.viewInitiated = true;
-			this.$el.html(can.view(this.templateId, data));
-			return this;
-		};
-
-		instance.initView = function() {
-			if (!this.options.ejs && !this.viewInitiated) {
-				this.$el.html($('#' + this.templateId).html());
-				this.viewInitiated = true;
-			}
-			return this;
-		};
-
 		instance.refresh = function(ms) {
 			if (!ms) { this.refreshTimer = null; return this; }
 
@@ -104,6 +84,11 @@
 
 		instance.setChartOptions = function (options) {
 			this.options.chartOptions = options;
+			return this;
+		};
+
+		instance.applyBindings = function(model) {
+			window.ko.applyBindings(model, this.$el.get(0));
 			return this;
 		};
 
