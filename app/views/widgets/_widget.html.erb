@@ -1,5 +1,5 @@
 <%= sandbox_css('widget-group', css).html_safe %>
-<div class="widget-group">
+<div class="widget-group" data-widget-sandbox>
   <%= html_safe html %>
 </div>
 <% content_for :javascript do %>
@@ -8,8 +8,8 @@
   var modules = Observer.modules;
   var helpers = Observer.helpers;
 
-  Observer.on('ready.body', function() {
-    var widget = modules.widget($('.widget-group'), {
+  $(function() {
+    var widget = modules.widget($('[data-widget-sandbox]'), {
       autoRefresh: $('.show.widgets').length
     });
 

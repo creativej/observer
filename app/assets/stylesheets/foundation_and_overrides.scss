@@ -33,7 +33,7 @@
 // $include-xl-html-grid-classes: false;
 
 $row-width: 100%;
-// $column-gutter: rem-calc(30);
+$column-gutter: rem-calc(10);
 // $total-columns: 12;
 
 // We use these to control various global styles
@@ -53,7 +53,7 @@ $body-font-family: "Ubuntu", "Helvetica Neue", "Helvetica", Helvetica, Arial, sa
 
 // We use these as default colors throughout
 $primary-color: #cfc;
-$secondary-color: $medium-grey;
+$secondary-color: $light-grey;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;

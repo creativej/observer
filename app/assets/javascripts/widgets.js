@@ -43,6 +43,10 @@
 			$(document).trigger('previewWidgetRequested');
 		});
 
+		$('[data-id]').on('activate', function(e) {
+			$(e.target).find('[data-ace-editor]').trigger('focusRequested');
+		});
+
 		Observer.on('saved', function(mode, value) {
 			if (mode === 'yaml') {
 				$('[data-widget-builder]').trigger('renderRequested', value);
@@ -53,19 +57,6 @@
 			.on('log', d.log)
 			.on('reset.log', d.reset)
 			;
-	});
-
-	Observer.onPageLoaded(['preview.widgets', 'show.widgets'], function() {
-		var
-			$el = $('.widget-group'),
-			$window = $(window)
-			;
-		$el.css('width', $window.width());
-		$el.css('height', $window.height());
-
-		Observer.on('log', function (log) {
-			window.parent.Observer.trigger('log', log);
-		});
 	});
 
 }(jQuery, window, Observer));

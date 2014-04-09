@@ -116,7 +116,7 @@
             return editor;
         };
 
-        this.handleChangeEvent = function(e) {
+        this.onChangeEvent = function(e) {
             var value = this.editor.getValue();
 
             this.val(value);
@@ -159,10 +159,15 @@
             return this;
         };
 
+        this.onFocusRequest = function() {
+            this.editor.focus();
+            this.editor.resize(true);
+        };
+
         this.after('initialize', function() {
             this.$editor = this.select('editorSelector');
             this.editor = this.aceEditor(this.$editor.prop('id'));
-            this.$field = $(this.$editor.data('bind'));
+            this.$field = this.$node.siblings(this.$editor.data('bind'));
 
             if (this.val() && this.val().trim()) {
                 this.update();
@@ -174,10 +179,11 @@
 
             // window.onbeforeunload = this.proxy(this.handleUnloadEvent);
 
-            this.bubbleEvent(this.editor, 'change', this.handleChangeEvent);
+            this.bubbleEvent(this.editor, 'change', this.onChangeEvent);
             this.bubbleEvent(this.editor, 'focus');
 
             this.bindKeyCommandsToEditor(this.editor);
+            this.on('focusRequested', this.onFocusRequest);
         });
     });
 }(jQuery, ace, window, Observer, jsyaml));

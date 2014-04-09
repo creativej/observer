@@ -25,7 +25,11 @@
             $tab.addClass(this.attr.activeClass);
 
             this.select('panelsSelector').removeClass(this.attr.activeClass);
-            this.$node.find(targetSelector).addClass(this.attr.activeClass);
+
+            var $tabContent = this.$node.find(targetSelector);
+
+            $tabContent.addClass(this.attr.activeClass);
+            $tabContent.trigger('activate');
         };
 
         this.panelSelector = function($tab) {

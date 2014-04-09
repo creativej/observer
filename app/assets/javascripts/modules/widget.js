@@ -103,4 +103,4 @@
 
 		return instance;
 	};
-}(jQuery, Observer, window, can));
+}(jQuery, Observer, window));

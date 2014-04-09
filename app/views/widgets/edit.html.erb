@@ -32,7 +32,7 @@
 <%= form_for(@widget, :html => { :class => 'widget-form', 'data-widget-form' => true }) do |f| %>
 <div class="row">
   <div class="large-12 columns" id="widget-editor-layout" data-widget-editor-layout>
-    <div class="large-7 columns">
+    <div class="large-6 columns" data-editor-group="left">
       <div data-tabs>
         <dl class="tabs" data-flight-tabs>
           <dd class="active" data-target="js"><a href="#">JS</a></dd>
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <div class="large-5 columns">
+    <div class="large-6 columns" data-editor-group="right">
       <div data-tabs>
         <dl class="tabs">
           <dd class="active" data-target="html"><a href="#">HTML</a></dd>
