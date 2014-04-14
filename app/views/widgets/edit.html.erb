@@ -18,7 +18,13 @@
   <li><a href="<%= @redirect %>"><i class="icon-forward"></i> Done</a></li>
 </ul>
 <% end %>
-<div class="widget-name editable-name" data-editable-name data-url="<%= widget_path %>" data-name="widget[name]" contenteditable="true"><%= @widget.name %></div>
+<div
+  class="widget-name editable-name"
+  data-editable-name
+  data-url="<%= widget_path %>"
+  data-name="widget[name]"
+  contenteditable="true"
+><%= @widget.name %></div>
 
 <div class="preview-container" data-widget-previewer>
   <%= overlay_spinner.html_safe %>

@@ -92,12 +92,6 @@
 	margin: 0 auto;
 }
 
-.container {
-	margin-top: 20px;
-	@include box-sizing(border-box);
-	padding: 0 10px;
-}
-
 .field--extra-margin {
 	margin-bottom: 20px;
 }
@@ -124,16 +118,4 @@
 
 .action:hover {
 	color: $highlight-color;
-}
-
-.widgets.index,
-.queries.index,
-.dashboards.index,
-.connections.index
-{
-	.container {
-		max-width: 800px;
-		margin-left: auto;
-		margin-right: auto;
-	}
 }

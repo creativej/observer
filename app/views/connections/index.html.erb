@@ -1,37 +1,45 @@
-<h1>Listing connections</h1>
+<div class="row">
+  <div class="large-2 columns">
+  </div>
+  <div class="large-8 columns large-centered">
+    <h1>Listing connections</h1>
 
-<table class="table--common">
-  <thead>
-    <tr>
-      <th>Host</th>
-      <th>Db</th>
-      <th>Type</th>
-      <th>Created by</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @connections.each do |connection| %>
-      <tr>
-        <td>
-          <%= connection_name(connection) %>
-        </td>
-        <td><%= connection.database %></td>
-        <td><%= connection.database_type %></td>
-        <td><%= connection.user.username %></td>
-        <td>
-            <a href="<%= edit_connection_path(connection) %>" class="action" title="edit this connection"><i class="icon-pencil"></i></a>
-        </td>
-        <td>
-            <a href="<%= connection_path(connection) %>" class="action" data-confirm="Are you sure?" data-method="delete" title="delete this connection">
-              <i class="icon-cross"></i>
-            </a>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table class="table--common">
+      <thead>
+        <tr>
+          <th>Host</th>
+          <th>Db</th>
+          <th>Type</th>
+          <th>Created by</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @connections.each do |connection| %>
+          <tr>
+            <td>
+              <%= connection_name(connection) %>
+            </td>
+            <td><%= connection.database %></td>
+            <td><%= connection.database_type %></td>
+            <td><%= connection.user.username %></td>
+            <td>
+                <a href="<%= edit_connection_path(connection) %>" class="action" title="edit this connection"><i class="icon-pencil"></i></a>
+            </td>
+            <td>
+                <a href="<%= connection_path(connection) %>" class="action" data-confirm="Are you sure?" data-method="delete" title="delete this connection">
+                  <i class="icon-cross"></i>
+                </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<br />
-<a href="<%= new_connection_path %>" class="button small"><i class="icon-plus"></i>New connection</a>
+    <br />
+    <a href="<%= new_connection_path %>" class="button small"><i class="icon-plus"></i>New connection</a>
+  </div>
+  <div class="large-2 columns">
+  </div>
+</div>
