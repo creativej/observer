@@ -25,6 +25,10 @@
     }
 }
 
+.editor-group--sql {
+    height: 400px;
+}
+
 .editor-group--drop-shadow {
     @include drop-shadow;
 }

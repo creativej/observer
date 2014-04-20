@@ -22,41 +22,17 @@
 @import "modules/editor";
 @import "modules/table";
 @import "modules/editable_name";
+@import "modules/icons";
+@import "modules/modals";
+@import "modules/userbar";
 @import "website";
 @import "dashboards";
 @import "queries";
 @import "widgets";
 @import "devise";
 
-.custom-icon {
-	position: relative;
-}
-
-.connection-icon {
-	.icon-database {
-		position: absolute;
-		font-size: 100%;
-		top: 41px;
-		color: #666666;
-		margin-left: -17px;
-	}
-}
-
-.reveal-modal__title {
-	color: #fff;
-	margin-bottom: 10px;
-}
-
-.reveal-modal__item {
-	margin-bottom: 1px;
-}
-
-.reveal-modal__content {
-	padding: 4px 5px 10px 5px;
-
-	label {
-		color: #fff;
-	}
+.layout-container {
+	margin-top: 20px;
 }
 
 .content-group {
@@ -94,21 +70,6 @@
 
 .field--extra-margin {
 	margin-bottom: 20px;
-}
-
-.userbar {
-	.user {
-		color: #999;
-		line-height: 41px;
-		height: $topbar-height;
-		background-color: $topbar-bg;
-		font-size: 0.8em;
-	}
-}
-
-.fullscreen .userbar {
-	height: 0px;
-	overflow: hidden;
 }
 
 .action {
