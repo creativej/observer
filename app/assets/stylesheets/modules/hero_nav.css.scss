@@ -1,0 +1,21 @@
+.hero-nav-group {
+    margin-top: 100px;
+    list-style: none;
+}
+
+.hero-nav__item {
+    font-size: 2em;
+    background-color: $panel-color;
+    @include drop-shadow;
+    padding: 10px;
+    text-align: center;
+    width: 300px;
+    margin: 10px;
+    @include inline-block;
+}
+
+.hero-nav__item__icon {
+    font-size: 2.5em;
+    display: block;
+    margin: 0 auto;
+}

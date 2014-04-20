@@ -1,26 +1,26 @@
-<ul class="components">
-  <li class="connections component">
-    <a href="<%= connections_path %>">
-      <i class="icon-cloud component-icon"></i>
+<ul class="hero-nav-group">
+  <li class="connections hero-nav__item">
+    <a href="<%= connections_path %>" class="hero-nav__item__link">
+      <i class="icon-cloud hero-nav__item__icon"></i>
+      <div>Connections</div>
     </a>
-    <%= link_to 'Connections', connections_path %>
   </li>
-  <li class="resources component">
-    <a href="<%= queries_path %>">
-      <i class="icon-database component-icon"></i>
+  <li class="resources hero-nav__item">
+    <a href="<%= queries_path %>" class="hero-nav__item__link">
+      <i class="icon-database hero-nav__item__icon"></i>
+      <div>Data sources</div>
     </a>
-    <%= link_to 'Data source', queries_path %>
   </li>
-  <li class="database component">
-    <a href="<%= widgets_path %>">
-      <i class="icon-line-graph component-icon"></i>
+  <li class="database hero-nav__item">
+    <a href="<%= widgets_path %>" class="hero-nav__item__link">
+      <i class="icon-line-graph hero-nav__item__icon"></i>
+      <div>Widgets</div>
     </a>
-    <%= link_to 'Widgets', widgets_path %>
   </li>
-  <li class="dashboard component">
-    <a href="<%= dashboards_path %>">
-      <i class="icon-layout component-icon"></i>
+  <li class="dashboard hero-nav__item">
+    <a href="<%= dashboards_path %>" class="hero-nav__item__link">
+      <i class="icon-layout hero-nav__item__icon"></i>
+      <div>Dashboards</div>
     </a>
-    <%= link_to 'Dashboards', dashboards_path %>
   </li>
 </ul>
