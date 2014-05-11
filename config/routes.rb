@@ -3,7 +3,8 @@ TheObserver::Application.routes.draw do
 
   resources :dashboards do
     match 'update-widgets' => 'dashboards#update_widgets', :as => :update_widgets, :constraints => {:format => /json/}
-    match 'add-widget' => 'dashboards#add_widget', :as => :add_widget, :constraints => {:format => /json/}
+    # match 'add-widget' => 'dashboards#add_widget', :as => :add_widget, :constraints => {:format => /json/}
+    match 'add-widget' => 'dashboards#add_widget', :as => :add_widget
     match 'remove-widget' => 'dashboards#remove_widget', :as => :remove_widget, :constraints => {:format => /json/}
 
     collection do
