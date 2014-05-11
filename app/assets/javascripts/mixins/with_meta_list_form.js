@@ -5,7 +5,7 @@
         this.defaultAttrs({
             listFormSelector: '[data-list-form]',
             listFormAddBtnSelector: '[data-add-item]',
-            listFormItemsSelector: '[data-for-list]',
+            listFormItemsSelector: '[data-list="true"]',
             listItemDeleteSelector: '[data-delete]'
         });
 

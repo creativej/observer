@@ -1,0 +1,45 @@
+.widget-builder-group {
+    min-height: 580px;
+    background-color: $dark-grey;
+    padding: 30px 3em 10px;
+}
+
+.widget-builder__data {
+    padding: 1em;
+    background-color: scale-color($dark-grey, $lightness: -10%);
+    margin-bottom: 1em;
+    color: $medium-grey;
+    input, label {
+        font-size: emCalc(12px);
+    }
+    position: relative;
+}
+
+.widget-builder__array-label {
+    margin-bottom: emCalc(10px);
+}
+
+.widget-builder__delete-icon {
+    font-size: emCalc(24px);
+    margin-left: emCalc(-18px);
+    color: $medium-grey;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+    z-index: 1;
+}
+
+.widget-builder__data__schema {
+    font-size: emCalc(12px);
+    color: $light-grey;
+    margin-bottom: 0.5em;
+}
+
+.widget-builder__data__schema__name {
+    color: #fff;
+}
+
+.widget-builder__delete-icon:hover {
+    color: $highlight-color;
+    cursor: pointer;
+}

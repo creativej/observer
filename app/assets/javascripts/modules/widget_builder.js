@@ -1,9 +1,8 @@
 //= require actions/save_attribute
 //= require mixins/with_template_helpers
 //= require mixins/with_meta_list_form
-//= require canjs/can.jquery
 
-(function($, Observer, window, yaml, undefined) {
+(function($, Observer, window, yaml, ko, undefined) {
     'use strict';
 
     var
@@ -15,8 +14,7 @@
     Observer.module('WidgetBuilder', Observer.flightComponent(function() {
         this.defaultAttrs({
             contentSelector: '[data-content]',
-            saveSelector: '[data-save]',
-            fieldsSelector: '[data-for-save]',
+            fieldsSelector: '[data-auto-save="true"]',
             valueSelector: '[data-value]'
         });
 
@@ -27,6 +25,7 @@
                 try {
                     return JSON.parse(this.select('valueSelector').val());
                 } catch (e) {
+                    console.log(e);
                     return {};
                 }
             }
@@ -37,22 +36,6 @@
 
             this.select('valueSelector').val(value);
             this.trigger('valueChanged');
-        };
-
-        this.render = function(meta) {
-            meta = meta || this.meta;
-
-            var html = window.can.view('widget-builder-ejs', {
-                meta: meta,
-                helpers: this.templateHelpers,
-                data: this.val()
-            });
-
-            this.meta = meta;
-
-            this.select('contentSelector').html(html);
-
-            this.trigger('activateTabRequested');
         };
 
         this.clean = function() {
@@ -74,7 +57,8 @@
                 return;
             }
 
-            this.render(meta);
+            this.meta = meta;
+            this.updateMeta();
         };
 
         this.saveUrl = function() {
@@ -103,16 +87,80 @@
             });
         };
 
+        this.updateMeta = function() {
+            this.observableMeta.removeAll();
+            console.log(this.metaArray());
+            this.observableMeta(this.metaArray());
+            this.trigger('activateTabRequested');
+        };
+
+        this.metaArray = function(schema, data, shallow) {
+            var self = this;
+            var meta = schema || this.meta || {};
+            var value;
+
+            if (data === undefined) {
+                value = this.val();
+            } else {
+                value = data;
+            }
+
+            return $.map(meta, function(field, name) {
+                var label;
+                if (field.label) {
+                    label = field.label;
+                } else if (field.label !== false) {
+                    label = name;
+                }
+
+                var isInput = ($.inArray(field.type, ['text', 'url', 'number']) >= 0);
+                if (!isInput && field.type !== 'array') {
+                    console.log('field type:', field.type, 'not supported');
+                    return;
+                }
+
+                if (!field.name) {
+                    field.name = name;
+                }
+
+                field.label = label;
+
+                if (field.schema && !shallow) {
+                    field.schema = self.metaArray(field.schema, value[name], true);
+                }
+
+                field.value = value[name];
+
+                if (shallow) {
+                    field.isArray = false;
+                    field.value = '';
+                } else {
+                    field.isArray = (field.type === 'array');
+                }
+                field.autoSave = !shallow;
+                field.forList = shallow;
+
+                return field;
+            })
+        };
+
+        this.applyKoBinding = function() {
+            this.observableMeta = ko.observableArray(this.metaArray());
+
+            ko.applyBindings(
+                { meta: this.observableMeta },
+                this.select('contentSelector').get(0)
+            );
+        };
+
         this.after('initialize', function() {
+            this.applyKoBinding();
+
             this.renderYaml(this.$node.data('meta'));
 
-            this.on('itemAdded', function() {
-                this.render();
-            });
+            this.on('itemAdded', this.updateMeta);
 
-            this.on('itemDeleted', function() {
-                this.render();
-            });
+            this.on('itemDeleted', this.updateMeta);
 
             this.on('valueChanged', this.saveUpstream);
             this.on('renderRequested', this.onRenderRequest);
@@ -121,5 +169,5 @@
             });
 
         });
-    }, mixins.withTemplateHelpers, mixins.withMetaListForm));
-}(jQuery, Observer, window, jsyaml));
+    }, mixins.withMetaListForm));
+}(jQuery, Observer, window, jsyaml, ko));

@@ -111,7 +111,10 @@
         this.aceEditor = function(id) {
             var editor = ace.edit(id);
             editor.setTheme('ace/theme/twilight');
-            editor.getSession().setMode('ace/mode/'+this.mode());
+            var session = editor.getSession();
+            session.setMode('ace/mode/'+this.mode());
+            session.setTabSize(2);
+
             this.editor = editor;
             return editor;
         };

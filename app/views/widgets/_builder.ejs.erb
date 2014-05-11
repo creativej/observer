@@ -1,12 +1,81 @@
-<script id="widget-builder-ejs" type="text/ejs">
-    <form class="form--dark-panel">
-    <%% for (var name in meta) { %>
-        <%%== helpers.renderField(
-            name,
-            meta[name],
-            (data)? data[name] : null,
-            true
-        ) %>
-    <%% } %>
-    </form>
+<%= form_tag({
+  :class => 'form--dark-panel',
+  'data-content' => true
+}) do %>
+  <div data-bind="foreach: meta">
+    <!-- ko ifnot: isArray -->
+      <div data-bind="template: 'builder-input', data: $data"></div>
+    <!-- /ko -->
+    <!-- ko if: isArray -->
+      <div data-bind="template: 'builder-array', data: $data"></div>
+    <!-- /ko -->
+  </div>
+<% end %>
+
+<script type="text/html" id="builder-input">
+  <label>
+    <!-- ko if: label -->
+      <div data-bind="text: label"></div>
+    <!-- /ko -->
+
+    <input data-bind="attr: {
+      'type': type,
+      'name': name,
+      'placeholder': placeholder,
+      'data-auto-save': autoSave,
+      'data-list': forList,
+    },
+    value: value"/>
+  </label>
+</script>
+<script type="text/html" id="builder-array-data">
+  <div class="row">
+    <div class="small-12 columns">
+      <div data-bind="foreach: value">
+        <div class="widget-builder__data">
+          <div data-bind="foreach: $parent.schema">
+            <div class="widget-builder__data__schema">
+              <span class="widget-builder__data__schema__name" data-bind="text: label"></span>:
+              <span data-bind="text: $parent[name]"></span>
+            </div>
+          </div>
+          <i
+            class="icon-cross widget-builder__delete-icon"
+            data-delete
+            data-bind="attr: {
+              'data-index': $index,
+              'data-list-name': $parent.name
+            }"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+<script type="text/html" id="builder-array">
+  <div class="row">
+    <div class="large-12 columns">
+      <label class="widget-builder__array-label" data-bind="text: label">
+      </label>
+      <div
+        class="widget-builder__list"
+        data-list-form
+        data-bind="attr: {
+          'data-name': name
+        }"
+      >
+        <div data-bind="template: 'builder-array-data', data: $data"></div>
+        <div data-bind="foreach: schema">
+          <div data-bind="template: 'builder-input', data: $data"></div>
+        </div>
+        <div class="clearfix">
+          <button
+            class="button small secondary right disabled"
+            type="button"
+            data-add-item
+          >Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </script>

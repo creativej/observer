@@ -17,6 +17,7 @@
 //= require jqplot/plugins/jqplot.highlighter
 //= require mixins/eventable
 //= require bower_components/zeroclipboard/ZeroClipboard
+//= require knockout-3.1.0
 //= require observer
 //= require mixins/with_core
 //= require observer/debugger
