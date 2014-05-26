@@ -37,10 +37,10 @@
             ).done(this.proxy(function() {
                 this.setDirty(false);
 
-                Observer.trigger('saved', this.mode(), this.val());
+                this.trigger('saved', this.payload());
 
                 if (this.isAutoPreview()) {
-                    this.trigger('previewWidgetRequested');
+                    this.trigger(document, 'previewRequested');
                 }
             }));
         };

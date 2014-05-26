@@ -47,7 +47,6 @@
 
         this.deleteItem = function(name, idx) {
             var data = this.val();
-            console.log(data[name]);
             data[name].splice(idx, 1);
 
             this.val(data);

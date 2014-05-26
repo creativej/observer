@@ -167,6 +167,15 @@
             this.editor.resize(true);
         };
 
+        this.payload = function() {
+            var payload = {
+                mode: this.mode(),
+                fieldName: this.$field.prop('name'),
+                value: this.val()
+            };
+            return payload;
+        };
+
         this.after('initialize', function() {
             this.$editor = this.select('editorSelector');
             this.editor = this.aceEditor(this.$editor.prop('id'));

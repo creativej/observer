@@ -85,9 +85,7 @@ class WidgetsController < ApplicationController
     rescue
       data = {}
     end
-
     @widget[:js] = LiquidTemplate.for_widget.parse(@widget[:js]).render data
-
     render :layout => 'basic'
   end
 

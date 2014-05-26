@@ -5,8 +5,8 @@ def parse(content)
 end
 
 describe Widget do
-  describe "query template parser" do
-    it "should parse data_url filter" do
+  describe "widget template parser" do
+    it "should widget data_url filter" do
       q = parse(
         'var url = "{% data_url aslkdfjalsdf %}"'
       )
@@ -15,6 +15,20 @@ describe Widget do
 
       expect(q.render).to eq(
         "var url = \"#{url}\""
+      )
+    end
+  end
+
+  describe "widget data parser" do
+    it "should parse data filter" do
+      q = parse(
+        'var name = "{{ name }}"'
+      )
+
+      data = { "name" => 'crazy8' }
+
+      expect(q.render(data)).to eq(
+        "var name = \"#{url}\""
       )
     end
   end

@@ -18,6 +18,28 @@ class DashboardsWidgets < ActiveRecord::Base
     dw.row = data['row']
     dw.size_x = data['size_x']
     dw.size_y = data['size_y']
+    dw.data = data['data']
     dw
+  end
+
+  def data_obj
+    begin
+      ActiveSupport::JSON.decode(self.data)
+    rescue
+      {}
+    end
+  end
+
+  def parsed_js()
+    print self.data_obj
+    self.widget.parsed_js(self.data_obj())
+  end
+
+  def parsed_css(params = {})
+    self.widget.parsed_css(self.data_obj())
+  end
+
+  def parsed_html(params = {})
+    self.widget.parsed_html(self.data_obj())
   end
 end

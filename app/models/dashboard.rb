@@ -31,6 +31,15 @@ class Dashboard < ActiveRecord::Base
 
   def add_widget_from_data(widget)
     widget['dashboard_id'] = self.id
+    widget[:size_x] = widget[:row]
+    widget[:size_y] = widget[:column]
+    widget[:col] = 1
+    widget[:row] = 1
+
+    self.dashboard_widgets.each do |w|
+      widget[:row] = [w.col, widget[:row]].max
+    end
+
     @last_dashboard_widget = DashboardsWidgets.create_from_data(widget)
     @last_dashboard_widget.save
   end

@@ -15,17 +15,20 @@
         this.defaultAttrs({
             contentSelector: '[data-content]',
             fieldsSelector: '[data-auto-save="true"]',
-            valueSelector: '[data-value]'
+            valueSelector: '[data-value]',
+            previewBtnSelector: '[data-preview-btn]',
+            addBtnSelector: '[data-add-btn]'
         });
 
         this.spinner = modules.spinner(Observer.$spinner());
 
+        this.previewData = {};
+
         this.val = function(value) {
-            if (value === undefined) {
+            if (this.isUndefined(value)) {
                 try {
                     return JSON.parse(this.select('valueSelector').val());
                 } catch (e) {
-                    console.log(e);
                     return {};
                 }
             }
@@ -75,6 +78,10 @@
             });
 
             this.val(value);
+
+            this.trigger('saved', {
+                value: value
+            });
         };
 
         this.saveUpstream = function() {
@@ -89,7 +96,7 @@
 
         this.updateMeta = function() {
             this.observableMeta.removeAll();
-            console.log(this.metaArray());
+
             this.observableMeta(this.metaArray());
             this.trigger('activateTabRequested');
         };
@@ -99,7 +106,7 @@
             var meta = schema || this.meta || {};
             var value;
 
-            if (data === undefined) {
+            if (this.isUndefined(data)) {
                 value = this.val();
             } else {
                 value = data;
@@ -153,6 +160,32 @@
             );
         };
 
+        this.onPreviewBtnCLicked = function(e) {
+            e.preventDefault();
+
+            this.previewData['data'] = this.select('valueSelector').val();
+            this.trigger('previewRequested', this.previewData);
+        };
+
+        this.onUpdatePreviewDataRequested = function(e, data) {
+            data.data = this.val();
+            this.previewData = data;
+        };
+
+        this.onAddBtnCLicked = function(e) {
+            e.preventDefault();
+
+            $.each(this.previewData, this.proxy(function(name, value) {
+                this.$node.append(
+                    $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "widget[" + name + "]").val(value)
+                );
+            }));
+
+            this.$node.submit();
+        };
+
         this.after('initialize', function() {
             this.applyKoBinding();
 
@@ -162,12 +195,22 @@
 
             this.on('itemDeleted', this.updateMeta);
 
-            this.on('valueChanged', this.saveUpstream);
+            if (this.$node.data('auto-save')) {
+                this.on('valueChanged', this.saveUpstream);
+            }
+
             this.on('renderRequested', this.onRenderRequest);
+            this.on('updatePreviewDataRequested', this.onUpdatePreviewDataRequested);
             this.on('change', {
                 fieldsSelector: this.save
             });
 
+            this.on('click', {
+                previewBtnSelector: this.onPreviewBtnCLicked,
+                addBtnSelector: this.onAddBtnCLicked
+            });
+
+            this.trigger('ready');
         });
     }, mixins.withMetaListForm));
 }(jQuery, Observer, window, jsyaml, ko));

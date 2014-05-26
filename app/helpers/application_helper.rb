@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def get(value, default)
-    value.nil? ? value : default
+    (defined? value) ? value : default
   end
 
   def spinner(classes = '')

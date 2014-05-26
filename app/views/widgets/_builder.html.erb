@@ -1,7 +1,4 @@
-<%= form_tag({
-  :class => 'form--dark-panel',
-  'data-content' => true
-}) do %>
+<div data-content>
   <div data-bind="foreach: meta">
     <!-- ko ifnot: isArray -->
       <div data-bind="template: 'builder-input', data: $data"></div>
@@ -10,7 +7,7 @@
       <div data-bind="template: 'builder-array', data: $data"></div>
     <!-- /ko -->
   </div>
-<% end %>
+</div>
 
 <script type="text/html" id="builder-input">
   <label>

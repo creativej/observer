@@ -48,12 +48,21 @@
 		};
 
 		this.save = function() {
+			var $form = this.select('formSelector');
+
+			var payload = {};
+
+			$form.find('input').each(function() {
+				var $this = $(this);
+				payload[$this.prop('name')] = $this.val();
+			});
+
 			Observer.actions.postForm(
-				this.select('formSelector'),
+				$form,
 				this.attr.spinner
 			).done($.proxy(function() {
 				this.close();
-				this.trigger('saved');
+				this.trigger('saved', payload);
 			}, this));
 
 			return false;

@@ -57,12 +57,6 @@
     font-family: 'Myriad-Pro', 'Myriad', helvetica, arial, sans-serif;
 }
 .widgets.edit {
-    .preview-container {
-        margin: 0 auto 1em;
-        position: relative;
-        // border: 1px solid #ccc;
-    }
-
     .widget-preview {
         margin: 0 auto;
         margin-bottom: 15px;
@@ -70,23 +64,6 @@
 
     .editor-group {
         height: 580px;
-    }
-}
-
-.form--dark-panel {
-    label {
-        color: $light-grey;
-        font-size: emCalc(16px);
-    }
-
-    input {
-        margin-top: emCalc(5px);
-        background-color: $medium-grey;
-        font-size: emCalc(14px);
-        color: white;
-    }
-    input:focus {
-        background-color: scale-color($medium-grey, $lightness: 10%);
     }
 }
 

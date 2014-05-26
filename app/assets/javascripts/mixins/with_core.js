@@ -37,6 +37,10 @@
         this.find = function(selector) {
             return this.$node.find(selector);
         };
+
+        this.integer = function(value) {
+            return window.parseInt(value, 10);
+        };
     };
 
 }(jQuery, window, Observer));

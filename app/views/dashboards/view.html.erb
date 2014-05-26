@@ -19,11 +19,11 @@
     <ul class="gridster-widgets">
     <% @dashboard_widgets.each do |dw| %>
       <li
-        data-col="<%= dw.col %>"
+:id         data-col="<%= dw.col %>"
         data-row="<%= dw.row %>"
         data-sizex="<%= dw.size_x %>"
         data-sizey="<%= dw.size_y %>"
-        data-url="<%= widget_path(dw.widget) %>"
+        data-url="<%= widget_dashboards_path(:token => @dashboard.token, :dashboard_widget_id => dw.id) %>"
         data-id="<%= dw.id %>">
         <%= widget_sandbox('', '', dw.widget_id, 'interactive').html_safe %>
       </li>

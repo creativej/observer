@@ -6,10 +6,18 @@
     var modules = Observer.modules;
 
     Observer.modules.WidgetPreviewer = flight.component(function() {
+        var formFields = [
+            'js',
+            'css',
+            'html',
+            'data',
+            'column',
+            'row'
+        ];
+
         this.defaultAttrs({
            spinner: modules.spinner(Observer.$spinner()),
            sandboxSelector: '[data-sandbox]',
-           $widgetForm: null,
            previewWidgetFormSelector: '[data-widget-preview-form]'
         });
 
@@ -51,29 +59,56 @@
             }, 'fast');
         };
 
-        this.$widgetFormFields = function() {
-            return this.attr.$widgetForm.find('input[type="hidden"]');
+        this.onPreviewRequested = function(e, data) {
+            this.update(data);
+            this.preview();
         };
 
         this.preview = function() {
             var $form = this.select('previewWidgetFormSelector');
 
-            this.resize(
-                parseInt($('#widget_row').val(), 10),
-                parseInt($('#widget_column').val(), 10)
-            );
-
-            $form.html(
-                this.$widgetFormFields()
-                    .clone()
-                    .prop('id', undefined)
-                    .hide()
-            );
-
-            this.prepareToPreview(function() {
+            this.prepareToPreview(this.proxy(function() {
                 $form.submit();
-            });
+                this.activate();
+            }));
+
+            this.resize(
+                this.integer($form.find('[name="widget[row]"]').val()),
+                this.integer($form.find('[name="widget[column]"]').val())
+            );
         };
+
+        this.update = function(data) {
+            if (this.isUndefined(data)) {
+                return;
+            }
+
+            var $form = this.select('previewWidgetFormSelector');
+
+            formFields.forEach(this.proxy(function(field) {
+                var inputName = 'widget[' + field + ']';
+
+                if (this.isUndefined(data[field])) {
+                    field = inputName;
+                }
+
+                if (this.isDefined(data[field])) {
+                    $form.find('[name="' + inputName + '"]').val(data[field]);
+                }
+            }));
+        };
+
+        this.onUpdateRequested = function(e, data) {
+            this.update(data);
+        };
+
+        this.idle = function() {
+            this.$node.attr('data-idle', 'true');
+        };
+
+        this.activate = function() {
+            this.$node.attr('data-idle', null);
+        }
 
         this.after('initialize', function() {
             this.on(
@@ -82,9 +117,14 @@
                 this.onSandboxLoaded
             );
             this.on('resizeRequested', this.resize);
-            this.on(document, 'previewWidgetRequested', this.preview);
-            this.preview();
+            this.on('updateRequested', this.onUpdateRequested);
+            this.on('idleRequested', this.idle);
+            this.on(document, 'previewRequested', this.onPreviewRequested);
+
+            if (this.$node.data('autoPlay')) {
+                this.preview();
+            }
         });
-    });
+    }, Observer.mixins.withCore);
 
 }(jQuery, Observer, flight, window));

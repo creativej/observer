@@ -1,0 +1,8 @@
+.widget-previewer {
+    margin: 0 auto 1em;
+    position: relative;
+
+    &[data-idle] .widget-previewer__content {
+        display: none;
+    }
+}

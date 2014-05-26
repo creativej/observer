@@ -2,6 +2,21 @@
     min-height: 580px;
     background-color: $dark-grey;
     padding: 30px 3em 10px;
+
+    label {
+        color: $light-grey;
+        font-size: emCalc(16px);
+    }
+
+    input {
+        margin-top: emCalc(5px);
+        background-color: $medium-grey;
+        font-size: emCalc(14px);
+        color: white;
+    }
+    input:focus {
+        background-color: scale-color($medium-grey, $lightness: 10%);
+    }
 }
 
 .widget-builder__data {

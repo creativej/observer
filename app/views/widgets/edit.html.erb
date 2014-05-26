@@ -25,16 +25,7 @@
   data-name="widget[name]"
   contenteditable="true"
 ><%= @widget.name %></div>
-
-<div class="preview-container" data-widget-previewer>
-  <%= overlay_spinner.html_safe %>
-  <%= widget_sandbox('', 'widget-sandbox', '', 'interactive').html_safe %>
-  <div class="widget-debugger-group" data-widget-debugger>
-    <pre class="widget-debugger__console" data-console></pre>
-    <div class="widget-debugger__tip">Check your JS console for more details. </div>
-  </div>
-  <%= form_tag preview_widgets_path, :target => 'widget-sandbox', 'data-widget-preview-form' => true do %><% end %>
-</div>
+<%= render 'previewer', :widget => @widget %>
 <%= form_for(@widget, :html => { :class => 'widget-form', 'data-widget-form' => true }) do |f| %>
 <div class="row">
   <div class="large-12 columns" id="widget-editor-layout" data-widget-editor-layout>
@@ -99,9 +90,10 @@
               data-widget-builder
               data-meta="<%= @widget.meta %>"
               data-save-url="<%= widget_path %>"
+              data-auto-save= "true"
             >
-              <%= f.hidden_field :data, :placeholder => 'css', "data-value" => true %>
-              <%= render 'builder.ejs', :format => 'ejs' %>
+              <%= f.hidden_field :data, { "data-value" => true } %>
+              <%= render 'builder' %>
             </div>
           </div>
         </div>

@@ -8,55 +8,72 @@
 //= require modules/editable_name
 //= require modules/widget_debugger
 //= require modules/widget_editor
-//= require modules/widget_meta_editor
 //= require modules/widget_previewer
 //= require modules/widget_builder
 //= require modules/tabs
 
 (function($, window, Observer, undefined) {
-	'use strict';
+    'use strict';
 
-	var modules = Observer.modules;
+    var modules = Observer.modules;
 
-	Observer.onPageReady(['edit.widgets'], function() {
-		modules.WidgetPreviewer.attachTo('[data-widget-previewer]', {
-			$widgetForm: $('[data-widget-form]')
-		});
+    function bindEditorToPreviewer($editor, $previewer) {
+        $editor.on('saved', function(evt, data) {
+            var previewerPayload = {};
+            previewerPayload[data.fieldName] = data.value;
 
-		modules.Tabs.attachTo('[data-tabs]');
+            $previewer.trigger('updateRequested', previewerPayload);
+        });
+    }
 
-		modules.WidgetEditor.attachTo('[data-js-editor]');
-		modules.WidgetEditor.attachTo('[data-yaml-editor]');
-		modules.WidgetEditor.attachTo('[data-css-editor]');
-		modules.WidgetEditor.attachTo('[data-html-editor]');
-		modules.WidgetBuilder.attachTo('[data-widget-builder]');
+    Observer.onPageReady(['edit.widgets'], function() {
+        var $jsEditor = $('[data-js-editor]');
+        var $yamlEditor = $('[data-yaml-editor]');
+        var $cssEditor = $('[data-css-editor]');
+        var $htmlEditor = $('[data-html-editor]');
+        var $previewer = $('[data-widget-previewer]');
+        var $builder = $('[data-widget-builder]');
 
-		modules.EditableName.attachTo('[data-editable-name]');
-		modules.WidgetPreferences.attachTo('[data-widget-preferences]');
+        modules.WidgetEditor.attachTo($jsEditor);
+        bindEditorToPreviewer($jsEditor, $previewer);
 
-		modules.widgetModifier($('[data-widget-modifier]'));
-		modules.widgetResources($('[data-widget-resources]'));
+        modules.WidgetEditor.attachTo($yamlEditor);
+        $yamlEditor.on('saved', function(evt, data) {
+            $builder.trigger('renderRequested', data.value);
+        });
 
-		var d = modules.widgetDebugger($('[data-widget-debugger]'));
+        modules.WidgetEditor.attachTo($cssEditor);
+        bindEditorToPreviewer($cssEditor, $previewer);
 
-		$('[data-widget-preferences]').on('saved', function() {
-			$(document).trigger('previewWidgetRequested');
-		});
+        modules.WidgetEditor.attachTo($htmlEditor);
+        bindEditorToPreviewer($htmlEditor, $previewer);
 
-		$('[data-id]').on('activate', function(e) {
-			$(e.target).find('[data-ace-editor]').trigger('focusRequested');
-		});
 
-		Observer.on('saved', function(mode, value) {
-			if (mode === 'yaml') {
-				$('[data-widget-builder]').trigger('renderRequested', value);
-			}
-		});
+        modules.WidgetPreviewer.attachTo($previewer);
+        modules.Tabs.attachTo('[data-tabs]');
 
-		Observer
-			.on('log', d.log)
-			.on('reset.log', d.reset)
-			;
-	});
+        modules.WidgetBuilder.attachTo($builder);
+
+        modules.EditableName.attachTo('[data-editable-name]');
+        modules.WidgetPreferences.attachTo('[data-widget-preferences]');
+
+        modules.widgetModifier($('[data-widget-modifier]'));
+        modules.widgetResources($('[data-widget-resources]'));
+
+        var d = modules.widgetDebugger($('[data-widget-debugger]'));
+
+        $('[data-widget-preferences]').on('saved', function(e, data) {
+            $(document).trigger('previewRequested', data);
+        });
+
+        $('[data-id]').on('activate', function(e) {
+            $(e.target).find('[data-ace-editor]').trigger('focusRequested');
+        });
+
+        Observer
+            .on('log', d.log)
+            .on('reset.log', d.reset)
+            ;
+    });
 
 }(jQuery, window, Observer));
