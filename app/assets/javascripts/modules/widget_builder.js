@@ -120,6 +120,8 @@
                     label = name;
                 }
 
+                field.placeholder = field.placeholder || '';
+
                 var isInput = ($.inArray(field.type, ['text', 'url', 'number']) >= 0);
                 if (!isInput && field.type !== 'array') {
                     console.log('field type:', field.type, 'not supported');

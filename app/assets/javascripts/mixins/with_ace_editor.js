@@ -87,7 +87,7 @@
                 name: 'preview',
                 bindKey: {win: 'Ctrl-ENTER',  mac: 'Command-ENTER'},
                 exec: this.proxy(function(editor) {
-                    this.trigger('previewWidgetRequested');
+                    this.trigger('previewRequested');
                 }),
                 readOnly: true // false if this command should not apply in readOnly mode
             });
@@ -179,7 +179,7 @@
         this.after('initialize', function() {
             this.$editor = this.select('editorSelector');
             this.editor = this.aceEditor(this.$editor.prop('id'));
-            this.$field = this.$node.siblings(this.$editor.data('bind'));
+            this.$field = $(this.$editor.data('bind'));
 
             if (this.val() && this.val().trim()) {
                 this.update();

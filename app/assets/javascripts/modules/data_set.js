@@ -112,6 +112,10 @@
 
 			instance.clear();
 
+			if (!groupBy) {
+				throw 'Error: groupBy is not set';
+			}
+
 			list.forEach(function(item, index) {
 				instance.columns.forEach(function(column) {
 					var arr = [];
@@ -120,19 +124,15 @@
 						item = options.preprocessor(item, column.field);
 					}
 
-					if (groupBy) {
-						arr = groupBy(column.field, item);
-					}
+					arr = groupBy(column.field, item);
 
 					instance.add(column.field, arr[0], arr[1]);
 				});
 			});
 
-			if (groupBy) {
-				this.columns.forEach(function(column) {
-					instance.populateEmptyGaps(column.field);
-				});
-			}
+			this.columns.forEach(function(column) {
+				instance.populateEmptyGaps(column.field);
+			});
 
 			return this;
 		};

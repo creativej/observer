@@ -1,3 +1,14 @@
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <a href="<%= edit_dashboard_path(@dashboard) %>" title="add widgets">
+      <i class="icon-back dashboard-tools-icon"></i> Back to dashboard
+    </a>
+  </li>
+</ul>
+<% end %>
+
 <div class="row widget-selector-group">
   <div class="small-3 columns">
     <div class="widgets-selector__list" data-dashboard-widgets>

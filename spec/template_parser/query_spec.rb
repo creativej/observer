@@ -72,5 +72,22 @@ describe Query do
       )
     end
 
+    it "should parse parameter using context variable" do
+      q = parse(
+        'Hello {{ name | default: "world" }}'
+      )
+      expect(q.render('name' => 'you')).to eq(
+        'Hello you'
+      )
+    end
+
+    it "should parse parameter with default" do
+      q = parse(
+        'Hello {{ name | default: "world" }}'
+      )
+      expect(q.render()).to eq(
+        'Hello world'
+      )
+    end
   end
 end

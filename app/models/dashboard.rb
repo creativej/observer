@@ -31,8 +31,8 @@ class Dashboard < ActiveRecord::Base
 
   def add_widget_from_data(widget)
     widget['dashboard_id'] = self.id
-    widget[:size_x] = widget[:row]
-    widget[:size_y] = widget[:column]
+    widget[:size_x] = widget[:column]
+    widget[:size_y] = widget[:row]
     widget[:col] = 1
     widget[:row] = 1
 

@@ -20,7 +20,7 @@
         });
 
         this.runQuery = function() {
-            var $resultContent = this.select('resultContentSelector');
+            var $resultContent = $(this.attr.resultContentSelector);
 
             actions.postToUrl(
                 this.select('runBtnSelector').data('url'),

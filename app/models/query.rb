@@ -14,7 +14,7 @@ class Query < ActiveRecord::Base
 
   def generate_token
     self.token = loop do
-      random_secret = SecureRandom.urlsafe_base64(nil, false)
+      random_secret = SecureRandom.urlsafe_base64(6, false).downcase
       break random_secret unless self.class.exists?(token: random_secret)
     end
   end

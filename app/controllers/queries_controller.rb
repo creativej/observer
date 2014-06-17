@@ -66,6 +66,7 @@ class QueriesController < ApplicationController
 
     queryTemplate = LiquidTemplate.for_query.parse(params[:value])
     sql = queryTemplate.render
+
     begin
       @result = client.query sql
       @queryError = client.last_query_error
