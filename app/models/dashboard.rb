@@ -9,7 +9,10 @@ class Dashboard < ActiveRecord::Base
   before_create :before_create
   def before_create
     if (self.token.nil?)
-      self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
+      self.token = loop do
+        random_secret = SecureRandom.urlsafe_base64(6, false).downcase
+        break random_secret unless self.class.exists?(token: random_secret)
+      end
     end
   end
 
