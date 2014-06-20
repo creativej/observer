@@ -1,4 +1,6 @@
 class ConnectionsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /connections
   # GET /connections.json
   def index
@@ -11,14 +13,12 @@ class ConnectionsController < ApplicationController
   end
 
   # GET /connections/new
-  # GET /connections/new.json
   def new
     @connection = Connection.new
     @redirect = param(:redirect, connections_path)
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @connection }
     end
   end
 
@@ -66,7 +66,7 @@ class ConnectionsController < ApplicationController
         redirect_path = param(:redirect, edit_connection_path(@connection))
 
         format.html { redirect_to redirect_path, notice: 'Connection was successfully updated.' }
-        format.json { head :no_content }
+        format.json { head :ok }
       else
         format.html { render action: "edit" }
         format.json { render json: @connection.errors, status: :unprocessable_entity }

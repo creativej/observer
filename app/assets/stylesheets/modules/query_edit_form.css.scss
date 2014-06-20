@@ -1,0 +1,29 @@
+.query-edit-form-group {
+    padding: 0 20px;
+    margin-bottom: 100px;
+}
+
+.query-editor-group {
+    background-color: $panel-color;
+    padding: 10px;
+    @include drop-shadow;
+}
+
+.query-form__actions {
+    text-align: right;
+}
+
+.query-form__actions__result {
+    overflow-x: visible;
+    overflow-y: visible;
+    margin-top: 2em;
+    width: 100%;
+
+    table {
+        margin: 20px auto;
+    }
+}
+
+.query-form__actions__result {
+    font-size: 0.9em;
+}

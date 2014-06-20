@@ -97,7 +97,7 @@
 					;
 			}
 
-			return data;
+			return data[0];
 		};
 
 		instance.addWidget = function(html, $item) {

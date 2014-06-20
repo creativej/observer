@@ -8,7 +8,7 @@
 			type: 'PUT',
 			dataType: 'json',
 			data: {
-				widget: JSON.stringify(data)
+				widget: data
 			}
 		})
 		.success(function(resp) {

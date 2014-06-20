@@ -3,17 +3,19 @@ TheObserver::Application.routes.draw do
 
   resources :dashboards do
     match 'update-widgets' => 'dashboards#update_widgets', :as => :update_widgets, :constraints => {:format => /json/}
-    match 'add-widget' => 'dashboards#add_widget', :as => :add_widget, :constraints => {:format => /json/}
+    match 'add-widget' => 'dashboards#add_widget', :as => :add_widget, :via => :post
+    match 'new-widget' => 'dashboards#new_widget', :as => :new_widget
     match 'remove-widget' => 'dashboards#remove_widget', :as => :remove_widget, :constraints => {:format => /json/}
 
     collection do
       match 'view/:token' => 'dashboards#view', :as => :view
-      match 'view/:token/widgets/:widget_id' => 'dashboards#widget', :as => :widget
+      match 'view/:token/widgets/:dashboard_widget_id' => 'dashboards#widget', :as => :widget
     end
   end
 
   resources :widgets do
     collection do
+      match 'tag/:tag' => 'widgets#show_tag', :as => :show_tag
       match 'preview', :as => :preview
       match 'copy/:id' => 'widgets#copy', :as => :copy
     end

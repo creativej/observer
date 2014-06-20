@@ -25,11 +25,15 @@ class Connection < ActiveRecord::Base
   after_save :clear_password
 
   def decrypt_password
+    if !self.encrypted_password.nil?
       secret = Digest::SHA1.hexdigest(
         TheObserver::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
       encryptor.decrypt_and_verify(self.encrypted_password)
+    else
+      ''
+    end
   end
 
   def encrypt_password

@@ -37,30 +37,40 @@
 /**
  * Widget selector group
  */
-.widgets-selector-group {
-	background-color: $panel-color;
-	display: none;
-}
+// .widgets-selector-group {
+// 	background-color: $panel-color;
+// 	display: none;
+// }
 
-.widgets-selector__actions {
-	margin-top: 10px;
-}
+// .widgets-selector__actions {
+// 	margin-top: 10px;
+// }
 
-.widgets-selector__item {
-	background-color: #222;
-	font-size: emCalc(14px);
-	padding: 8px;
+// .widgets-selector__item {
+// 	background-color: #222;
+// 	font-size: emCalc(14px);
+// 	padding: 8px;
+// 	cursor: pointer;
+// 	color: $primary-color;
+
+// 	.widget-sandbox {
+// 		display: none;
+// 	}
+// }
+
+// .widgets-selector__item:hover {
+// 	color: $highlight-color;
+// 	background-color: $bg-highlight-color;
+// }
+
+.widgets-selector__list__item {
+	padding: emCalc(4px);
+
 	cursor: pointer;
-	color: $primary-color;
 
-	.widget-sandbox {
-		display: none;
+	&[data-active] {
+		background-color: grey;
 	}
-}
-
-.widgets-selector__item:hover {
-	color: $highlight-color;
-	background-color: $bg-highlight-color;
 }
 
 /**

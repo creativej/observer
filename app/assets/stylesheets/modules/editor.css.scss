@@ -5,6 +5,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    height: 100%;
 }
 
 .editor-container {
@@ -17,11 +18,15 @@
     position: relative;
     padding: 30px 10px 10px;
     margin-bottom: 10px;
-    background-color: #133;
+    background-color: $dark-grey;
 
     .ace_scroller {
         background-color: transparent !important;
     }
+}
+
+.editor-group--sql {
+    height: 400px;
 }
 
 .editor-group--drop-shadow {

@@ -28,8 +28,9 @@
 			dfd.resolve(resp);
 		})
 		.fail(function(resp, status, error) {
-			console.log(options.failedTitle);
-			dfd.reject();
+			spinner('hide');
+			Observer.alert(options.failedTitle, resp.responseText, 'medium');
+			dfd.reject(resp.responseText);
 		})
 		;
 

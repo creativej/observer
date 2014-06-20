@@ -2,12 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.widgets {
-    .container {
-        max-width: 100%;
-    }
-}
-
 .widget-sandbox {
     width: 100%;
     min-height: 100px;
@@ -63,43 +57,13 @@
     font-family: 'Myriad-Pro', 'Myriad', helvetica, arial, sans-serif;
 }
 .widgets.edit {
-    .preview-container {
-        margin: 0 auto;
-        position: relative;
-        // border: 1px solid #ccc;
-    }
-
     .widget-preview {
         margin: 0 auto;
         margin-bottom: 15px;
     }
 
-    .editor-group.js {
-        height: 480px;
-    }
-}
-
-#widget-editor-layout {
-    .editor-group.css, .editor-group.html {
-        transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
-        -webkit-transition: height 500ms cubic-bezier(0.165, 0.84, 0.44, 1); /* Safari */
-    }
-
-    &[data-scss-mode] {
-        .editor-group.css {
-            height: 320px;
-        }
-        .editor-group.html {
-            height: 150px;
-        }
-    }
-    &[data-html-mode] {
-        .editor-group.css {
-            height: 150px;
-        }
-        .editor-group.html {
-            height: 320px;
-        }
+    .editor-group {
+        height: 580px;
     }
 }
 
@@ -117,21 +81,8 @@
 }
 
 .widget-group {
-    padding: 10px 20px 10px 10px;
-    position: relative;
     @include box-sizing(border-box);
-    padding-top: 20px;
-
-    background-color: #fff;
-    border: 10px solid #eee;
     height: 100%;
-    &.widget-group--transparent {
-        background: transparent;
-        border: none;
-    }
-}
-
-.widget-group:hover {
 }
 
 .widget-edit-form-group {

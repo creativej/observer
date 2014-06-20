@@ -8,7 +8,7 @@ describe Query do
   describe "query template parser" do
     it "should parse group_by" do
       q = parse(
-        'SELECT title, {% group timecreated by day %} as datetime FROM t'
+        'SELECT title, {% group timecreated by day as timestamp %} as datetime FROM t'
       )
 
       expect(q.render).to eq(
@@ -18,11 +18,21 @@ describe Query do
 
     it "should parse group_by using context variable" do
       q = parse(
-        'SELECT title, {% group timecreated by day %} as datetime FROM t'
+        'SELECT title, {% group timecreated by day as timestamp %} as datetime FROM t'
       )
 
       expect(q.render('group_by' => 'year')).to eq(
         "SELECT title, YEAR(FROM_UNIXTIME(timecreated)) as datetime FROM t"
+      )
+    end
+
+    it "should parse group_by as datetime" do
+      q = parse(
+        'SELECT title, {% group timecreated by day %} as datetime FROM t'
+      )
+
+      expect(q.render).to eq(
+        "SELECT title, CONCAT(YEAR(timecreated), '-', MONTH(timecreated), '-', DAY(timecreated)) as datetime FROM t"
       )
     end
 
@@ -62,5 +72,22 @@ describe Query do
       )
     end
 
+    it "should parse parameter using context variable" do
+      q = parse(
+        'Hello {{ name | default: "world" }}'
+      )
+      expect(q.render('name' => 'you')).to eq(
+        'Hello you'
+      )
+    end
+
+    it "should parse parameter with default" do
+      q = parse(
+        'Hello {{ name | default: "world" }}'
+      )
+      expect(q.render()).to eq(
+        'Hello world'
+      )
+    end
   end
 end

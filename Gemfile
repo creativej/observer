@@ -7,7 +7,7 @@ gem 'rails', '~> 3.2.17'
 
 # gem 'pg'
 gem 'mysql2'
-gem 'bower-rails', '~> 0.4.4'
+gem 'bower-rails', '~> 0.7.0'
 gem 'devise'
 gem 'bourbon'
 gem 'jquery-rails'
@@ -15,6 +15,7 @@ gem 'rails_config'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'httparty'
 gem 'liquid'
+gem 'paper_trail', '~> 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,7 +26,7 @@ group :assets do
   gem 'execjs'
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'zurb-foundation', '~> 4.2.2'
+  gem 'foundation-rails', '~> 5.1.1.0'
   gem 'entypo-rails'
   gem 'uglifier', '>= 1.0.3'
 end
@@ -43,6 +44,7 @@ end
 # Use unicorn as the app server
 # gem 'unicorn'
 group :test, :development do
+  gem 'rspec', '~> 2.99.0'
   gem 'rspec-rails', '~> 2.0'
   gem 'factory_girl_rails'
   gem 'sqlite3'

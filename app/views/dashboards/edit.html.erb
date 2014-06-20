@@ -2,7 +2,7 @@
 <ul class="right dashboard-tools">
   <li class="divider"></li>
   <li>
-    <a href="#" data-reveal-id="widgets-selector" title="add widgets">
+    <a href="<%= dashboard_new_widget_path({ dashboard_id: @dashboard.id }) %>" title="add widgets">
       <i class="icon-line-graph dashboard-tools-icon"></i> Add widget
     </a>
   </li>
@@ -31,7 +31,15 @@
     >
       <ul class="gridster-widgets">
       <% @dashboard_widgets.each do |dw| %>
-        <li data-col="<%= dw.col %>" data-row="<%= dw.row %>" data-sizex="<%= dw.size_x %>" data-sizey="<%= dw.size_y %>" data-url="<%= widget_path(dw.widget) %>" data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>" data-id="<%= dw.id %>">
+        <li
+          data-col="<%= dw.col %>"
+          data-row="<%= dw.row %>"
+          data-sizex="<%= dw.size_x %>"
+          data-sizey="<%= dw.size_y %>"
+          data-url="<%= widget_dashboards_path(:token => @dashboard.token, :dashboard_widget_id => dw.id) %>"
+          data-remove-url="<%= dashboard_remove_widget_path({ :dashboard_id => @dashboard.id }) %>"
+          data-id="<%= dw.id %>"
+        >
           <%= widget_sandbox('', '', dw.widget_id).html_safe %>
           <%= widget_modifier(:remove => true).html_safe %>
         </li>

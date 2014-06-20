@@ -4,11 +4,11 @@ module ApplicationHelper
   end
 
   def get(value, default)
-    value.nil? ? value : default
+    (defined? value) ? value : default
   end
 
   def spinner(classes = '')
-    '<div class="spinner-container ' << classes << '"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
+    '<div data-spinner class="spinner-container ' << classes << '"><div class="spinner-icon"></div><div class="spinner-action"></div></div>'
   end
 
   def overlay_spinner

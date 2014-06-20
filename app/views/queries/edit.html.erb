@@ -24,7 +24,14 @@
     >
       <%= @query.name %>
     </div>
-    <%= form_for(@query, :html => {:class => 'custom query-form' }) do |f| %>
+    <%= form_for(
+        @query,
+        :html => {
+          :class => 'custom query-form',
+          'data-query-form' => true,
+          'data-target' => '[data-result-content]'
+        }
+      ) do |f| %>
       <%= render '/form_errors' %>
       <div class="query-editor-group field">
         <%= f.hidden_field :value %>
@@ -36,7 +43,17 @@
           :bind => '#query_value'
         %>
         <div class="row query-form-actions-group">
-          <div class="columns large-3 right query-form-actions field">
+          <div class="columns large-2 right query-form__actions field">
+            <a
+              href="#"
+              class="button query-form__actions__run secondary"
+              data-url="<%= run_queries_path %>"
+              data-run-btn
+            ><i class="icon-triangle-right"></i>Run</a>
+          </div>
+          <div class='columns large-6'>
+          </div>
+          <div class='columns large-3'>
             <%= select(
               :query,
               :connection_id,
@@ -45,15 +62,12 @@
               },
               :class => 'medium'
             ) %>
-            <a href="#" class="button run-btn secondary" data-url="<%= run_queries_path %>"><i class="icon-triangle-right"></i>Run</a>
-          </div>
-          <div class='columns large-9'>
-            <div class="result-content">
-              <div class="result-content-empty-text"></div>
-            </div>
           </div>
         </div>
       </div>
     <% end %>
+
+    <div class="query-form__actions__result" data-result-content>
+    </div>
   </div>
 </div>

@@ -13,7 +13,6 @@ class DashboardsController < ApplicationController
   end
 
   # GET /dashboards/new
-  # GET /dashboards/new.json
   def new
     @dashboard = Dashboard.new
     @dashboard.user = current_user
@@ -30,17 +29,14 @@ class DashboardsController < ApplicationController
   end
 
   # PUT /dashboards/1
-  # PUT /dashboards/1.json
   def update
     @dashboard = Dashboard.find(params[:id])
 
     respond_to do |format|
       if @dashboard.update_attributes(params[:dashboard])
-        format.html { redirect_to(edit_dashboard_path) }
         format.json { head :no_content }
       else
         flash[:errors] = @dashboard.errors
-        format.html { redirect_to(edit_dashboard_path) }
         format.json { render json: @dashboard.errors, status: :unprocessable_entity }
       end
     end
@@ -66,17 +62,25 @@ class DashboardsController < ApplicationController
     end
   end
 
-  # POST /dashboards/1/add-widget.json
+  # GET /dashboards/:token/widgets/:dashboard_widget_id
+  def widget
+    @dashboard = Dashboard.find_by_token(params[:token])
+    print params[:dashboard_widget_id]
+    @widget = @dashboard.dashboard_widgets.find(params[:dashboard_widget_id])
+    render :layout => 'basic'
+  end
+
+  # GET /dashboards/1/new-widget
+  def new_widget
+    @dashboard = Dashboard.find(params[:dashboard_id])
+    @widgets = Widget.all(:include => :user)
+  end
+
+  # POST /dashboards/1/add-widget
   def add_widget
     @dashboard = Dashboard.find(params[:dashboard_id])
-    widget = ActiveSupport::JSON.decode(params[:widget]).first
-    respond_to do |format|
-      if @dashboard.add_widget(widget)
-        format.json { render json: { :id => @dashboard.last_added_widget.id } }
-      else
-        format.json { render json: @dashboard.errors, status: :unprocessable_entity }
-      end
-    end
+    @dashboard.add_widget_from_data(params[:widget])
+    redirect_to(edit_dashboard_path(@dashboard))
   end
 
   # DELETE /dashboards/1/remove-widgets.json

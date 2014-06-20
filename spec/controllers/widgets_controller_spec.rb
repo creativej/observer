@@ -19,144 +19,144 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe WidgetsController do
+  include Devise::TestHelpers
 
-  # This should return the minimal set of attributes required to create a valid
-  # Widget. As you add validations to Widget, be sure to
-  # update the return value of this method accordingly.
   def valid_attributes
-    { "user_id" => "1" }
+    {
+      "name" => "new name",
+      "js" => "new js",
+      "css" => "new css",
+      "html" => "new html"
+    }
   end
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # WidgetsController. Be sure to keep this updated too.
-  def valid_session
-    {}
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+    sign_in @user
   end
 
   describe "GET index" do
-    it "assigns all widgets as @widgets" do
-      widget = Widget.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:widgets).should eq([widget])
+    it "show an index of all widgets" do
+      FactoryGirl.create :widget
+      get :index
+
+      expect(response.status).to eq(200)
     end
   end
 
   describe "GET show" do
     it "assigns the requested widget as @widget" do
-      widget = Widget.create! valid_attributes
-      get :show, {:id => widget.to_param}, valid_session
-      assigns(:widget).should eq(widget)
+      widget = FactoryGirl.create :widget
+
+      get :show, { :id => widget.id }
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe "GET show by tag" do
+    it "renders widget base on its tag" do
+      PaperTrail.enabled = true
+
+      widget = FactoryGirl.create :widget
+      widget.js = "new js"
+      widget.save
+
+      widget.add_tag('0.0.1', 'desc')
+
+      get :show_tag, { :id => widget.id, :tag => '0.0.1' }
+      expect(response.status).to eq(200)
     end
   end
 
   describe "GET new" do
     it "assigns a new widget as @widget" do
-      get :new, {}, valid_session
-      assigns(:widget).should be_a_new(Widget)
+      get :new
+
+      expect(Widget.all.length).to eq(1)
+
+      widget = Widget.first
+
+      expect(widget.name).to eq('untitled')
+      expect(widget.user.id).to eq(@user.id)
+
+      response.should redirect_to(edit_widget_path(widget.id))
+    end
+  end
+
+  describe "GET copy" do
+    it "makes a new copy of a widget" do
+      widget = FactoryGirl.create :widget
+
+      get :copy, :id => widget.id
+
+      expect(Widget.all.length).to eq(2)
+
+      new_widget = Widget.last
+
+      expect(new_widget.name).to eq("#{widget.name} (1)")
+      expect(new_widget.user.id).to eq(@user.id)
+
+      response.should redirect_to(edit_widget_path(new_widget.id))
     end
   end
 
   describe "GET edit" do
     it "assigns the requested widget as @widget" do
-      widget = Widget.create! valid_attributes
-      get :edit, {:id => widget.to_param}, valid_session
-      assigns(:widget).should eq(widget)
-    end
-  end
+      widget = FactoryGirl.create :widget
 
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Widget" do
-        expect {
-          post :create, {:widget => valid_attributes}, valid_session
-        }.to change(Widget, :count).by(1)
-      end
-
-      it "assigns a newly created widget as @widget" do
-        post :create, {:widget => valid_attributes}, valid_session
-        assigns(:widget).should be_a(Widget)
-        assigns(:widget).should be_persisted
-      end
-
-      it "redirects to the created widget" do
-        post :create, {:widget => valid_attributes}, valid_session
-        response.should redirect_to(Widget.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved widget as @widget" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Widget.any_instance.stub(:save).and_return(false)
-        post :create, {:widget => { "user_id" => "invalid value" }}, valid_session
-        assigns(:widget).should be_a_new(Widget)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Widget.any_instance.stub(:save).and_return(false)
-        post :create, {:widget => { "user_id" => "invalid value" }}, valid_session
-        response.should render_template("new")
-      end
+      get :edit, { :id => widget.id }
+      expect(response.status).to eq(200)
     end
   end
 
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested widget" do
-        widget = Widget.create! valid_attributes
-        # Assuming there are no other widgets in the database, this
-        # specifies that the Widget created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Widget.any_instance.should_receive(:update_attributes).with({ "user_id" => "1" })
-        put :update, {:id => widget.to_param, :widget => { "user_id" => "1" }}, valid_session
+        widget = FactoryGirl.create :widget
+
+        put :update, {
+          :id => widget.to_param,
+          :widget => valid_attributes,
+          :format => :json
+        }
+
+        widget.reload
+
+        expect(widget.name).to eq(valid_attributes['name'])
+        expect(widget.js).to eq(valid_attributes['js'])
+        expect(widget.css).to eq(valid_attributes['css'])
+        expect(widget.html).to eq(valid_attributes['html'])
+
+        expect(response.status).to eq(204)
       end
 
-      it "assigns the requested widget as @widget" do
-        widget = Widget.create! valid_attributes
-        put :update, {:id => widget.to_param, :widget => valid_attributes}, valid_session
-        assigns(:widget).should eq(widget)
-      end
+      it "update the widget with invalid parameters" do
+        widget = FactoryGirl.create :widget
 
-      it "redirects to the widget" do
-        widget = Widget.create! valid_attributes
-        put :update, {:id => widget.to_param, :widget => valid_attributes}, valid_session
-        response.should redirect_to(widget)
-      end
-    end
+        put :update, {
+          :id => widget.to_param,
+          :widget => {
+            'name' => nil
+          },
+          :format => :json
+        }
 
-    describe "with invalid params" do
-      it "assigns the widget as @widget" do
-        widget = Widget.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Widget.any_instance.stub(:save).and_return(false)
-        put :update, {:id => widget.to_param, :widget => { "user_id" => "invalid value" }}, valid_session
-        assigns(:widget).should eq(widget)
-      end
-
-      it "re-renders the 'edit' template" do
-        widget = Widget.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Widget.any_instance.stub(:save).and_return(false)
-        put :update, {:id => widget.to_param, :widget => { "user_id" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        expect(response.status).to eq(422)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested widget" do
-      widget = Widget.create! valid_attributes
+      widget = FactoryGirl.create :widget
       expect {
-        delete :destroy, {:id => widget.to_param}, valid_session
+        delete :destroy, {:id => widget.to_param}
       }.to change(Widget, :count).by(-1)
     end
 
     it "redirects to the widgets list" do
-      widget = Widget.create! valid_attributes
-      delete :destroy, {:id => widget.to_param}, valid_session
+      widget = FactoryGirl.create :widget
+      delete :destroy, {:id => widget.to_param}
       response.should redirect_to(widgets_url)
     end
   end

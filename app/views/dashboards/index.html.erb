@@ -1,39 +1,47 @@
-<h1>Dashboards</h1>
+<div class="row">
+  <div class="large-2 columns">
+  </div>
+  <div class="large-8 columns large-centered">
+    <h1>Dashboards</h1>
 
-<table class="table--common">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Scale</th>
-      <th>Is public</th>
-      <th>Created by</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<% @dashboards.each do |dashboard| %>
-    <tr>
-      <td>
-        <a href="<%= edit_dashboard_path(dashboard) %>"><%= dashboard.name %>
-        </a>
-      </td>
-      <td><%= dashboard.scale %></td>
-      <td><%= dashboard.is_public %></td>
-      <td><%= dashboard.user.username %></td>
-      <td class="action-cell">
-        <a href="<%= edit_dashboard_path(dashboard) %>" class="action" title="edit this dashboard"><i class="icon-pencil"></i></a>
-      </td>
-      <td class="action-cell">
-        <a href="<%= dashboard_path(dashboard) %>" class="action" data-confirm="Are you sure?" data-method="delete" title="delete this dashboard">
-          <i class="icon-cross"></i>
-        </a>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+    <table class="table--common">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Scale</th>
+          <th>Is public</th>
+          <th>Created by</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @dashboards.each do |dashboard| %>
+        <tr>
+          <td>
+            <a href="<%= edit_dashboard_path(dashboard) %>"><%= dashboard.name %>
+            </a>
+          </td>
+          <td><%= dashboard.scale %></td>
+          <td><%= dashboard.is_public %></td>
+          <td><%= dashboard.user.username %></td>
+          <td class="action-cell">
+            <a href="<%= edit_dashboard_path(dashboard) %>" class="action" title="edit this dashboard"><i class="icon-pencil"></i></a>
+          </td>
+          <td class="action-cell">
+            <a href="<%= dashboard_path(dashboard) %>" class="action" data-confirm="Are you sure?" data-method="delete" title="delete this dashboard">
+              <i class="icon-cross"></i>
+            </a>
+          </td>
+        </tr>
+    <% end %>
+      </tbody>
+    </table>
 
-<br />
+    <br />
 
-<a href="<%= new_dashboard_path %>" class="button small"><i class="icon-plus"></i>New dashboard</a>
+    <a href="<%= new_dashboard_path %>" class="button small"><i class="icon-plus"></i>New dashboard</a>
+  </div>
+  <div class="large-2 columns">
+  </div>
+</div>

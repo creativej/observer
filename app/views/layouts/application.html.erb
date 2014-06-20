@@ -13,14 +13,16 @@
   	<!-- Set the viewport width to device width for mobile -->
   	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  	<title><%= content_for?(:title) ? yield(:title) : "The Observer" %></title>
+  	<title><%= content_for?(:title) ? yield(:title) : "Observer" %></title>
 
     <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
   	<%= stylesheet_link_tag    "application" %>
-  	<%= javascript_include_tag "vendor/custom.modernizr" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-sham.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.min.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+
+    <script src="/assets/javascripts/lib/flight.js" type="text/javascript"></script>
     <%= csrf_meta_tags %>
   </head>
 
@@ -29,10 +31,10 @@
     class="<%= "#{controller.controller_name} #{controller.action_name}" %>"
     data-triggerjs="<%= "#{controller.action_name}.#{controller.controller_name}" %>"
   >
-      <nav class="top-bar userbar">
+      <nav class="top-bar userbar" data-topbar>
         <section class="top-bar-section components-menu">
           <ul class="left title-area">
-            <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">The observer</a>
+            <li class="<% if user_signed_in? %>has-dropdown<% end %> name"><a href="/" class="brand-title">Observer</a>
             <% if user_signed_in? %>
             <ul class="dropdown">
               <li>
@@ -94,7 +96,7 @@
           <%= yield :tools %>
         </section>
       </nav>
-    <div class="container">
+    <div class="layout-container">
         <% if !flash[:notice].nil? %>
         <div data-alert class="alert-box success">
           <%= flash[:notice] %>

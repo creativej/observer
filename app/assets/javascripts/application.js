@@ -10,18 +10,20 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require foundation
 //= require jqplot/jquery.jqplot.js
 //= require jqplot/plugins/jqplot.dateAxisRenderer
 //= require jqplot/plugins/jqplot.cursor
 //= require jqplot/plugins/jqplot.highlighter
 //= require mixins/eventable
 //= require bower_components/zeroclipboard/ZeroClipboard
+//= require knockout-3.1.0
 //= require observer
+//= require mixins/with_core
 //= require observer/debugger
 //= require observer/keyboard
 //= require modules/jqplot
 //= require modules/data_set
-//= require foundation
 //= require modules/alert_modal
 //= require jquery_ujs
 //= require bower_components/moment/moment
@@ -32,6 +34,8 @@
 
 (function(window, Observer, $, document) {
 	"use strict";
+
+	Observer.enableDebug();
 
 	$(function() {
 		Observer.trigger('ready.body');

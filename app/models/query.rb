@@ -1,18 +1,21 @@
 class Query < ActiveRecord::Base
   attr_accessible :name, :token, :value, :connection_id, :user_id
-  before_create :before_create
+  before_create :generate_token
   belongs_to :user
   belongs_to :db_connection, :class_name => 'Connection', :foreign_key =>
 "connection_id"
   validates :name, :presence => true
 
-  def before_create
-    if (self.token.nil?)
-      self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
-    end
-  end
-
   def value_as_query(vars = {})
     LiquidTemplate.for_query.parse(self.value).render vars
+  end
+
+  protected
+
+  def generate_token
+    self.token = loop do
+      random_secret = SecureRandom.urlsafe_base64(6, false).downcase
+      break random_secret unless self.class.exists?(token: random_secret)
+    end
   end
 end

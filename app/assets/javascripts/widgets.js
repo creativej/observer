@@ -1,7 +1,5 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
-//= require modules/ace_editor
-//= require actions/save_attribute
 //= require modules/spinner
 //= require modules/sandbox
 //= require modules/widget_preferences
@@ -10,93 +8,72 @@
 //= require modules/editable_name
 //= require modules/widget_debugger
 //= require modules/widget_editor
+//= require modules/widget_previewer
+//= require modules/widget_builder
+//= require modules/tabs
 
 (function($, window, Observer, undefined) {
-	'use strict';
+    'use strict';
 
-	var modules = Observer.modules;
+    var modules = Observer.modules;
 
-	function previewWidget(sandbox) {
-		var
-			$hiddenFields = $('.widget-form')
-				.find('input[type="hidden"]'),
-			$form = $('.preview-widget-form')
-			;
+    function bindEditorToPreviewer($editor, $previewer) {
+        $editor.on('saved', function(evt, data) {
+            var previewerPayload = {};
+            previewerPayload[data.fieldName] = data.value;
 
-		sandbox.resize(
-			parseInt($('#widget_row').val(), 10),
-			parseInt($('#widget_column').val(), 10)
-		);
+            $previewer.trigger('updateRequested', previewerPayload);
+        });
+    }
 
-		$form.html($hiddenFields.clone().prop('id', undefined).hide());
-		sandbox.prepareToLoad(function() {
-			$form.submit();
-		});
-	}
+    Observer.onPageReady(['edit.widgets'], function() {
+        var $jsEditor = $('[data-js-editor]');
+        var $yamlEditor = $('[data-yaml-editor]');
+        var $cssEditor = $('[data-css-editor]');
+        var $htmlEditor = $('[data-html-editor]');
+        var $previewer = $('[data-widget-previewer]');
+        var $builder = $('[data-widget-builder]');
 
-	Observer.onPageReady(['edit.widgets'], function() {
-		var
-			$editorLayout = $('#widget-editor-layout'),
-			$previewContainer = $('.preview-container'),
-			spinner = modules.spinner(
-				$previewContainer.find('.spinner-container')
-			),
-			sandbox = modules.sandbox($('.widget-sandbox'), spinner)
-			;
+        modules.WidgetEditor.attachTo($jsEditor);
+        bindEditorToPreviewer($jsEditor, $previewer);
 
-		sandbox.on('resized', function() {
-			$previewContainer.width(this.width());
-			$previewContainer.height(this.height());
-		});
+        modules.WidgetEditor.attachTo($yamlEditor);
+        $yamlEditor.on('saved', function(evt, data) {
+            $builder.trigger('renderRequested', data.value);
+        });
 
-		var
-			$editorGroups =  $('.editor-group'),
-			jsEditor = modules.widgetEditor($editorGroups.filter('.js')),
-			htmlEditor = modules.widgetEditor($editorGroups.filter('.html')),
-			cssEditor = modules.widgetEditor($editorGroups.filter('.css'));
+        modules.WidgetEditor.attachTo($cssEditor);
+        bindEditorToPreviewer($cssEditor, $previewer);
 
-		previewWidget(sandbox);
+        modules.WidgetEditor.attachTo($htmlEditor);
+        bindEditorToPreviewer($htmlEditor, $previewer);
 
-		modules.widgetPreferences($('[data-widget-preferences]'))
-			.on('save', function() {
-				previewWidget(sandbox);
-			});
-		modules.widgetModifier($('[data-widget-modifier]'));
-		modules.widgetResources($('[data-widget-resources]'));
-		modules.editableName($('.widget-name'));
 
-		var d = modules.widgetDebugger($('[data-widget-debugger]'));
+        modules.WidgetPreviewer.attachTo($previewer);
+        modules.Tabs.attachTo('[data-tabs]');
 
-		Observer
-			.on('htmlModeRequested', function() {
-				$editorLayout
-					.removeAttr('data-scss-mode')
-					.attr('data-html-mode', true);
-			})
-			.on('scssModeRequested', function() {
-				$editorLayout
-					.removeAttr('data-html-mode')
-					.attr('data-scss-mode', true);
-			})
-			.on('previewWidgetRequested', function() {
-				previewWidget(sandbox);
-			})
-			.on('log', d.log)
-			.on('reset.log', d.reset)
-			;
-	});
+        modules.WidgetBuilder.attachTo($builder);
 
-	Observer.onPageLoaded(['preview.widgets', 'show.widgets'], function() {
-		var
-			$el = $('.widget-group'),
-			$window = $(window)
-			;
-		$el.css('width', $window.width());
-		$el.css('height', $window.height());
+        modules.EditableName.attachTo('[data-editable-name]');
+        modules.WidgetPreferences.attachTo('[data-widget-preferences]');
 
-		Observer.on('log', function (log) {
-			window.parent.Observer.trigger('log', log);
-		});
-	});
+        modules.widgetModifier($('[data-widget-modifier]'));
+        modules.widgetResources($('[data-widget-resources]'));
+
+        var d = modules.widgetDebugger($('[data-widget-debugger]'));
+
+        $('[data-widget-preferences]').on('saved', function(e, data) {
+            $(document).trigger('previewRequested', data);
+        });
+
+        $('[data-id]').on('activate', function(e) {
+            $(e.target).find('[data-ace-editor]').trigger('focusRequested');
+        });
+
+        Observer
+            .on('log', d.log)
+            .on('reset.log', d.reset)
+            ;
+    });
 
 }(jQuery, window, Observer));

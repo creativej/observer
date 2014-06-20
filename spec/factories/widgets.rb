@@ -7,6 +7,5 @@ FactoryGirl.define do
     js "MyText"
     css "MyText"
     html "MyText"
-    options "MyText"
   end
 end

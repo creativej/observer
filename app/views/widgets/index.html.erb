@@ -1,33 +1,41 @@
-<h1>Widgets</h1>
-<table class="table--common">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Created by</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row">
+  <div class="large-2 columns">
+  </div>
+  <div class="large-8 columns large-centered">
+    <h1>Widgets</h1>
+    <table class="table--common">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Created by</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-  <tbody>
-<% @widgets.each do |widget| %>
-    <tr>
-      <td><a href="<%= edit_widget_path(widget) %>"><%= widget.name %></a></td>
-      <td>
-      <%= widget.user.username %>
-      </td>
-      <td class="action-cell">
-          <a href="<%= edit_widget_path(widget) %>" class="action"><i class="icon-pencil"></i></a>
-      </td>
-      <td class="action-cell">
-        <a href="<%= widget_path(widget) %>" class="action" data-confirm="Are you sure?" data-method="delete">
-          <i class="icon-cross"></i>
-        </a>
-      </td>    </tr>
-<% end %>
-  </tbody>
-</table>
+      <tbody>
+    <% @widgets.each do |widget| %>
+        <tr>
+          <td><a href="<%= edit_widget_path(widget) %>"><%= widget.name %></a></td>
+          <td>
+          <%= widget.user.username %>
+          </td>
+          <td class="action-cell">
+              <a href="<%= edit_widget_path(widget) %>" class="action"><i class="icon-pencil"></i></a>
+          </td>
+          <td class="action-cell">
+            <a href="<%= widget_path(widget) %>" class="action" data-confirm="Are you sure?" data-method="delete">
+              <i class="icon-cross"></i>
+            </a>
+          </td>    </tr>
+    <% end %>
+      </tbody>
+    </table>
 
-<br />
+    <br />
 
-<a href="<%= new_widget_path %>" class="button small"><i class="icon-plus"></i>New widget</a>
+    <a href="<%= new_widget_path %>" class="button small"><i class="icon-plus"></i>New widget</a>
+  </div>
+  <div class="large-2 columns">
+  </div>
+</div>

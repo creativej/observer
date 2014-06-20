@@ -1,12 +1,17 @@
 class GroupTag < Liquid::Tag
   def initialize(tag_name, content, tokens)
     super
-    @name = content.sub(/by (.+)$/, '').strip
-    @period = content.sub(/^(.+) by/, '').strip
+    @name = content.gsub(/^(.+) by.+$/, '\1').strip
+    @period = content.gsub(/^.+ by\s(\w+).+$/, '\1').strip
+    @type = content.gsub(/^.+ as (.+)$/, '\1').strip
   end
 
   def render(context)
-    date = "FROM_UNIXTIME(#{@name})"
+    if @type == 'timestamp'
+      date = "FROM_UNIXTIME(#{@name})"
+    else
+      date = @name
+    end
 
     year = "YEAR(#{date})"
     month = "MONTH(#{date})"

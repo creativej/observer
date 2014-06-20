@@ -1,21 +1,20 @@
 <%= sandbox_css('widget-group', css).html_safe %>
-<div class="widget-group"></div>
-<script id="widgetEJS" type="text/ejs">
+<div class="widget-group" data-widget-sandbox>
   <%= html_safe html %>
-</script>
+</div>
 <% content_for :javascript do %>
 <script type="text/javascript">
 (function($, Observer, window, undefined) {
   var modules = Observer.modules;
   var helpers = Observer.helpers;
 
-  Observer.on('ready.body', function() {
-    var widget = modules.widget($('.widget-group'), {
+  $(function() {
+    var widget = modules.widget($('[data-widget-sandbox]'), {
       autoRefresh: $('.show.widgets').length
     });
 
     try {
-      $.proxy(function(modules, undefined) {
+      $.proxy(function(modules, ko, undefined) {
         var
           document = undefined,
           window = undefined
@@ -23,9 +22,7 @@
         <% if js.present? %>
           <%= html_safe js %>
         <% end %>
-
-        this.initView();
-      }, widget)(Observer.modules);
+      }, widget)(Observer.modules, ko);
     } catch (e) {
       console.log(e);
       window.parent.Observer.trigger('log', e.stack);

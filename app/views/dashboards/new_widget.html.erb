@@ -1,0 +1,52 @@
+<% content_for :tools do %>
+<ul class="right dashboard-tools">
+  <li class="divider"></li>
+  <li>
+    <a href="<%= edit_dashboard_path(@dashboard) %>" title="add widgets">
+      <i class="icon-back dashboard-tools-icon"></i> Back to dashboard
+    </a>
+  </li>
+</ul>
+<% end %>
+
+<div class="row widget-selector-group">
+  <div class="small-3 columns">
+    <div class="widgets-selector__list" data-dashboard-widgets>
+      <% @widgets.each do |widget| %>
+          <div
+              class="widgets-selector__list__item"
+              data-widget-item
+              data-id="<%= widget.id %>"
+              data-meta="<%= widget.meta %>"
+              data-html="<%= widget.html %>"
+              data-css="<%= widget.css %>"
+              data-js="<%= widget.js %>"
+              data-column="<%= widget.column %>"
+              data-row="<%= widget.row %>"
+              data-data=""
+          >
+              <%= widget.name %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-3 columns">
+    <div class="content" data-builder>
+      <% if @widgets.length %>
+        <%= form_tag dashboard_add_widget_path, {
+          :class => 'widget-builder-group',
+          'data-widget-builder' => '1',
+          'data-meta' => ''
+        } do %>
+          <%= hidden_field_tag 'data', '', { "data-value" => true } %>
+          <%= render '/widgets/builder' %>
+          <button class="button small secondary" data-preview-btn>Preview</button>
+          <button class="button small primary" data-add-btn>Add</button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="small-6 columns">
+    <%= render '/widgets/previewer' %>
+  </div>
+</div>

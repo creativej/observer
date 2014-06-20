@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140202082858) do
+ActiveRecord::Schema.define(:version => 20140222121852) do
 
   create_table "connections", :force => true do |t|
     t.integer  "user_id"
@@ -43,14 +43,16 @@ ActiveRecord::Schema.define(:version => 20140202082858) do
   add_index "dashboards", ["token"], :name => "index_dashboards_on_token"
 
   create_table "dashboards_widgets", :force => true do |t|
-    t.integer  "dashboard_id", :null => false
-    t.integer  "widget_id",    :null => false
-    t.integer  "row",          :null => false
-    t.integer  "col",          :null => false
-    t.integer  "size_x",       :null => false
-    t.integer  "size_y",       :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "dashboard_id",  :null => false
+    t.integer  "widget_id",     :null => false
+    t.integer  "row",           :null => false
+    t.integer  "col",           :null => false
+    t.integer  "size_x",        :null => false
+    t.integer  "size_y",        :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "widget_tag_id"
+    t.text     "data"
   end
 
   create_table "queries", :force => true do |t|
@@ -86,6 +88,28 @@ ActiveRecord::Schema.define(:version => 20140202082858) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
+  create_table "versions", :force => true do |t|
+    t.string   "item_type",  :null => false
+    t.integer  "item_id",    :null => false
+    t.string   "event",      :null => false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+  end
+
+  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+
+  create_table "widget_tags", :force => true do |t|
+    t.integer  "widget_id"
+    t.integer  "version_id"
+    t.string   "name"
+    t.text     "desc"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "widget_tags", ["widget_id", "name"], :name => "index_widget_tags_on_widget_id_and_name", :unique => true
+
   create_table "widgets", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
@@ -96,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20140202082858) do
     t.datetime "updated_at", :null => false
     t.integer  "column"
     t.integer  "row"
+    t.text     "meta"
+    t.text     "data"
   end
 
 end

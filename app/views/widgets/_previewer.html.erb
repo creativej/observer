@@ -1,0 +1,24 @@
+<div
+  class="widget-previewer"
+  data-widget-previewer
+  <% if defined? widget %>
+    data-auto-play="1"
+  <% end %>
+>
+  <div class="widget-previewer__content">
+    <%= overlay_spinner.html_safe %>
+    <%= widget_sandbox('', 'widget-sandbox', '', 'interactive').html_safe %>
+    <div class="widget-debugger-group" data-widget-debugger>
+      <pre class="widget-debugger__console" data-console></pre>
+      <div class="widget-debugger__tip">Check your JS console for more details. </div>
+    </div>
+    <%= form_tag preview_widgets_path, :target => 'widget-sandbox', 'data-widget-preview-form' => true do %>
+      <%= hidden_field_tag 'widget[js]', (defined? widget) ? widget.js : '' %>
+      <%= hidden_field_tag 'widget[css]', (defined? widget) ? widget.css : '' %>
+      <%= hidden_field_tag 'widget[html]', (defined? widget) ? widget.html : '' %>
+      <%= hidden_field_tag 'widget[data]', (defined? widget) ? widget.data : '' %>
+      <%= hidden_field_tag 'widget[row]', (defined? widget) ? widget.row : '' %>
+      <%= hidden_field_tag 'widget[column]', (defined? widget) ? widget.column : '' %>
+    <% end %>
+  </div>
+</div>

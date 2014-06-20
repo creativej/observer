@@ -9,7 +9,10 @@ class Dashboard < ActiveRecord::Base
   before_create :before_create
   def before_create
     if (self.token.nil?)
-      self.token = Digest::SHA1.hexdigest("#{self.name}-#{Time.now}")
+      self.token = loop do
+        random_secret = SecureRandom.urlsafe_base64(6, false).downcase
+        break random_secret unless self.class.exists?(token: random_secret)
+      end
     end
   end
 
@@ -29,14 +32,23 @@ class Dashboard < ActiveRecord::Base
     end
   end
 
-  def add_widget(widget)
+  def add_widget_from_data(widget)
     widget['dashboard_id'] = self.id
-    @last_added_widget = DashboardsWidgets.create_from_data(widget)
-    @last_added_widget.save
+    widget[:size_x] = widget[:column]
+    widget[:size_y] = widget[:row]
+    widget[:col] = 1
+    widget[:row] = 1
+
+    self.dashboard_widgets.each do |w|
+      widget[:row] = [w.col, widget[:row]].max
+    end
+
+    @last_dashboard_widget = DashboardsWidgets.create_from_data(widget)
+    @last_dashboard_widget.save
   end
 
-  def last_added_widget
-    @last_added_widget
+  def last_dashboard_widget
+    @last_dashboard_widget
   end
 
   def remove_widget(id)

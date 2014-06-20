@@ -10,8 +10,71 @@ module WidgetsHelper
   end
 
   def sandbox_css(cls, css)
+    mixins = <<eos
+  @mixin defaultHeadings($color) {
+    h1, h2 {
+      color: $color;
+      margin: 0 0 5px;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 18px;
+    }
+
+    h2 {
+      font-size: 14px;
+    }
+  }
+
+  @mixin white($mode:border) {
+    padding: 10px;
+    font-size: 14px;
+    color: grey;
+    @include defaultHeadings(grey);
+
+    @if $mode == transparent {
+      background: none;
+    } @else {
+      background-color: #fff;
+
+      @if $mode != no-border {
+        border: 10px solid #eee;
+      }
+    }
+  }
+
+  @mixin solarized {
+    font-size: 14px;
+    background-color: #042029;
+    color: #839496;
+    padding: 10px;
+    @include defaultHeadings(#B58900);
+
+    a {
+      color: #268BD2;
+    }
+  }
+
+  @mixin dark_grey($mode:border) {
+    font-size: 14px;
+    color: #ddd;
+    padding: 10px;
+    @include defaultHeadings(#fff);
+
+    @if $mode == transparent {
+      background: none;
+    } @else {
+      background-color: grey;
+
+      @if $mode != no-border {
+        border: 10px solid #ccc;
+      }
+    }
+  }
+eos
     begin
-      engine = Sass::Engine.new(".#{cls} { #{css} }", :syntax => :scss)
+      engine = Sass::Engine.new("#{mixins} .#{cls} { #{css} }", :syntax => :scss)
       "<style>#{engine.render}</style>"
     rescue
       ""
@@ -48,6 +111,7 @@ eos
   src="#{src}"
   scrolling="no"
   data-widget-id="#{widget_id}"
+  data-sandbox
   data-dimensions="#{Settings.gridster.dimensions}"></iframe>
 eos
   end
