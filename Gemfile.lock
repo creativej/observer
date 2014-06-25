@@ -40,7 +40,6 @@ GEM
     bourbon (4.0.2)
       sass (~> 3.3)
       thor
-    bower-rails (0.7.3)
     builder (3.0.4)
     capistrano (2.15.5)
       highline
@@ -206,7 +205,6 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bourbon
-  bower-rails (~> 0.7.0)
   capistrano
   coffee-rails
   debugger

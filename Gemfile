@@ -7,7 +7,6 @@ gem 'rails', '~> 3.2.17'
 
 # gem 'pg'
 gem 'mysql2'
-gem 'bower-rails', '~> 0.7.0'
 gem 'devise'
 gem 'bourbon'
 gem 'jquery-rails'

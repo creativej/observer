@@ -1,4 +1,3 @@
-//= require canjs/can.jquery
 (function($, Observer, window) {
     Observer.modules.widgetDebugger = function($el) {
         var instance = window.eventable();

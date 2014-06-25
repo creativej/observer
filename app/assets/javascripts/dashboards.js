@@ -6,7 +6,6 @@
 //= require modules/dashboard_widgets
 //= require actions/save_widget_to_dashboard
 //= require actions/update_dashboard_widgets
-//= require jquery.transit/jquery.transit.js
 //= require modules/widget_builder
 //
 (function($, window, Observer, undefined) {
