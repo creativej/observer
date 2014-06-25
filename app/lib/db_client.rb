@@ -5,6 +5,7 @@ class DBClient
       :db => conn.database,
       :user => conn.username,
       :password => conn.decrypt_password,
+      :port => conn.port
     })
   end
 
@@ -13,6 +14,7 @@ class DBClient
     @db = options[:db]
     @user = options[:user]
     @password = options[:password]
+    @port = options[:port]
   end
 
   def connect
@@ -22,6 +24,7 @@ class DBClient
           :database => @db,
           :username => @user,
           :password => @password,
+          :port => @port,
           :read_timeout => 150
         )
     end
