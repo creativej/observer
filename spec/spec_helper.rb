@@ -35,4 +35,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # Opting in infer spec type
+  RSpec.configure do |config|
+    config.infer_spec_type_from_file_location!
+  end
 end
