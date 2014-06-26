@@ -65,18 +65,11 @@ class QueriesController < ApplicationController
     client = DBClient.create connection
 
     queryTemplate = LiquidTemplate.for_query.parse(params[:value])
-    sql = queryTemplate.render
+    @sql = queryTemplate.render
 
-    begin
-      @result = client.query sql
-      @queryError = client.last_query_error
-
-      render :partial => 'result'
-     rescue Exception => e
-
-      render :json => { :errors => e, :value => sql }, :status => 422
-    end
-
+    @result = client.query @sql
+    @queryError = client.last_query_error
+    render :partial => 'result'
   end
 
   # GET /queries/data/:token

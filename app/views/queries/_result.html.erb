@@ -1,22 +1,25 @@
-<% if @result %>
+<% if @queryError %>
+  <div data-alert class="alert-box alert secondary">
+    <p><%= @queryError %></p>
+    <code><%= @sql %></code>
+  </div>
+<% else %>
  <table class="result-table table--common">
-      <thead><tr>
-      <% @result.fields.each do |field| %>
-      <th><%= field %></th>
-      <% end %>
-      </tr></thead>
-      <tbody>
+    <thead>
+      <tr>
+        <% @result.fields.each do |field| %>
+          <th><%= field %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
       <% @result.each(:as => :array) do |row| %>
         <tr>
-        <% row.each do |col| %>
-        <td><%= col %></td>
-        <% end %>
+          <% row.each do |col| %>
+            <td><%= col %></td>
+          <% end %>
         </tr>
       <% end %>
-      </tbody>
+    </tbody>
   </table>
-<% else %>
-<div data-alert class="alert-box alert secondary">
-  <%= @queryError %>
-</div>
 <% end %>
