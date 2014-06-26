@@ -50,7 +50,7 @@ group :test, :development do
 end
 
 group :development do
-  gem 'debugger'
+  # gem 'debugger'
   gem 'thin'
   gem 'better_errors'
   gem 'binding_of_caller'
