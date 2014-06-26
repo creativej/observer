@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-TheObserver::Application.load_tasks
+Observer::Application.load_tasks

@@ -27,7 +27,7 @@ class Connection < ActiveRecord::Base
   def decrypt_password
     if !self.encrypted_password.nil?
       secret = Digest::SHA1.hexdigest(
-        TheObserver::Application.config.connection_secret
+        Observer::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
       encryptor.decrypt_and_verify(self.encrypted_password)
@@ -39,7 +39,7 @@ class Connection < ActiveRecord::Base
   def encrypt_password
     if self.password.present?
       secret = Digest::SHA1.hexdigest(
-        TheObserver::Application.config.connection_secret
+        Observer::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
       self.encrypted_password = encryptor.encrypt_and_sign(self.password)

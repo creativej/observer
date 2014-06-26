@@ -1,4 +1,4 @@
-TheObserver::Application.routes.draw do
+Observer::Application.routes.draw do
   resources :connections
 
   resources :dashboards do

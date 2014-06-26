@@ -2,7 +2,7 @@ class ReencryptPasswordConnections < ActiveRecord::Migration
   def up
     Connection.all.each do |c|
       secret = Digest::SHA1.hexdigest(
-        TheObserver::Application.config.connection_secret
+        Observer::Application.config.connection_secret
       )
       encryptor = ActiveSupport::MessageEncryptor.new(secret)
 

@@ -4,7 +4,7 @@ module AESCrypt
   def AESCrypt.decrypt_password(encrypted_password)
     self.decrypt(
       encrypted_password,
-      TheObserver::Application.config.connection_secret,
+      Observer::Application.config.connection_secret,
       nil,
       'AES-256-CBC'
     )
@@ -13,7 +13,7 @@ module AESCrypt
   def AESCrypt.encrypt_password(password)
     self.encrypt(
       password,
-      TheObserver::Application.config.connection_secret,
+      Observer::Application.config.connection_secret,
       nil,
       'AES-256-CBC'
     )
